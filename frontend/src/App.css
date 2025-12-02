@@ -1,0 +1,84 @@
+:root {
+  background-color: #0f172a;
+}
+
+.app-layout {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #00c7b1 0%, #f4f9f8 45%, #f7f7f7 100%);
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #00c7b1;
+  color: #fff;
+  padding: 0 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-content {
+  padding: 32px;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.rich-text-preview {
+  max-height: 140px;
+  overflow: auto;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+}
+
+.rich-editor {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 6px;
+  background: #fff;
+}
+
+.rich-editor-area {
+  min-height: 160px;
+  padding: 8px;
+  border-radius: 4px;
+  outline: none;
+  white-space: pre-wrap;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.rich-editor-area:empty:before {
+  content: attr(data-placeholder);
+  color: #888;
+}
+
+.rich-editor-area img,
+.rich-text-preview img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 6px 0;
+  max-height: 400px;
+  object-fit: contain;
+}

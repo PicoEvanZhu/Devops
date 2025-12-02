@@ -1,0 +1,382 @@
+import logging
+from typing import Any, Dict, List, Optional
+
+import requests
+
+logger = logging.getLogger(__name__)
+
+
+class AzureDevOpsError(Exception):
+    def __init__(self, message: str, status_code: Optional[int] = None) -> None:
+        super().__init__(message)
+        self.status_code = status_code
+
+
+class AzureDevOpsAuthError(AzureDevOpsError):
+    pass
+
+
+class AzureDevOpsClient:
+    """
+    Thin wrapper around Azure DevOps REST API for projects and work items.
+    """
+
+    API_VERSION = "7.1"
+
+    def __init__(self, organization: str, pat: str) -> None:
+        if not organization or not pat:
+            raise ValueError("organization and pat are required")
+        self.organization = organization
+        self.pat = pat
+        self.base_url = f"https://dev.azure.com/{organization}"
+        self.auth = ("", pat)
+        # Reuse HTTP session to reduce TLS handshakes and speed up concurrent calls
+        self.session = requests.Session()
+
+    def list_projects(self, top: Optional[int] = None) -> List[Dict[str, Any]]:
+        projects: List[Dict[str, Any]] = []
+        continuation_token: Optional[str] = None
+
+        while True:
+            params: Dict[str, Any] = {"api-version": self.API_VERSION}
+            if continuation_token:
+                params["continuationToken"] = continuation_token
+            if top is not None:
+                params["$top"] = max(top - len(projects), 0)
+
+            response = self._request("GET", f"{self.base_url}/_apis/projects", params=params)
+            data = response.json()
+            projects.extend(
+                {
+                    "id": item.get("id"),
+                    "name": item.get("name"),
+                    "description": item.get("description"),
+                    "state": item.get("state"),
+                }
+                for item in data.get("value", [])
+            )
+
+            continuation_token = response.headers.get("x-ms-continuationtoken") or data.get("continuationToken")
+            if not continuation_token or (top is not None and len(projects) >= top):
+                break
+
+        return projects[:top] if top is not None else projects
+
+    def query_todos(
+        self,
+        project: str,
+        *,
+        state: Optional[str] = None,
+        keyword: Optional[str] = None,
+        assigned_to: Optional[str] = None,
+        work_item_type: Optional[str] = None,
+        page: int = 1,
+        page_size: int = 20,
+    ) -> List[Dict[str, Any]]:
+        page = max(page, 1)
+        page_size = max(min(page_size, 200), 1)  # Azure DevOps limits to 200 per call
+
+        clauses = [
+            "[System.TeamProject] = @project",
+            "[System.State] <> 'Removed'",
+        ]
+
+        if work_item_type:
+            # allow comma-separated list
+            types = [t.strip() for t in work_item_type.split(",") if t.strip()]
+        else:
+            types = ["Task", "Product Backlog Item", "User Story", "Bug"]
+        if types:
+            if len(types) == 1:
+                clauses.append(f"[System.WorkItemType] = '{types[0]}'")
+            else:
+                joined = ", ".join(f"'{t}'" for t in types)
+                clauses.append(f"[System.WorkItemType] IN ({joined})")
+
+        if state:
+            if "," in state:
+                states = [s.strip() for s in state.split(",") if s.strip()]
+                if states:
+                    joined = ", ".join(f"'{s}'" for s in states)
+                    clauses.append(f"[System.State] IN ({joined})")
+            else:
+                clauses.append(f"[System.State] = '{state}'")
+        if assigned_to:
+            clauses.append(f"[System.AssignedTo] CONTAINS '{assigned_to}'")
+        if keyword:
+            clauses.append(f"[System.Title] CONTAINS '{keyword}'")
+
+        wiql = (
+            "SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], "
+            "[System.Tags], [Microsoft.VSTS.Common.Priority], [System.ChangedDate], "
+            "[System.Description], [System.WorkItemType], [System.CreatedDate], [System.TeamProject], "
+            "[System.AreaPath], [System.IterationPath], [Microsoft.VSTS.Scheduling.Effort] "
+            "FROM WorkItems WHERE "
+            + " AND ".join(clauses)
+            + " ORDER BY [System.ChangedDate] DESC"
+        )
+
+        wiql_resp = self._request(
+            "POST",
+            f"{self.base_url}/{project}/_apis/wit/wiql",
+            params={"api-version": self.API_VERSION},
+            json={"query": wiql},
+        ).json()
+
+        work_items = wiql_resp.get("workItems", [])
+        skip = (page - 1) * page_size
+        page_items = work_items[skip : skip + page_size]
+        ids = [str(item.get("id")) for item in page_items if item.get("id")]
+        if not ids:
+            return []
+
+        results: List[Dict[str, Any]] = []
+        for chunk_ids in self._chunk(ids, 200):
+            resp = self._request(
+                "GET",
+                f"{self.base_url}/{project}/_apis/wit/workitems",
+                params={
+                    "ids": ",".join(chunk_ids),
+                    "api-version": self.API_VERSION,
+                    "fields": (
+                        "System.Id,System.Title,System.State,System.AssignedTo,System.Tags,"
+                        "Microsoft.VSTS.Common.Priority,System.ChangedDate,System.Description,"
+                        "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,System.TeamProject,Microsoft.VSTS.Scheduling.Effort"
+                    ),
+                },
+            ).json()
+            for item in resp.get("value", []):
+                fields = item.get("fields", {})
+                results.append(self._map_work_item(item))
+
+        # Ensure final sort by ChangedDate desc as a safeguard
+        results.sort(key=lambda r: r.get("changedDate") or "", reverse=True)
+        return results
+
+    def create_todo(self, project: str, data: Dict[str, Any]) -> Dict[str, Any]:
+        work_item_type = data.get("workItemType") or "User Story"
+        body = self._build_patch_body(data, project)
+        resp = self._request(
+            "POST",
+            f"{self.base_url}/{project}/_apis/wit/workitems/${work_item_type}",
+            params={"api-version": self.API_VERSION},
+            headers={"Content-Type": "application/json-patch+json"},
+            json=body,
+        )
+        return self._map_work_item(resp.json())
+
+    def update_todo(self, project: str, item_id: int, data: Dict[str, Any]) -> Dict[str, Any]:
+        body = self._build_patch_body(data, project)
+        resp = self._request(
+            "PATCH",
+            f"{self.base_url}/{project}/_apis/wit/workitems/{item_id}",
+            params={"api-version": self.API_VERSION},
+            headers={"Content-Type": "application/json-patch+json"},
+            json=body,
+        )
+        return self._map_work_item(resp.json())
+
+    def remove_todo(self, project: str, item_id: int) -> Dict[str, Any]:
+        body = [{"op": "add", "path": "/fields/System.State", "value": "Removed"}]
+        resp = self._request(
+            "PATCH",
+            f"{self.base_url}/{project}/_apis/wit/workitems/{item_id}",
+            params={"api-version": self.API_VERSION},
+            headers={"Content-Type": "application/json-patch+json"},
+            json=body,
+        )
+        return self._map_work_item(resp.json())
+
+    def list_tags(self, project: str) -> List[str]:
+        tags: List[str] = []
+        continuation_token: Optional[str] = None
+
+        while True:
+            params: Dict[str, Any] = {"api-version": self.API_VERSION}
+            if continuation_token:
+                params["continuationToken"] = continuation_token
+
+            response = self._request(
+                "GET",
+                f"{self.base_url}/{project}/_apis/wit/tags",
+                params=params,
+            )
+            data = response.json()
+            tags.extend(tag.get("name") for tag in data.get("value", []) if tag.get("name"))
+
+            continuation_token = response.headers.get("x-ms-continuationtoken") or data.get("continuationToken")
+            if not continuation_token:
+                break
+
+        # return unique sorted tags
+        return sorted(set(tags))
+
+    def list_area_paths(self, project: str) -> List[str]:
+        url = f"{self.base_url}/{project}/_apis/wit/classificationnodes/areas"
+        resp = self._request("GET", url, params={"api-version": self.API_VERSION, "$depth": 10}).json()
+        return self._flatten_classification_nodes(resp)
+
+    def list_iteration_paths(self, project: str) -> List[str]:
+        url = f"{self.base_url}/{project}/_apis/wit/classificationnodes/iterations"
+        resp = self._request("GET", url, params={"api-version": self.API_VERSION, "$depth": 10}).json()
+        return self._flatten_classification_nodes(resp)
+
+    def _build_patch_body(self, data: Dict[str, Any], project: Optional[str] = None) -> List[Dict[str, Any]]:
+        ops: List[Dict[str, Any]] = []
+        mapping = {
+            "title": "/fields/System.Title",
+            "description": "/fields/System.Description",
+            "state": "/fields/System.State",
+            "priority": "/fields/Microsoft.VSTS.Common.Priority",
+            "assignedTo": "/fields/System.AssignedTo",
+            "areaPath": "/fields/System.AreaPath",
+            "iterationPath": "/fields/System.IterationPath",
+            "effort": "/fields/Microsoft.VSTS.Scheduling.Effort",
+        }
+
+        for key, path in mapping.items():
+            if key in data and data.get(key) is not None:
+                value = data[key]
+                if key in ("areaPath", "iterationPath") and isinstance(value, str):
+                    # Azure DevOps expects tree paths without a leading slash/backslash
+                    value = self._normalize_tree_path(value)
+                    # Skip container-only roots like "\Area" or "\Iteration"
+                    lower_val = value.lower()
+                    if lower_val in ("area", "iteration") or lower_val.endswith("\\area") or lower_val.endswith("\\iteration"):
+                        continue
+                    # Validate against known nodes to avoid invalid tree name errors
+                    if project:
+                        try:
+                            valid_paths = (
+                                self.list_area_paths(project)
+                                if key == "areaPath"
+                                else self.list_iteration_paths(project)
+                            )
+                            valid_paths = [self._normalize_tree_path(p) for p in valid_paths]
+                            if value not in valid_paths:
+                                continue
+                        except Exception:
+                            # if validation fails, proceed without dropping to avoid masking other issues
+                            pass
+                ops.append({"op": "add", "path": path, "value": value})
+
+        if "tags" in data and data.get("tags") is not None:
+            tags_value = data["tags"]
+            if isinstance(tags_value, list):
+                tags_value = "; ".join(tags_value)
+            ops.append({"op": "add", "path": "/fields/System.Tags", "value": tags_value})
+
+        if "parentId" in data and data.get("parentId") is not None:
+            parent_id = data.get("parentId")
+            parent_url = f"{self.base_url}/_apis/wit/workItems/{parent_id}"
+            ops.append(
+                {
+                    "op": "add",
+                    "path": "/relations/-",
+                    "value": {"rel": "System.LinkTypes.Hierarchy-Reverse", "url": parent_url, "attributes": {"name": "Parent"}},
+                }
+            )
+        return ops
+
+    def _map_work_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
+        fields = item.get("fields", {})
+        assigned = fields.get("System.AssignedTo")
+        area = fields.get("System.AreaPath")
+        iteration = fields.get("System.IterationPath")
+        if isinstance(area, str):
+            area = self._normalize_tree_path(area)
+        if isinstance(iteration, str):
+            iteration = self._normalize_tree_path(iteration)
+        return {
+            "id": item.get("id"),
+            "title": fields.get("System.Title"),
+            "description": fields.get("System.Description"),
+            "state": fields.get("System.State"),
+            "workItemType": fields.get("System.WorkItemType"),
+            "createdDate": fields.get("System.CreatedDate"),
+            "project": fields.get("System.TeamProject"),
+            "areaPath": area,
+            "iterationPath": iteration,
+            "assignedTo": assigned.get("displayName") if isinstance(assigned, dict) else assigned,
+            "priority": fields.get("Microsoft.VSTS.Common.Priority"),
+            "effort": fields.get("Microsoft.VSTS.Scheduling.Effort"),
+            "tags": self._split_tags(fields.get("System.Tags")),
+            "changedDate": fields.get("System.ChangedDate"),
+        }
+
+    def _request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
+        headers = kwargs.pop("headers", {}) or {}
+        response = self.session.request(method, url, headers=headers, auth=self.auth, timeout=20, **kwargs)
+
+        if response.status_code in (401, 403):
+            raise AzureDevOpsAuthError("Azure DevOps authentication failed", status_code=response.status_code)
+
+        if response.status_code >= 400:
+            message = response.json().get("message") if response.headers.get("Content-Type", "").startswith("application/json") else response.text
+            raise AzureDevOpsError(message or "Azure DevOps API error", status_code=response.status_code)
+
+        return response
+
+    def list_comments(self, project: str, work_item_id: int) -> List[Dict[str, Any]]:
+        url = f"{self.base_url}/{project}/_apis/wit/workItems/{work_item_id}/comments"
+        resp = self._request("GET", url, params={"api-version": "7.1-preview.3"}).json()
+        comments: List[Dict[str, Any]] = []
+        for c in resp.get("comments", []):
+            author = c.get("revisedBy") or c.get("createdBy") or {}
+            comments.append(
+                {
+                    "id": c.get("id"),
+                    "text": c.get("text"),
+                    "createdDate": c.get("createdDate"),
+                    "createdBy": author.get("displayName") if isinstance(author, dict) else author,
+                }
+            )
+        return comments
+
+    def add_comment(self, project: str, work_item_id: int, text: str) -> Dict[str, Any]:
+        url = f"{self.base_url}/{project}/_apis/wit/workItems/{work_item_id}/comments"
+        resp = self._request(
+            "POST",
+            url,
+            params={"api-version": "7.1-preview.3"},
+            headers={"Content-Type": "application/json"},
+            json={"text": text},
+        ).json()
+        author = resp.get("revisedBy") or resp.get("createdBy") or {}
+        return {
+            "id": resp.get("id"),
+            "text": resp.get("text"),
+            "createdDate": resp.get("createdDate"),
+            "createdBy": author.get("displayName") if isinstance(author, dict) else author,
+        }
+
+    @staticmethod
+    def _split_tags(raw: Optional[str]) -> List[str]:
+        if not raw:
+            return []
+        return [tag.strip() for tag in raw.split(";") if tag.strip()]
+
+    @staticmethod
+    def _chunk(items: List[str], size: int) -> List[List[str]]:
+        return [items[i : i + size] for i in range(0, len(items), size)]
+
+    @staticmethod
+    def _flatten_classification_nodes(node: Dict[str, Any], base_path: Optional[str] = None) -> List[str]:
+        paths: List[str] = []
+        current_path = node.get("path") or (f"{base_path}\\{node.get('name')}" if base_path else node.get("name"))
+        if current_path:
+            current_path = AzureDevOpsClient._normalize_tree_path(current_path)
+        if current_path:
+            paths.append(current_path)
+        for child in node.get("children", []) or []:
+            paths.extend(AzureDevOpsClient._flatten_classification_nodes(child, current_path))
+        return paths
+
+    @staticmethod
+    def _normalize_tree_path(path: str) -> str:
+        """Remove leading slashes and drop container segments 'Area'/'Iteration' from classification paths."""
+        cleaned = path.lstrip("\\/").strip()
+        parts = cleaned.split("\\")
+        if len(parts) > 1 and parts[1].lower() in ("area", "iteration"):
+            parts.pop(1)
+        return "\\".join(parts)
