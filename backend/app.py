@@ -1,4 +1,5 @@
 import os
+import logging
 from typing import Dict, Optional, List
 
 from dotenv import load_dotenv
@@ -18,6 +19,7 @@ app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = False
+app.logger.setLevel(logging.INFO)
 
 # Allow all origins for local dev; still requires cookies for auth
 CORS(app, supports_credentials=True, origins="*")
@@ -116,6 +118,7 @@ def list_all_todos() -> tuple:
 
     try:
         projects = client.list_projects()
+        app.logger.info("list_all_todos: %s projects", len(projects))
         aggregated = []
 
         # Query projects in parallel to maximize throughput
@@ -135,11 +138,13 @@ def list_all_todos() -> tuple:
                     page=1,
                     page_size=page_size,
                 )
+                app.logger.info("list_all_todos: %s items=%s", proj.get("name"), len(items))
                 for item in items:
                     item["projectId"] = proj_id
                     item["projectName"] = proj.get("name")
                 return items
-            except AzureDevOpsError:
+            except AzureDevOpsError as exc:
+                app.logger.warning("list_all_todos: %s AzureDevOpsError: %s", proj.get("name"), exc)
                 return []
             except Exception as exc:
                 app.logger.error("Failed to fetch project %s: %s", proj_id, exc)

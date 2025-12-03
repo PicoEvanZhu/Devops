@@ -60,7 +60,7 @@ function Shell() {
   return (
     <Layout className="app-layout">
       <Header className="app-header">
-        <div className="brand">Azure DevOps To-Do Manager</div>
+        <div className="brand">Pico Project IT Project Manage</div>
         <div className="header-actions">
           {session.authenticated && (
             <Button style={{ marginRight: 12 }} onClick={() => navigate("/projects")}>

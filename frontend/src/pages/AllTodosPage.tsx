@@ -17,7 +17,6 @@ export function AllTodosPage() {
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<{ state?: string; keyword?: string; assignedTo?: string; type?: string; page?: number; pageSize?: number }>({
-    assignedTo: "Evan",
     page: 1,
     pageSize: 20,
   });
@@ -177,6 +176,23 @@ export function AllTodosPage() {
     }
   };
 
+  const loadParents = async (projectId?: string, search?: string) => {
+    if (!projectId) {
+      setParentOptions([]);
+      return;
+    }
+    try {
+      const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200, type: "Epic,Feature" });
+      const options = (res.todos || []).map((t) => ({
+        label: `${t.id} - ${t.title || "Untitled"}`,
+        value: t.id,
+      }));
+      setParentOptions(options);
+    } catch {
+      setParentOptions([]);
+    }
+  };
+
   const handleAddComment = async (text: string) => {
     if (!editing?.id || !editing?.projectId) return;
     setCommentLoading(true);
@@ -196,6 +212,8 @@ export function AllTodosPage() {
     const cleanArea = typeof values.areaPath === "string" ? values.areaPath.replace(/^[/\\]+/, "") : values.areaPath;
     const cleanIteration =
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
+    const parentId =
+      values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : undefined;
     try {
       setLoading(true);
       if (editing) {
@@ -203,12 +221,13 @@ export function AllTodosPage() {
           title: values.title,
           assignedTo: values.assignedTo,
           priority: values.priority,
-          effort: values.effort,
+          remaining: values.remaining,
           state: values.state || "New",
           description: values.description,
           tags: values.tags,
           areaPath: cleanArea,
           iterationPath: cleanIteration,
+          parentId,
         });
         message.success("Updated");
       } else {
@@ -216,12 +235,14 @@ export function AllTodosPage() {
           title: values.title,
           assignedTo: values.assignedTo,
           priority: values.priority,
-          effort: values.effort,
+          remaining: values.remaining,
           state: values.state || "New",
           description: values.description,
           tags: values.tags,
           areaPath: cleanArea,
           iterationPath: cleanIteration,
+          workItemType: values.workItemType || "User Story",
+          parentId,
         });
         message.success("Created");
       }
@@ -337,22 +358,25 @@ export function AllTodosPage() {
         rowKey={(row) => `${row.projectId}-${row.id}`}
         onRow={(record) => ({
          onDoubleClick: () => {
-           setEditing(record);
-           form.setFieldsValue({
-             projectId: record.projectId,
-             title: record.title,
-             assignedTo: record.assignedTo,
-             priority: record.priority,
-              effort: record.effort,
-             state: record.state,
-             description: record.description,
-             tags: record.tags,
-             areaPath: record.areaPath,
-             iterationPath: record.iterationPath,
-           });
-           loadTags(record.projectId);
-           loadAreas(record.projectId);
-           loadIterations(record.projectId);
+            setEditing(record);
+            form.setFieldsValue({
+              projectId: record.projectId,
+              title: record.title,
+              assignedTo: record.assignedTo,
+              priority: record.priority,
+              remaining: record.remaining,
+              state: record.state,
+              description: record.description,
+              tags: record.tags,
+              workItemType: record.workItemType,
+              areaPath: record.areaPath,
+              iterationPath: record.iterationPath,
+              parentId: record.parentId,
+            });
+            loadTags(record.projectId);
+            loadAreas(record.projectId);
+            loadIterations(record.projectId);
+            loadParents(record.projectId);
             loadComments(record.projectId, record.id);
            setDrawerOpen(true);
          },
@@ -376,7 +400,7 @@ export function AllTodosPage() {
           },
           { title: "State", dataIndex: "state" },
           { title: "Priority", dataIndex: "priority", width: 90 },
-          { title: "Effort", dataIndex: "effort", width: 90 },
+          { title: "Remaining", dataIndex: "remaining", width: 110 },
           { title: "Assigned To", dataIndex: "assignedTo" },
           { title: "Area", dataIndex: "areaPath", ellipsis: true },
           { title: "Iteration", dataIndex: "iterationPath", ellipsis: true },
@@ -418,16 +442,18 @@ export function AllTodosPage() {
                       title: record.title,
                       assignedTo: record.assignedTo,
                       priority: record.priority,
-                      effort: record.effort,
+                      remaining: record.remaining,
                       state: record.state,
                       description: record.description,
                       tags: record.tags,
+                      workItemType: record.workItemType,
                       areaPath: record.areaPath,
                       iterationPath: record.iterationPath,
                     });
                     loadTags(record.projectId);
                     loadAreas(record.projectId);
                     loadIterations(record.projectId);
+                    loadParents(record.projectId);
                     loadComments(record.projectId, record.id);
                     setDrawerOpen(true);
                   }}
@@ -500,7 +526,7 @@ export function AllTodosPage() {
           </Space>
         }
       >
-        <Form layout="vertical" form={form} initialValues={{ state: "New", assignedTo: "Evan Zhu" }}>
+        <Form layout="vertical" form={form} initialValues={{ state: "New", assignedTo: "Evan Zhu", workItemType: "User Story" }}>
           <Form.Item label="Project" name="projectId" rules={[{ required: true }]}>
             <Select
               placeholder="Select project"
@@ -511,6 +537,7 @@ export function AllTodosPage() {
                 loadTags(val);
                 loadAreas(val);
                 loadIterations(val);
+                loadParents(val);
                 setComments([]);
               }}
             />
@@ -518,6 +545,38 @@ export function AllTodosPage() {
           <Form.Item label="Title" name="title" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item label="Work Item Type" name="workItemType">
+                <Select
+                  disabled={!!editing}
+                  options={["User Story", "Product Backlog Item", "Task", "Bug", "Feature"].map((v) => ({
+                    label: v,
+                    value: v,
+                  }))}
+                  placeholder="Select type"
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Parent" name="parentId">
+                <Select
+                  showSearch
+                  allowClear
+                  options={parentOptions}
+                  placeholder="Select parent"
+                  value={
+                    form.getFieldValue("parentId") && !parentOptions.find((p) => p.value === form.getFieldValue("parentId"))
+                      ? form.getFieldValue("parentId")
+                      : undefined
+                  }
+                  onFocus={() => loadParents(form.getFieldValue("projectId"))}
+                  onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
+                  filterOption={false}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
           <Row gutter={12}>
             <Col span={12}>
               <Form.Item label="Assigned To" name="assignedTo">
@@ -546,7 +605,7 @@ export function AllTodosPage() {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Effort" name="effort">
+              <Form.Item label="Remaining" name="remaining">
                 <InputNumber min={0} style={{ width: "100%" }} />
               </Form.Item>
             </Col>

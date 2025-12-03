@@ -47,7 +47,9 @@ type FormValues = {
   state?: string;
   areaPath?: string;
   iterationPath?: string;
-  effort?: number;
+  remaining?: number;
+  workItemType?: string;
+  parentId?: number;
 };
 
 export function TodosPage() {
@@ -61,6 +63,7 @@ export function TodosPage() {
     assignedTo: "Evan",
   });
   const [tagOptions, setTagOptions] = useState<{ label: string; value: string }[]>([]);
+  const [parentOptions, setParentOptions] = useState<{ label: string; value: number }[]>([]);
   const [form] = Form.useForm<FormValues>();
   const navigate = useNavigate();
 
@@ -93,6 +96,20 @@ export function TodosPage() {
     }
   };
 
+  const loadParents = async (search?: string) => {
+    if (!projectId) return;
+    try {
+      const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200, type: "Epic,Feature" });
+      const options = (res.todos || []).map((t) => ({
+        label: `${t.id} - ${t.title || "Untitled"}`,
+        value: t.id,
+      }));
+      setParentOptions(options);
+    } catch (err: any) {
+      message.error(err.message || "Failed to load parents");
+    }
+  };
+
   useEffect(() => {
     // reset to default assigned filter on project change
     const baseFilters = { ...filters, assignedTo: filters.assignedTo || "Evan" };
@@ -105,9 +122,10 @@ export function TodosPage() {
   const openCreateModal = () => {
     setEditing(null);
     form.resetFields();
-    form.setFieldsValue({ assignedTo: "Evan Zhu" });
+    form.setFieldsValue({ assignedTo: "Evan Zhu", workItemType: "User Story" });
     setDrawerOpen(true);
     fetchTags();
+    loadParents();
   };
 
   const openEditModal = (item: TodoItem) => {
@@ -119,9 +137,12 @@ export function TodosPage() {
       assignedTo: item.assignedTo,
       tags: item.tags,
       state: item.state,
+      workItemType: item.workItemType,
+      parentId: (item as any).parentId,
     });
     setDrawerOpen(true);
     fetchTags();
+    loadParents();
   };
 
   const handleSubmit = async () => {
@@ -130,14 +151,16 @@ export function TodosPage() {
     const cleanArea = typeof values.areaPath === "string" ? values.areaPath.replace(/^[/\\]+/, "") : values.areaPath;
     const cleanIteration =
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
-    const payload = { ...values, areaPath: cleanArea, iterationPath: cleanIteration };
+    const parentId =
+      values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : undefined;
+    const payload = { ...values, areaPath: cleanArea, iterationPath: cleanIteration, parentId };
     setLoading(true);
     try {
       if (editing) {
         await api.updateTodo(projectId, editing.id, payload);
         message.success("Updated to-do");
       } else {
-        await api.createTodo(projectId, payload);
+        await api.createTodo(projectId, { ...payload, workItemType: values.workItemType || "User Story" });
         message.success("Created to-do");
       }
       setDrawerOpen(false);
@@ -343,6 +366,54 @@ export function TodosPage() {
           <Form.Item label="Title" name="title" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item label="Work Item Type" name="workItemType" initialValue="User Story">
+                <Select
+                  disabled={!!editing}
+                  options={["User Story", "Product Backlog Item", "Task", "Bug", "Feature"].map((v) => ({
+                    label: v,
+                    value: v,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Parent" name="parentId">
+                <Select
+                  showSearch
+                  allowClear
+                  options={parentOptions}
+                  placeholder="Select parent"
+                  value={
+                    form.getFieldValue("parentId") && !parentOptions.find((p) => p.value === form.getFieldValue("parentId"))
+                      ? form.getFieldValue("parentId")
+                      : undefined
+                  }
+                  onFocus={() => loadParents()}
+                  onSearch={(val) => loadParents(val)}
+                  filterOption={false}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item label="Area" name="areaPath">
+                <Select
+                  showSearch
+                  placeholder="Select area"
+                  // In a project context we reuse tags fetch; here just provide raw select
+                  allowClear
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Iteration" name="iterationPath">
+                <Select showSearch placeholder="Select iteration" allowClear />
+              </Form.Item>
+            </Col>
+          </Row>
           <Form.Item label="Description" name="description">
             <RichTextEditor
               value={form.getFieldValue("description")}
@@ -350,12 +421,36 @@ export function TodosPage() {
               placeholder="Rich text: paste images, add links"
             />
           </Form.Item>
-          <Form.Item label="Priority" name="priority">
-            <InputNumber min={1} style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item label="Assigned To" name="assignedTo">
-            <Input placeholder="e.g. user@domain.com" />
-          </Form.Item>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item label="Assigned To" name="assignedTo">
+                <Input placeholder="e.g. user@domain.com" />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="State" name="state">
+                <Select
+                  allowClear
+                  options={["New", "Active", "Resolved", "Closed"].map((value) => ({
+                    label: value,
+                    value,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item label="Priority" name="priority">
+                <InputNumber min={1} style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Remaining" name="remaining">
+                <InputNumber min={0} style={{ width: "100%" }} />
+              </Form.Item>
+            </Col>
+          </Row>
           <Form.Item label="Tags" name="tags">
             <Select
               mode="tags"
@@ -364,15 +459,6 @@ export function TodosPage() {
               showSearch
               onFocus={() => fetchTags()}
               onSearch={(val) => fetchTags(val)}
-            />
-          </Form.Item>
-          <Form.Item label="State" name="state">
-            <Select
-              allowClear
-              options={["New", "Active", "Resolved", "Closed"].map((value) => ({
-                label: value,
-                value,
-              }))}
             />
           </Form.Item>
         </Form>

@@ -82,16 +82,13 @@ class AzureDevOpsClient:
         ]
 
         if work_item_type:
-            # allow comma-separated list
             types = [t.strip() for t in work_item_type.split(",") if t.strip()]
-        else:
-            types = ["Task", "Product Backlog Item", "User Story", "Bug"]
-        if types:
-            if len(types) == 1:
-                clauses.append(f"[System.WorkItemType] = '{types[0]}'")
-            else:
-                joined = ", ".join(f"'{t}'" for t in types)
-                clauses.append(f"[System.WorkItemType] IN ({joined})")
+            if types:
+                if len(types) == 1:
+                    clauses.append(f"[System.WorkItemType] = '{types[0]}'")
+                else:
+                    joined = ", ".join(f"'{t}'" for t in types)
+                    clauses.append(f"[System.WorkItemType] IN ({joined})")
 
         if state:
             if "," in state:
@@ -104,24 +101,44 @@ class AzureDevOpsClient:
         if assigned_to:
             clauses.append(f"[System.AssignedTo] CONTAINS '{assigned_to}'")
         if keyword:
-            clauses.append(f"[System.Title] CONTAINS '{keyword}'")
+            keyword_str = str(keyword).strip()
+            if keyword_str.isdigit():
+                clauses.append(f"([System.Id] = {keyword_str} OR [System.Title] CONTAINS '{keyword_str}')")
+            else:
+                clauses.append(f"[System.Title] CONTAINS '{keyword_str}'")
 
         wiql = (
             "SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], "
             "[System.Tags], [Microsoft.VSTS.Common.Priority], [System.ChangedDate], "
             "[System.Description], [System.WorkItemType], [System.CreatedDate], [System.TeamProject], "
-            "[System.AreaPath], [System.IterationPath], [Microsoft.VSTS.Scheduling.Effort] "
+            "[System.AreaPath], [System.IterationPath], [Microsoft.VSTS.Scheduling.RemainingWork] "
             "FROM WorkItems WHERE "
             + " AND ".join(clauses)
             + " ORDER BY [System.ChangedDate] DESC"
         )
 
-        wiql_resp = self._request(
-            "POST",
-            f"{self.base_url}/{project}/_apis/wit/wiql",
-            params={"api-version": self.API_VERSION},
-            json={"query": wiql},
-        ).json()
+        try:
+            wiql_resp = self._request(
+                "POST",
+                f"{self.base_url}/{project}/_apis/wit/wiql",
+                params={"api-version": self.API_VERSION},
+                json={"query": wiql},
+            ).json()
+        except AzureDevOpsError as exc:
+            # If WIQL fails (often due to invalid type), retry once without type filter
+            if exc.status_code == 400 and work_item_type:
+                logger.warning("WIQL failed for project %s with types '%s', retrying without type", project, work_item_type)
+                return self.query_todos(
+                    project,
+                    state=state,
+                    keyword=keyword,
+                    assigned_to=assigned_to,
+                    work_item_type=None,
+                    page=page,
+                    page_size=page_size,
+                )
+            logger.warning("WIQL query failed for project %s: %s", project, exc)
+            return []
 
         work_items = wiql_resp.get("workItems", [])
         skip = (page - 1) * page_size
@@ -138,15 +155,10 @@ class AzureDevOpsClient:
                 params={
                     "ids": ",".join(chunk_ids),
                     "api-version": self.API_VERSION,
-                    "fields": (
-                        "System.Id,System.Title,System.State,System.AssignedTo,System.Tags,"
-                        "Microsoft.VSTS.Common.Priority,System.ChangedDate,System.Description,"
-                        "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,System.TeamProject,Microsoft.VSTS.Scheduling.Effort"
-                    ),
+                    "$expand": "relations",
                 },
             ).json()
             for item in resp.get("value", []):
-                fields = item.get("fields", {})
                 results.append(self._map_work_item(item))
 
         # Ensure final sort by ChangedDate desc as a safeguard
@@ -231,7 +243,7 @@ class AzureDevOpsClient:
             "assignedTo": "/fields/System.AssignedTo",
             "areaPath": "/fields/System.AreaPath",
             "iterationPath": "/fields/System.IterationPath",
-            "effort": "/fields/Microsoft.VSTS.Scheduling.Effort",
+            "remaining": "/fields/Microsoft.VSTS.Scheduling.RemainingWork",
         }
 
         for key, path in mapping.items():
@@ -281,6 +293,16 @@ class AzureDevOpsClient:
     def _map_work_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
         fields = item.get("fields", {})
         assigned = fields.get("System.AssignedTo")
+        parent_id = None
+        for rel in item.get("relations", []) or []:
+          try:
+            if rel.get("rel") and "Hierarchy-Reverse" in rel.get("rel"):
+                url = rel.get("url") or ""
+                if "/workItems/" in url:
+                    parent_id = int(url.rsplit("/", 1)[-1])
+                    break
+          except Exception:
+            continue
         area = fields.get("System.AreaPath")
         iteration = fields.get("System.IterationPath")
         if isinstance(area, str):
@@ -299,9 +321,10 @@ class AzureDevOpsClient:
             "iterationPath": iteration,
             "assignedTo": assigned.get("displayName") if isinstance(assigned, dict) else assigned,
             "priority": fields.get("Microsoft.VSTS.Common.Priority"),
-            "effort": fields.get("Microsoft.VSTS.Scheduling.Effort"),
+            "remaining": fields.get("Microsoft.VSTS.Scheduling.RemainingWork"),
             "tags": self._split_tags(fields.get("System.Tags")),
             "changedDate": fields.get("System.ChangedDate"),
+            "parentId": parent_id,
         }
 
     def _request(self, method: str, url: str, **kwargs: Any) -> requests.Response:
@@ -309,11 +332,11 @@ class AzureDevOpsClient:
         response = self.session.request(method, url, headers=headers, auth=self.auth, timeout=20, **kwargs)
 
         if response.status_code in (401, 403):
-            raise AzureDevOpsAuthError("Azure DevOps authentication failed", status_code=response.status_code)
+            raise AzureDevOpsAuthError(f"Azure DevOps authentication failed ({response.status_code})", status_code=response.status_code)
 
         if response.status_code >= 400:
             message = response.json().get("message") if response.headers.get("Content-Type", "").startswith("application/json") else response.text
-            raise AzureDevOpsError(message or "Azure DevOps API error", status_code=response.status_code)
+            raise AzureDevOpsError(f"{message or 'Azure DevOps API error'} (status {response.status_code})", status_code=response.status_code)
 
         return response
 
