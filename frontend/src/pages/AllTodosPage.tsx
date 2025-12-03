@@ -565,11 +565,6 @@ export function AllTodosPage() {
                   allowClear
                   options={parentOptions}
                   placeholder="Select parent"
-                  value={
-                    form.getFieldValue("parentId") && !parentOptions.find((p) => p.value === form.getFieldValue("parentId"))
-                      ? form.getFieldValue("parentId")
-                      : undefined
-                  }
                   onFocus={() => loadParents(form.getFieldValue("projectId"))}
                   onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
                   filterOption={false}
