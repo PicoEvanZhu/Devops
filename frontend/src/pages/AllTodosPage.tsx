@@ -182,7 +182,8 @@ export function AllTodosPage() {
       return;
     }
     try {
-      const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200, type: "Epic,Feature" });
+      // Fetch candidate parents across all work item types
+      const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200 });
       const options = (res.todos || []).map((t) => ({
         label: `${t.id} - ${t.title || "Untitled"}`,
         value: t.id,
@@ -373,6 +374,15 @@ export function AllTodosPage() {
               iterationPath: record.iterationPath,
               parentId: record.parentId,
             });
+            // Ensure parent Select shows existing parentId even before options load
+            if (record.parentId) {
+              setParentOptions((prev) => {
+                const exists = prev.some((p) => p.value === record.parentId);
+                if (exists) return prev;
+                const label = `${record.parentId} - ${record.title || "Parent"}`;
+                return [{ label, value: record.parentId }, ...prev];
+              });
+            }
             loadTags(record.projectId);
             loadAreas(record.projectId);
             loadIterations(record.projectId);
@@ -560,15 +570,34 @@ export function AllTodosPage() {
             </Col>
             <Col span={12}>
               <Form.Item label="Parent" name="parentId">
-                <Select
-                  showSearch
-                  allowClear
-                  options={parentOptions}
-                  placeholder="Select parent"
-                  onFocus={() => loadParents(form.getFieldValue("projectId"))}
-                  onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
-                  filterOption={false}
-                />
+                <Input.Group compact>
+                  <Select
+                    showSearch
+                    allowClear
+                    options={parentOptions}
+                    placeholder="Select parent"
+                    onFocus={() => loadParents(form.getFieldValue("projectId"))}
+                    onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
+                    filterOption={false}
+                    style={{ width: "calc(100% - 40px)" }}
+                  />
+                  {form.getFieldValue("parentId") && organization && (
+                    <Button
+                      icon={<LinkOutlined />}
+                      onClick={() => {
+                        const parentId = form.getFieldValue("parentId");
+                        const projectId = form.getFieldValue("projectId");
+                        const projectName = editing?.projectName || projectId;
+                        const url = `https://dev.azure.com/${encodeURIComponent(organization)}/${encodeURIComponent(
+                          projectName
+                        )}/_workitems/edit/${parentId}`;
+                        window.open(url, "_blank", "noopener,noreferrer");
+                      }}
+                      style={{ width: 40 }}
+                      title="View parent in Azure DevOps"
+                    />
+                  )}
+                </Input.Group>
               </Form.Item>
             </Col>
           </Row>
