@@ -1,6 +1,6 @@
 import { EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Drawer, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, message, Checkbox } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Card, Col, Drawer, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message, Checkbox } from "antd";
+import { useEffect, useMemo, useState } from "react";
 
 import { api } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
@@ -163,6 +163,16 @@ export function AllTodosPage() {
     persistFilters(next);
     return next;
   };
+
+  const totalRemaining = useMemo(
+    () =>
+      todos.reduce((sum, item) => {
+        const v = item.remaining;
+        const n = typeof v === "number" ? v : v ? Number(v) : 0;
+        return sum + (isNaN(n) ? 0 : n);
+      }, 0),
+    [todos]
+  );
 
   const openChildTask = (record: any) => {
     setEditing(null);
@@ -385,7 +395,10 @@ export function AllTodosPage() {
     <Card
       title="All Projects - To-Dos"
       extra={
-        <Space>
+        <Space align="center" size={24}>
+          <Typography.Text type="secondary">
+            总工时: <span style={{ fontWeight: 600 }}>{totalRemaining}</span>
+          </Typography.Text>
           <Button icon={<ReloadOutlined />} onClick={() => loadTodos()}>
             Refresh
           </Button>
