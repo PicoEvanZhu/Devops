@@ -22,12 +22,26 @@ export function AllTodosPage() {
   const FILTER_STORAGE_KEY = "allTodosFilters";
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState<{ state?: string; keyword?: string; assignedTo?: string; type?: string; page?: number; pageSize?: number }>(() => {
+  const [filters, setFilters] = useState<{
+    state?: string;
+    keyword?: string;
+    assignedTo?: string;
+    type?: string;
+    project?: string; // projectId
+    page?: number;
+    pageSize?: number;
+  }>(() => {
     if (typeof window !== "undefined") {
       try {
         const raw = window.localStorage.getItem(FILTER_STORAGE_KEY);
         if (raw) {
-          const stored = JSON.parse(raw) as { state?: string; keyword?: string; assignedTo?: string; type?: string };
+          const stored = JSON.parse(raw) as {
+            state?: string;
+            keyword?: string;
+            assignedTo?: string;
+            type?: string;
+            project?: string;
+          };
           const type = stored.type || NO_EPIC_SENTINEL;
           return { ...stored, type, page: 1, pageSize: 20 };
         }
@@ -47,7 +61,7 @@ export function AllTodosPage() {
   const [iterationOptions, setIterationOptions] = useState<{ label: string; value: string }[]>([]);
   const [parentOptions, setParentOptions] = useState<{ label: string; value: number }[]>([]);
   const [form] = Form.useForm();
-  const [tabKey, setTabKey] = useState("all");
+  const [tabKey, setTabKey] = useState<"all" | "no-start" | "on-going" | "completed">("on-going");
   const [comments, setComments] = useState<any[]>([]);
   const [commentLoading, setCommentLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -78,13 +92,18 @@ export function AllTodosPage() {
     try {
       const res = await api.listAllTodos({ ...nextFilters, state: stateFilter });
       const raw = res.todos || [];
-      const filtered =
+      const filteredByState =
         allowedStates.length === 0
           ? raw
           : raw.filter((t) => {
               const s = (t.state || "").toString().trim().toLowerCase();
               return allowedStates.includes(s);
             });
+      const projectFilter = nextFilters.project;
+      const filtered =
+        projectFilter && projectFilter.length > 0
+          ? filteredByState.filter((t) => String(t.projectId || "").toString() === projectFilter)
+          : filteredByState;
       setTodos(filtered);
       const page = nextFilters.page || 1;
       const pageSize = nextFilters.pageSize || 20;
@@ -99,7 +118,9 @@ export function AllTodosPage() {
   };
 
   useEffect(() => {
-    loadTodos(filters);
+    // 初次加载时根据当前 tabKey 应用状态筛选；
+    // 这里默认 tabKey 为 "on-going"，所以默认查看 On-Going。
+    loadTodos(filters, tabKey);
     api
       .session()
       .then((res) => setOrganization(res.organization || ""))
@@ -173,6 +194,19 @@ export function AllTodosPage() {
       }, 0),
     [todos]
   );
+
+  const remainingByProject = useMemo(() => {
+    const map: Record<string, number> = {};
+    todos.forEach((item) => {
+      const key = (item.projectName || item.project || "Unknown").toString();
+      const v = item.remaining;
+      const n = typeof v === "number" ? v : v ? Number(v) : 0;
+      if (!isNaN(n)) {
+        map[key] = (map[key] || 0) + n;
+      }
+    });
+    return map;
+  }, [todos]);
 
   const openChildTask = (record: any) => {
     setEditing(null);
@@ -396,9 +430,16 @@ export function AllTodosPage() {
       title="All Projects - To-Dos"
       extra={
         <Space align="center" size={24}>
-          <Typography.Text type="secondary">
-            总工时: <span style={{ fontWeight: 600 }}>{totalRemaining}</span>
-          </Typography.Text>
+          <Space direction="vertical" size={0}>
+            <Typography.Text type="secondary">
+              总工时: <span style={{ fontWeight: 600 }}>{totalRemaining}</span>
+            </Typography.Text>
+            <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+              {Object.entries(remainingByProject)
+                .map(([name, hours]) => `${name}: ${hours}`)
+                .join(" | ")}
+            </Typography.Text>
+          </Space>
           <Button icon={<ReloadOutlined />} onClick={() => loadTodos()}>
             Refresh
           </Button>
@@ -514,6 +555,25 @@ export function AllTodosPage() {
               label: value,
               value,
             }))}
+          />
+        </Col>
+      </Row>
+      <Row gutter={12} style={{ marginBottom: 12 }}>
+        <Col xs={24} md={6}>
+          <Select
+            allowClear
+            showSearch
+            placeholder="Project"
+            style={{ width: "100%" }}
+            value={filters.project}
+            options={projects}
+            optionFilterProp="label"
+            onChange={(value) => {
+              const next = { ...filters, project: value || undefined, page: 1 };
+              setFilters(next);
+              persistFilters(next);
+              loadTodos(next);
+            }}
           />
         </Col>
       </Row>
