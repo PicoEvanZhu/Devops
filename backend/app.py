@@ -181,6 +181,16 @@ def create_todo(project_id: str) -> tuple:
         return jsonify({"error": str(exc)}), exc.status_code or 500
 
 
+@app.route("/api/projects/<project_id>/todos/<int:item_id>", methods=["GET"])
+def get_todo(project_id: str, item_id: int) -> tuple:
+    client = _require_client()
+    try:
+        todo = client.get_todo(project_id, item_id)
+        return jsonify({"todo": todo})
+    except AzureDevOpsError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code or 500
+
+
 @app.route("/api/projects/<project_id>/todos/<int:item_id>", methods=["PATCH"])
 def update_todo(project_id: str, item_id: int) -> tuple:
     client = _require_client()

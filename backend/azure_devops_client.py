@@ -76,6 +76,12 @@ class AzureDevOpsClient:
         page = max(page, 1)
         page_size = max(min(page_size, 200), 1)  # Azure DevOps limits to 200 per call
 
+        # Special sentinel from frontend: exclude Epics but don't restrict other types
+        exclude_epic = False
+        if work_item_type == "__NO_EPIC__":
+            exclude_epic = True
+            work_item_type = None
+
         clauses = [
             "[System.TeamProject] = @project",
             "[System.State] <> 'Removed'",
@@ -89,6 +95,8 @@ class AzureDevOpsClient:
                 else:
                     joined = ", ".join(f"'{t}'" for t in types)
                     clauses.append(f"[System.WorkItemType] IN ({joined})")
+        if exclude_epic:
+            clauses.append("[System.WorkItemType] <> 'Epic'")
 
         if state:
             if "," in state:
@@ -176,6 +184,22 @@ class AzureDevOpsClient:
             json=body,
         )
         return self._map_work_item(resp.json())
+
+    def get_todo(self, project: str, item_id: int) -> Dict[str, Any]:
+        resp = self._request(
+            "GET",
+            f"{self.base_url}/{project}/_apis/wit/workitems/{item_id}",
+            params={
+                "api-version": self.API_VERSION,
+                "$expand": "relations",
+                "fields": (
+                    "System.Id,System.Title,System.State,System.AssignedTo,System.Tags,"
+                    "Microsoft.VSTS.Common.Priority,System.ChangedDate,System.Description,"
+                    "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,System.TeamProject,Microsoft.VSTS.Scheduling.RemainingWork"
+                ),
+            },
+        ).json()
+        return self._map_work_item(resp)
 
     def update_todo(self, project: str, item_id: int, data: Dict[str, Any]) -> Dict[str, Any]:
         body = self._build_patch_body(data, project)

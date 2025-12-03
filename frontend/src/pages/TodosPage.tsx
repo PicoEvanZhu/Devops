@@ -100,14 +100,65 @@ export function TodosPage() {
     if (!projectId) return;
     try {
       const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200, type: "Epic,Feature" });
-      const options = (res.todos || []).map((t) => ({
-        label: `${t.id} - ${t.title || "Untitled"}`,
+      const typePrefix = (type?: string) => {
+        if (!type) return "";
+        return type === "Epic" ? "epic" : type === "Feature" ? "feature" : type.toLowerCase();
+      };
+      let options = (res.todos || []).map((t) => ({
+        label: `${typePrefix(t.workItemType)}-${t.id} - ${t.title || "Untitled"}`,
         value: t.id,
       }));
+      const currentParentId = form.getFieldValue("parentId");
+      if (currentParentId && !options.find((o) => o.value === currentParentId)) {
+        try {
+          const detail = await api.getTodo(projectId, currentParentId);
+          const parent = detail.todo || { id: currentParentId, title: "Parent" };
+          const label = `${typePrefix(parent.workItemType)}-${parent.id} - ${parent.title || "Parent"}`;
+          options = [{ label, value: currentParentId }, ...options];
+        } catch {
+          options = [{ label: String(currentParentId), value: currentParentId }, ...options];
+        }
+      }
       setParentOptions(options);
     } catch (err: any) {
       message.error(err.message || "Failed to load parents");
     }
+  };
+
+  const applyKeywordSearch = (raw: string | undefined): typeof filters => {
+    const text = raw?.trim();
+    if (!text) {
+      const next = { ...filters, keyword: undefined };
+      setFilters(next);
+      return next;
+    }
+
+    const typeMap: Record<string, string> = {
+      epic: "Epic",
+      feature: "Feature",
+      us: "User Story",
+      pbi: "Product Backlog Item",
+      task: "Task",
+      bug: "Bug",
+    };
+
+    const match = text.match(/^([a-zA-Z]+)-(.*)$/);
+    if (match) {
+      const prefix = match[1].toLowerCase();
+      const rest = match[2].trim();
+      const mappedType = typeMap[prefix];
+      const next = {
+        ...filters,
+        keyword: rest || undefined,
+        type: mappedType || filters.type,
+      };
+      setFilters(next);
+      return next;
+    }
+
+    const next = { ...filters, keyword: text };
+    setFilters(next);
+    return next;
   };
 
   useEffect(() => {
@@ -210,8 +261,7 @@ export function TodosPage() {
             prefix={<SearchOutlined />}
             allowClear
             onChange={(e) => {
-              const next = { ...filters, keyword: e.target.value || undefined };
-              setFilters(next);
+              const next = applyKeywordSearch(e.target.value || undefined);
               loadTodos(next);
             }}
           />
@@ -385,11 +435,6 @@ export function TodosPage() {
                   allowClear
                   options={parentOptions}
                   placeholder="Select parent"
-                  value={
-                    form.getFieldValue("parentId") && !parentOptions.find((p) => p.value === form.getFieldValue("parentId"))
-                      ? form.getFieldValue("parentId")
-                      : undefined
-                  }
                   onFocus={() => loadParents()}
                   onSearch={(val) => loadParents(val)}
                   filterOption={false}

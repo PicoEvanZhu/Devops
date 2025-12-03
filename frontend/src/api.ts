@@ -71,6 +71,8 @@ export const api = {
     const query = params.toString() ? `?${params.toString()}` : "";
     return apiFetch<{ todos: any[]; hasMore?: boolean }>(`/api/todos${query}`);
   },
+  getTodo: (projectId: string, id: number) =>
+    apiFetch<{ todo: TodoItem }>(`/api/projects/${projectId}/todos/${id}`),
   createTodo: (projectId: string, payload: any) =>
     apiFetch<{ todo: TodoItem }>(`/api/projects/${projectId}/todos`, {
       method: "POST",

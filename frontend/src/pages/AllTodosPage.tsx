@@ -6,19 +6,37 @@ import { api } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
 
 const typeColors: Record<string, string> = {
-  Task: "blue",
-  "Product Backlog Item": "green",
-  Bug: "red",
-  "User Story": "purple",
+  Epic: "magenta",
   Feature: "gold",
+  "User Story": "purple",
+  "Product Backlog Item": "green",
+  Task: "blue",
+  Bug: "red",
 };
 
+const ALL_WORK_ITEM_TYPES = ["Epic", "Feature", "User Story", "Product Backlog Item", "Task", "Bug"];
+const DEFAULT_WORK_ITEM_TYPES = ALL_WORK_ITEM_TYPES.filter((t) => t !== "Epic");
+const NO_EPIC_SENTINEL = "__NO_EPIC__";
+
 export function AllTodosPage() {
+  const FILTER_STORAGE_KEY = "allTodosFilters";
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState<{ state?: string; keyword?: string; assignedTo?: string; type?: string; page?: number; pageSize?: number }>({
-    page: 1,
-    pageSize: 20,
+  const [filters, setFilters] = useState<{ state?: string; keyword?: string; assignedTo?: string; type?: string; page?: number; pageSize?: number }>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const raw = window.localStorage.getItem(FILTER_STORAGE_KEY);
+        if (raw) {
+          const stored = JSON.parse(raw) as { state?: string; keyword?: string; assignedTo?: string; type?: string };
+          const type = stored.type || NO_EPIC_SENTINEL;
+          return { ...stored, type, page: 1, pageSize: 20 };
+        }
+      } catch {
+        // ignore parse errors
+      }
+    }
+    // 默认：过滤掉 Epic（使用后端约定的哨兵值）
+    return { page: 1, pageSize: 20, type: NO_EPIC_SENTINEL };
   });
   const [pagination, setPagination] = useState({ current: 1, pageSize: 20, total: 0 });
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -81,7 +99,7 @@ export function AllTodosPage() {
   };
 
   useEffect(() => {
-    loadTodos();
+    loadTodos(filters);
     api
       .session()
       .then((res) => setOrganization(res.organization || ""))
@@ -95,6 +113,81 @@ export function AllTodosPage() {
       .catch(() => void 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const persistFilters = (next: typeof filters) => {
+    if (typeof window === "undefined") return;
+    try {
+      const { page, pageSize, ...rest } = next;
+      window.localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(rest));
+    } catch {
+      // ignore quota errors
+    }
+  };
+
+  const applyKeywordSearch = (raw: string | undefined): typeof filters => {
+    const text = raw?.trim();
+    if (!text) {
+      const next = { ...filters, keyword: undefined, page: 1 };
+      setFilters(next);
+      persistFilters(next);
+      return next;
+    }
+
+    const typeMap: Record<string, string> = {
+      epic: "Epic",
+      feature: "Feature",
+      us: "User Story",
+      pbi: "Product Backlog Item",
+      task: "Task",
+      bug: "Bug",
+    };
+
+    const match = text.match(/^([a-zA-Z]+)-(.*)$/);
+    if (match) {
+      const prefix = match[1].toLowerCase();
+      const rest = match[2].trim();
+      const mappedType = typeMap[prefix];
+      const next = {
+        ...filters,
+        keyword: rest || undefined,
+        type: mappedType || filters.type,
+        page: 1,
+      };
+      setFilters(next);
+      persistFilters(next);
+      return next;
+    }
+
+    const next = { ...filters, keyword: text, page: 1 };
+    setFilters(next);
+    persistFilters(next);
+    return next;
+  };
+
+  const openChildTask = (record: any) => {
+    setEditing(null);
+    form.resetFields();
+    form.setFieldsValue({
+      projectId: record.projectId,
+      title: "",
+      assignedTo: record.assignedTo,
+      state: "New",
+      priority: 2,
+      remaining: undefined,
+      description: "",
+      tags: [],
+      workItemType: "Task",
+      parentId: record.id,
+      areaPath: record.areaPath,
+      iterationPath: record.iterationPath,
+    });
+    loadTags(record.projectId);
+    loadAreas(record.projectId);
+    loadIterations(record.projectId);
+    loadParents(record.projectId);
+    setComments([]);
+    setDrawerOpen(true);
+  };
 
   const handlePageChange = (page: number, pageSize?: number) => {
     const next = { ...filters, page, pageSize: pageSize || filters.pageSize };
@@ -176,6 +269,23 @@ export function AllTodosPage() {
     }
   };
 
+  const formatParentLabel = (item: any) => {
+    const type = (item.workItemType || "").toString();
+    const typePrefix =
+      type === "Epic"
+        ? "epic"
+        : type === "Feature"
+        ? "feature"
+        : type === "User Story"
+        ? "us"
+        : type === "Task"
+        ? "task"
+        : type === "Bug"
+        ? "bug"
+        : type.toLowerCase();
+    return typePrefix ? `${typePrefix}-${item.id} - ${item.title || "Untitled"}` : `${item.id} - ${item.title || "Untitled"}`;
+  };
+
   const loadParents = async (projectId?: string, search?: string) => {
     if (!projectId) {
       setParentOptions([]);
@@ -184,10 +294,20 @@ export function AllTodosPage() {
     try {
       // Fetch candidate parents across all work item types
       const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200 });
-      const options = (res.todos || []).map((t) => ({
-        label: `${t.id} - ${t.title || "Untitled"}`,
+      let options = (res.todos || []).map((t) => ({
+        label: formatParentLabel(t),
         value: t.id,
       }));
+      const currentParentId = form.getFieldValue("parentId");
+      if (currentParentId && !options.find((o) => o.value === currentParentId)) {
+        try {
+          const detail = await api.getTodo(projectId, currentParentId);
+          const parent = detail.todo || { id: currentParentId, title: "Parent" };
+          options = [{ label: formatParentLabel(parent), value: currentParentId }, ...options];
+        } catch {
+          options = [{ label: String(currentParentId), value: currentParentId }, ...options];
+        }
+      }
       setParentOptions(options);
     } catch {
       setParentOptions([]);
@@ -300,8 +420,7 @@ export function AllTodosPage() {
             placeholder="Search title"
             allowClear
             onChange={(e) => {
-              const next = { ...filters, keyword: e.target.value || undefined, page: 1 };
-              setFilters(next);
+              const next = applyKeywordSearch(e.target.value || undefined);
               loadTodos(next);
             }}
           />
@@ -310,10 +429,11 @@ export function AllTodosPage() {
           <Input
             placeholder="Assigned to"
             allowClear
-            defaultValue={filters.assignedTo}
+            value={filters.assignedTo}
             onChange={(e) => {
               const next = { ...filters, assignedTo: e.target.value || undefined, page: 1 };
               setFilters(next);
+              persistFilters(next);
               loadTodos(next);
             }}
           />
@@ -327,6 +447,7 @@ export function AllTodosPage() {
             onChange={(value) => {
               const next = { ...filters, state: value || undefined, page: 1 };
               setFilters(next);
+              persistFilters(next);
               loadTodos(next);
             }}
             options={["New", "Active", "Resolved", "Closed", "Removed"].map((value) => ({
@@ -337,15 +458,46 @@ export function AllTodosPage() {
         </Col>
         <Col xs={24} md={6}>
           <Select
+            mode="multiple"
             allowClear
             placeholder="Work item type"
             style={{ width: "100%" }}
-            onChange={(value) => {
-              const next = { ...filters, type: value || undefined, page: 1 };
+            value={
+              filters.type === NO_EPIC_SENTINEL
+                ? DEFAULT_WORK_ITEM_TYPES
+                : filters.type
+                ? filters.type.split(",")
+                : undefined
+            }
+            maxTagCount="responsive"
+            onChange={(values: string[]) => {
+              let typeValue: string | undefined;
+              if (!values || values.length === 0) {
+                // 清空时仍默认排除 Epic
+                typeValue = NO_EPIC_SENTINEL;
+              } else {
+                const allNoEpicSelected =
+                  values.length === DEFAULT_WORK_ITEM_TYPES.length &&
+                  DEFAULT_WORK_ITEM_TYPES.every((t) => values.includes(t));
+                const allTypesSelected =
+                  values.length === ALL_WORK_ITEM_TYPES.length &&
+                  ALL_WORK_ITEM_TYPES.every((t) => values.includes(t));
+
+                if (allNoEpicSelected && !values.includes("Epic")) {
+                  typeValue = NO_EPIC_SENTINEL;
+                } else if (allTypesSelected) {
+                  // 选中所有类型则不再做类型过滤
+                  typeValue = undefined;
+                } else {
+                  typeValue = values.join(",");
+                }
+              }
+              const next = { ...filters, type: typeValue, page: 1 };
               setFilters(next);
+              persistFilters(next);
               loadTodos(next);
             }}
-            options={["Task", "Product Backlog Item", "User Story", "Bug", "Feature"].map((value) => ({
+            options={ALL_WORK_ITEM_TYPES.map((value) => ({
               label: value,
               value,
             }))}
@@ -357,7 +509,7 @@ export function AllTodosPage() {
         dataSource={todos}
         loading={loading}
         rowKey={(row) => `${row.projectId}-${row.id}`}
-        onRow={(record) => ({
+       onRow={(record) => ({
          onDoubleClick: () => {
             setEditing(record);
             form.setFieldsValue({
@@ -374,15 +526,6 @@ export function AllTodosPage() {
               iterationPath: record.iterationPath,
               parentId: record.parentId,
             });
-            // Ensure parent Select shows existing parentId even before options load
-            if (record.parentId) {
-              setParentOptions((prev) => {
-                const exists = prev.some((p) => p.value === record.parentId);
-                if (exists) return prev;
-                const label = `${record.parentId} - ${record.title || "Parent"}`;
-                return [{ label, value: record.parentId }, ...prev];
-              });
-            }
             loadTags(record.projectId);
             loadAreas(record.projectId);
             loadIterations(record.projectId);
@@ -459,6 +602,7 @@ export function AllTodosPage() {
                       workItemType: record.workItemType,
                       areaPath: record.areaPath,
                       iterationPath: record.iterationPath,
+                      parentId: record.parentId,
                     });
                     loadTags(record.projectId);
                     loadAreas(record.projectId);
@@ -468,6 +612,14 @@ export function AllTodosPage() {
                     setDrawerOpen(true);
                   }}
                 />
+                {record.workItemType === "User Story" && (
+                  <Button
+                    size="small"
+                    icon={<PlusOutlined />}
+                    title="New Task under this User Story"
+                    onClick={() => openChildTask(record)}
+                  />
+                )}
               </Space>
             ),
           },
@@ -570,34 +722,15 @@ export function AllTodosPage() {
             </Col>
             <Col span={12}>
               <Form.Item label="Parent" name="parentId">
-                <Input.Group compact>
-                  <Select
-                    showSearch
-                    allowClear
-                    options={parentOptions}
-                    placeholder="Select parent"
-                    onFocus={() => loadParents(form.getFieldValue("projectId"))}
-                    onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
-                    filterOption={false}
-                    style={{ width: "calc(100% - 40px)" }}
-                  />
-                  {form.getFieldValue("parentId") && organization && (
-                    <Button
-                      icon={<LinkOutlined />}
-                      onClick={() => {
-                        const parentId = form.getFieldValue("parentId");
-                        const projectId = form.getFieldValue("projectId");
-                        const projectName = editing?.projectName || projectId;
-                        const url = `https://dev.azure.com/${encodeURIComponent(organization)}/${encodeURIComponent(
-                          projectName
-                        )}/_workitems/edit/${parentId}`;
-                        window.open(url, "_blank", "noopener,noreferrer");
-                      }}
-                      style={{ width: 40 }}
-                      title="View parent in Azure DevOps"
-                    />
-                  )}
-                </Input.Group>
+                <Select
+                  showSearch
+                  allowClear
+                  options={parentOptions}
+                  placeholder="Select parent"
+                  onFocus={() => loadParents(form.getFieldValue("projectId"))}
+                  onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
+                  filterOption={false}
+                />
               </Form.Item>
             </Col>
           </Row>
