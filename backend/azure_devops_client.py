@@ -268,6 +268,9 @@ class AzureDevOpsClient:
             "areaPath": "/fields/System.AreaPath",
             "iterationPath": "/fields/System.IterationPath",
             "remaining": "/fields/Microsoft.VSTS.Scheduling.RemainingWork",
+            # Common custom field in this process – if it does not exist
+            # in a given project, Azure DevOps will simply ignore it.
+            "requester": "/fields/Custom.Requester",
         }
 
         for key, path in mapping.items():

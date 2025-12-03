@@ -174,6 +174,12 @@ def create_todo(project_id: str) -> tuple:
     if not payload.get("title"):
         return jsonify({"error": "title is required"}), 400
 
+    # Some Azure DevOps processes require a custom "Requester" field.
+    # If the frontend did not provide it explicitly, default it to the assignee
+    # to satisfy the rule and avoid creation failures.
+    if not payload.get("requester") and payload.get("assignedTo"):
+        payload["requester"] = payload.get("assignedTo")
+
     try:
         todo = client.create_todo(project_id, payload)
         return jsonify({"todo": todo}), 201
