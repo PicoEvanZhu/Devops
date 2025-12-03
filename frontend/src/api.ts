@@ -94,4 +94,18 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ text }),
     }),
+  uploadAttachment: async (projectId: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(`${API_BASE}/api/projects/${projectId}/attachments`, {
+      method: "POST",
+      credentials: "include",
+      body: formData,
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error((data as any).error || response.statusText);
+    }
+    return data as { url: string };
+  },
 };

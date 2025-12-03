@@ -464,6 +464,15 @@ export function TodosPage() {
               value={form.getFieldValue("description")}
               onChange={(html) => form.setFieldsValue({ description: html })}
               placeholder="Rich text: paste images, add links"
+              onUploadImage={async (file) => {
+                const projectId = form.getFieldValue("projectId");
+                if (!projectId) {
+                  message.error("Please select project first");
+                  throw new Error("projectId required");
+                }
+                const res = await api.uploadAttachment(projectId, file);
+                return res.url;
+              }}
             />
           </Form.Item>
           <Row gutter={12}>

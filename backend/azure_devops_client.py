@@ -257,6 +257,20 @@ class AzureDevOpsClient:
         resp = self._request("GET", url, params={"api-version": self.API_VERSION, "$depth": 10}).json()
         return self._flatten_classification_nodes(resp)
 
+    def upload_attachment(self, project: str, content: bytes, filename: str, content_type: str) -> str:
+        """
+        Upload a simple attachment and return its URL that can be used inside
+        HTML fields like System.Description.
+        """
+        url = f"{self.base_url}/{project}/_apis/wit/attachments"
+        # Attachments endpoint is currently in preview API.
+        # It only accepts application/octet-stream as content type, so we
+        # force that regardless of the original file mime type.
+        params = {"api-version": "7.1-preview.3", "fileName": filename}
+        headers = {"Content-Type": "application/octet-stream"}
+        resp = self._request("POST", url, params=params, headers=headers, data=content).json()
+        return resp.get("url")
+
     def _build_patch_body(self, data: Dict[str, Any], project: Optional[str] = None) -> List[Dict[str, Any]]:
         ops: List[Dict[str, Any]] = []
         mapping = {

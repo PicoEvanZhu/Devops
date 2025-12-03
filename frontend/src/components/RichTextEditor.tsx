@@ -6,9 +6,10 @@ type Props = {
   value?: string;
   onChange?: (html: string) => void;
   placeholder?: string;
+  onUploadImage?: (file: File) => Promise<string>;
 };
 
-export function RichTextEditor({ value, onChange, placeholder }: Props) {
+export function RichTextEditor({ value, onChange, placeholder, onUploadImage }: Props) {
   const editorRef = useRef<HTMLDivElement>(null);
   const [linkInputVisible, setLinkInputVisible] = useState(false);
   const [linkValue, setLinkValue] = useState("");
@@ -38,12 +39,24 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
         event.preventDefault();
         const file = item.getAsFile();
         if (!file) continue;
-        const reader = new FileReader();
-        reader.onload = () => {
-          insertHtmlAtCursor(`<img class="rte-img" src="${reader.result}" alt="pasted image" />`);
-          emitChange();
-        };
-        reader.readAsDataURL(file);
+        if (onUploadImage) {
+          onUploadImage(file)
+            .then((url) => {
+              insertHtmlAtCursor(`<img class="rte-img" src="${url}" alt="pasted image" />`);
+              emitChange();
+            })
+            .catch((err) => {
+              console.error(err);
+              message.error(err?.message || "Image upload failed");
+            });
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            insertHtmlAtCursor(`<img class="rte-img" src="${reader.result}" alt="pasted image" />`);
+            emitChange();
+          };
+          reader.readAsDataURL(file);
+        }
       }
     }
   };
@@ -54,12 +67,24 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
     event.preventDefault();
     Array.from(files).forEach((file) => {
       if (!file.type.startsWith("image/")) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        insertHtmlAtCursor(`<img class="rte-img" src="${reader.result}" alt="dropped image" />`);
-        emitChange();
-      };
-      reader.readAsDataURL(file);
+      if (onUploadImage) {
+        onUploadImage(file)
+          .then((url) => {
+            insertHtmlAtCursor(`<img class="rte-img" src="${url}" alt="dropped image" />`);
+            emitChange();
+          })
+          .catch((err) => {
+            console.error(err);
+            message.error(err?.message || "Image upload failed");
+          });
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          insertHtmlAtCursor(`<img class="rte-img" src="${reader.result}" alt="dropped image" />`);
+          emitChange();
+        };
+        reader.readAsDataURL(file);
+      }
     });
   };
 

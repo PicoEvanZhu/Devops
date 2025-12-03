@@ -282,6 +282,29 @@ def add_comment(project_id: str, item_id: int) -> tuple:
         return jsonify({"error": str(exc)}), exc.status_code or 500
 
 
+@app.route("/api/projects/<project_id>/attachments", methods=["POST"])
+def upload_attachment(project_id: str) -> tuple:
+    """
+    Accepts an image file and uploads it to Azure DevOps as a work item
+    attachment, returning the attachment URL that can be used inside
+    the HTML description.
+    """
+    client = _require_client()
+    if "file" not in request.files:
+        return jsonify({"error": "file is required"}), 400
+    file = request.files["file"]
+    if not file.filename:
+        return jsonify({"error": "file name is required"}), 400
+
+    content = file.read()
+    content_type = file.mimetype or "application/octet-stream"
+    try:
+        url = client.upload_attachment(project_id, content, file.filename, content_type)
+        return jsonify({"url": url})
+    except AzureDevOpsError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code or 500
+
+
 @app.errorhandler(AzureDevOpsAuthError)
 def handle_auth_error(error: AzureDevOpsAuthError):
     return jsonify({"error": str(error)}), error.status_code or 401
