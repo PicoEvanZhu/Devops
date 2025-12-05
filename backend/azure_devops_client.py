@@ -119,7 +119,8 @@ class AzureDevOpsClient:
             "SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], "
             "[System.Tags], [Microsoft.VSTS.Common.Priority], [System.ChangedDate], "
             "[System.Description], [System.WorkItemType], [System.CreatedDate], [System.TeamProject], "
-            "[System.AreaPath], [System.IterationPath], [Microsoft.VSTS.Scheduling.RemainingWork] "
+            "[System.AreaPath], [System.IterationPath], "
+            "[Microsoft.VSTS.Scheduling.OriginalEstimate], [Microsoft.VSTS.Scheduling.RemainingWork] "
             "FROM WorkItems WHERE "
             + " AND ".join(clauses)
             + " ORDER BY [System.ChangedDate] DESC"
@@ -195,7 +196,8 @@ class AzureDevOpsClient:
                 "fields": (
                     "System.Id,System.Title,System.State,System.AssignedTo,System.Tags,"
                     "Microsoft.VSTS.Common.Priority,System.ChangedDate,System.Description,"
-                    "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,System.TeamProject,Microsoft.VSTS.Scheduling.RemainingWork"
+                    "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,"
+                    "System.TeamProject,Microsoft.VSTS.Scheduling.OriginalEstimate,Microsoft.VSTS.Scheduling.RemainingWork"
                 ),
             },
         ).json()
@@ -281,6 +283,7 @@ class AzureDevOpsClient:
             "assignedTo": "/fields/System.AssignedTo",
             "areaPath": "/fields/System.AreaPath",
             "iterationPath": "/fields/System.IterationPath",
+            "originalEstimate": "/fields/Microsoft.VSTS.Scheduling.OriginalEstimate",
             "remaining": "/fields/Microsoft.VSTS.Scheduling.RemainingWork",
             # Common custom field in this process – if it does not exist
             # in a given project, Azure DevOps will simply ignore it.
@@ -312,6 +315,34 @@ class AzureDevOpsClient:
                             # if validation fails, proceed without dropping to avoid masking other issues
                             pass
                 ops.append({"op": "add", "path": path, "value": value})
+
+        # Keep OriginalEstimate 和 RemainingWork 尽量同步：
+        original = data.get("originalEstimate")
+        remaining = data.get("remaining")
+        state = str(data.get("state") or "").lower()
+        is_closed = state in ("closed", "resolved")
+
+        # 1) 如果提供了 OriginalEstimate 但没有提供 Remaining，则在「非关闭」状态下
+        #    把 RemainingWork 设成相同的值；关闭状态不自动改写 Remaining。
+        if original is not None and ("remaining" not in data or remaining is None) and not is_closed:
+            ops.append(
+                {
+                    "op": "add",
+                    "path": "/fields/Microsoft.VSTS.Scheduling.RemainingWork",
+                    "value": original,
+                }
+            )
+
+        # 2) 反过来，如果只提供了 Remaining 而没有 OriginalEstimate，也把 OriginalEstimate 设成相同的值，
+        #    避免 DevOps 里看到 Remaining 有值而 OriginalEstimate 为空。
+        if remaining is not None and ("originalEstimate" not in data or original is None):
+            ops.append(
+                {
+                    "op": "add",
+                    "path": "/fields/Microsoft.VSTS.Scheduling.OriginalEstimate",
+                    "value": remaining,
+                }
+            )
 
         if "tags" in data and data.get("tags") is not None:
             tags_value = data["tags"]
@@ -362,6 +393,7 @@ class AzureDevOpsClient:
             "iterationPath": iteration,
             "assignedTo": assigned.get("displayName") if isinstance(assigned, dict) else assigned,
             "priority": fields.get("Microsoft.VSTS.Common.Priority"),
+            "originalEstimate": fields.get("Microsoft.VSTS.Scheduling.OriginalEstimate"),
             "remaining": fields.get("Microsoft.VSTS.Scheduling.RemainingWork"),
             "tags": self._split_tags(fields.get("System.Tags")),
             "changedDate": fields.get("System.ChangedDate"),

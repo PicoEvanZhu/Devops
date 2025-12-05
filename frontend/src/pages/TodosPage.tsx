@@ -190,6 +190,7 @@ export function TodosPage() {
       state: item.state,
       workItemType: item.workItemType,
       parentId: (item as any).parentId,
+      originalEstimate: (item as any).originalEstimate,
     });
     setDrawerOpen(true);
     fetchTags();
@@ -204,7 +205,23 @@ export function TodosPage() {
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
     const parentId =
       values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : undefined;
-    const payload = { ...values, areaPath: cleanArea, iterationPath: cleanIteration, parentId };
+    const originalEstimate = values.originalEstimate;
+    const stateLower = (values.state || "").toString().toLowerCase();
+    const isClosed = stateLower === "closed" || stateLower === "resolved";
+    let remainingValue = values.remaining;
+    if (remainingValue == null && originalEstimate != null && !isClosed) {
+      remainingValue = originalEstimate;
+    }
+    const payload: any = {
+      ...values,
+      areaPath: cleanArea,
+      iterationPath: cleanIteration,
+      parentId,
+      originalEstimate,
+    };
+    if (remainingValue != null && !isClosed) {
+      payload.remaining = remainingValue;
+    }
     setLoading(true);
     try {
       if (editing) {
@@ -500,7 +517,7 @@ export function TodosPage() {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Remaining" name="remaining">
+              <Form.Item label="Original Estimate" name="originalEstimate">
                 <InputNumber min={0} style={{ width: "100%" }} />
               </Form.Item>
             </Col>

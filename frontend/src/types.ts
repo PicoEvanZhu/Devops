@@ -13,12 +13,16 @@ export type TodoItem = {
   workItemType?: string;
   assignedTo?: string;
   priority?: number;
-  effort?: number;
+  originalEstimate?: number;
+  remaining?: number;
   tags?: string[];
   changedDate?: string;
   createdDate?: string;
   areaPath?: string;
   iterationPath?: string;
+  projectId?: string;
+  projectName?: string;
+  parentId?: number;
 };
 
 export type SessionInfo = {

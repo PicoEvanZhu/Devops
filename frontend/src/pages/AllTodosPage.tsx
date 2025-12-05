@@ -188,7 +188,7 @@ export function AllTodosPage() {
   const totalRemaining = useMemo(
     () =>
       todos.reduce((sum, item) => {
-        const v = item.remaining;
+        const v = (item as any).originalEstimate;
         const n = typeof v === "number" ? v : v ? Number(v) : 0;
         return sum + (isNaN(n) ? 0 : n);
       }, 0),
@@ -199,7 +199,7 @@ export function AllTodosPage() {
     const map: Record<string, number> = {};
     todos.forEach((item) => {
       const key = (item.projectName || item.project || "Unknown").toString();
-      const v = item.remaining;
+      const v = (item as any).originalEstimate;
       const n = typeof v === "number" ? v : v ? Number(v) : 0;
       if (!isNaN(n)) {
         map[key] = (map[key] || 0) + n;
@@ -217,7 +217,7 @@ export function AllTodosPage() {
       assignedTo: record.assignedTo,
       state: "New",
       priority: 2,
-      remaining: undefined,
+      originalEstimate: undefined,
       description: "",
       tags: [],
       workItemType: "Task",
@@ -379,28 +379,40 @@ export function AllTodosPage() {
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
     const parentId =
       values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : undefined;
+    const originalEstimate = values.originalEstimate;
+    const stateLower = (values.state || "").toString().toLowerCase();
+    const isClosed = stateLower === "closed" || stateLower === "resolved";
+    let remainingValue = values.remaining;
+    if (remainingValue == null && originalEstimate != null && !isClosed) {
+      // 非关闭状态下，如果没单独填 Remaining，则默认与 Original Estimate 相同
+      remainingValue = originalEstimate;
+    }
     try {
       setLoading(true);
       if (editing) {
-        await api.updateTodo(values.projectId, editing.id, {
+        const updatePayload: any = {
           title: values.title,
           assignedTo: values.assignedTo,
           priority: values.priority,
-          remaining: values.remaining,
+          originalEstimate,
           state: values.state || "New",
           description: values.description,
           tags: values.tags,
           areaPath: cleanArea,
           iterationPath: cleanIteration,
           parentId,
-        });
+        };
+        // 编辑已关闭的 item 时，不再自动改写 Remaining
+        if (!isClosed && remainingValue != null) {
+          updatePayload.remaining = remainingValue;
+        }
+        await api.updateTodo(values.projectId, editing.id, updatePayload);
         message.success("Updated");
       } else {
         await api.createTodo(values.projectId, {
           title: values.title,
           assignedTo: values.assignedTo,
           priority: values.priority,
-          remaining: values.remaining,
           state: values.state || "New",
           description: values.description,
           tags: values.tags,
@@ -408,6 +420,8 @@ export function AllTodosPage() {
           iterationPath: cleanIteration,
           workItemType: values.workItemType || "User Story",
           parentId,
+          originalEstimate,
+          remaining: remainingValue,
         });
         message.success("Created");
       }
@@ -590,7 +604,7 @@ export function AllTodosPage() {
               title: record.title,
               assignedTo: record.assignedTo,
               priority: record.priority,
-              remaining: record.remaining,
+              originalEstimate: (record as any).originalEstimate,
               state: record.state,
               description: record.description,
               tags: record.tags,
@@ -626,7 +640,15 @@ export function AllTodosPage() {
           },
           { title: "State", dataIndex: "state" },
           { title: "Priority", dataIndex: "priority", width: 90 },
-          { title: "Remaining", dataIndex: "remaining", width: 110 },
+          {
+            title: "Original Estimate",
+            dataIndex: "originalEstimate",
+            width: 130,
+            render: (_: any, record: any) => {
+              const v = record.originalEstimate;
+              return v != null && v !== undefined && v !== "" ? v : "-";
+            },
+          },
           { title: "Assigned To", dataIndex: "assignedTo" },
           { title: "Area", dataIndex: "areaPath", ellipsis: true },
           { title: "Iteration", dataIndex: "iterationPath", ellipsis: true },
@@ -668,7 +690,7 @@ export function AllTodosPage() {
                       title: record.title,
                       assignedTo: record.assignedTo,
                       priority: record.priority,
-                      remaining: record.remaining,
+                      originalEstimate: (record as any).originalEstimate,
                       state: record.state,
                       description: record.description,
                       tags: record.tags,
@@ -835,7 +857,7 @@ export function AllTodosPage() {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Remaining" name="remaining">
+              <Form.Item label="Original Estimate" name="originalEstimate">
                 <InputNumber min={0} style={{ width: "100%" }} />
               </Form.Item>
             </Col>
