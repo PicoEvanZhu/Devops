@@ -492,7 +492,8 @@ export function AllTodosPage() {
     const parentId =
       values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : null;
     const originalEstimate = values.originalEstimate;
-    const stateLower = (values.state || "").toString().toLowerCase();
+    const desiredState = values.state || "New";
+    const stateLower = desiredState.toString().toLowerCase();
     const isClosed = stateLower === "closed" || stateLower === "resolved";
     let remainingValue = values.remaining;
     if (remainingValue == null && originalEstimate != null && !isClosed) {
@@ -507,7 +508,7 @@ export function AllTodosPage() {
           assignedTo: values.assignedTo,
           priority: values.priority,
           originalEstimate,
-          state: values.state || "New",
+          state: desiredState,
           description: values.description,
           tags: values.tags,
           areaPath: cleanArea,
@@ -521,11 +522,12 @@ export function AllTodosPage() {
         await api.updateTodo(values.projectId, editing.id, updatePayload);
         message.success("Updated");
       } else {
-        await api.createTodo(values.projectId, {
+        const initialState = isClosed ? "Active" : desiredState;
+        const created = await api.createTodo(values.projectId, {
           title: values.title,
           assignedTo: values.assignedTo,
           priority: values.priority,
-          state: values.state || "New",
+          state: initialState,
           description: values.description,
           tags: values.tags,
           areaPath: cleanArea,
@@ -535,6 +537,9 @@ export function AllTodosPage() {
           originalEstimate,
           remaining: remainingValue,
         });
+        if (isClosed && created?.todo?.id) {
+          await api.updateTodo(values.projectId, created.todo.id, { state: desiredState });
+        }
         message.success("Created");
       }
       await loadTodos(

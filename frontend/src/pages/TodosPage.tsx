@@ -259,7 +259,8 @@ export function TodosPage() {
     const parentId =
       values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : null;
     const originalEstimate = values.originalEstimate;
-    const stateLower = (values.state || "").toString().toLowerCase();
+    const desiredState = values.state || "New";
+    const stateLower = desiredState.toString().toLowerCase();
     const isClosed = stateLower === "closed" || stateLower === "resolved";
     let remainingValue = values.remaining;
     if (remainingValue == null && originalEstimate != null && !isClosed) {
@@ -278,10 +279,19 @@ export function TodosPage() {
     setLoading(true);
     try {
       if (editing) {
+        payload.state = desiredState;
         await api.updateTodo(projectId, editing.id, payload);
         message.success("Updated to-do");
       } else {
-        await api.createTodo(projectId, { ...payload, workItemType: values.workItemType || "User Story" });
+        const initialState = isClosed ? "Active" : desiredState;
+        const created = await api.createTodo(projectId, {
+          ...payload,
+          state: initialState,
+          workItemType: values.workItemType || "User Story",
+        });
+        if (isClosed && created?.todo?.id) {
+          await api.updateTodo(projectId, created.todo.id, { state: desiredState });
+        }
         message.success("Created to-do");
       }
       setDrawerOpen(false);
