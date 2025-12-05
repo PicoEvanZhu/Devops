@@ -38,6 +38,33 @@ const typeColors: Record<string, string> = {
   Feature: "gold",
 };
 
+const priorityTokenStyle = (value: number | string | undefined) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) {
+    return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
+  }
+  if (n === 1) {
+    return { background: "#ffe7e6", color: "#cf1322", border: "none" };
+  }
+  if (n === 2) {
+    return { background: "#fff7e6", color: "#d48806", border: "none" };
+  }
+  if (n === 3) {
+    return { background: "#e6f4ff", color: "#1677ff", border: "none" };
+  }
+  // 4 or others: neutral
+  return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
+};
+
+const priorityColor = (value: number | string | undefined) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return undefined;
+  if (n === 1) return "red";
+  if (n === 2) return "gold";
+  if (n === 3) return "blue";
+  return undefined; // 4 or others: no color
+};
+
 type FormValues = {
   title?: string;
   description?: string;
@@ -99,13 +126,37 @@ export function TodosPage() {
   const loadParents = async (search?: string) => {
     if (!projectId) return;
     try {
-      const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200, type: "Epic,Feature" });
+      let items: TodoItem[] = [];
+      const trimmed = (search || "").trim();
+
+      // 如果只输入了数字，优先按 ID 精确查一次，避免大量模糊搜索带来的延迟
+      if (trimmed && /^\d+$/.test(trimmed)) {
+        try {
+          const detail = await api.getTodo(projectId, Number(trimmed));
+          if (detail?.todo) {
+            items = [detail.todo as any];
+          }
+        } catch {
+          // ignore and fall back to listTodos
+        }
+      }
+
+      if (items.length === 0) {
+        const res = await api.listTodos(projectId, {
+          keyword: search,
+          page: 1,
+          pageSize: 50,
+          type: "Epic,Feature",
+        });
+        items = (res.todos || []) as any;
+      }
+
       const typePrefix = (type?: string) => {
         if (!type) return "";
         return type === "Epic" ? "epic" : type === "Feature" ? "feature" : type.toLowerCase();
       };
-      let options = (res.todos || []).map((t) => ({
-        label: `${typePrefix(t.workItemType)}-${t.id} - ${t.title || "Untitled"}`,
+      let options = items.map((t) => ({
+        label: `${typePrefix(t.workItemType)}-${t.id} - ${t.assignedTo || "-"} - ${t.title || "Untitled"}`,
         value: t.id,
       }));
       const currentParentId = form.getFieldValue("parentId");
@@ -113,7 +164,9 @@ export function TodosPage() {
         try {
           const detail = await api.getTodo(projectId, currentParentId);
           const parent = detail.todo || { id: currentParentId, title: "Parent" };
-          const label = `${typePrefix(parent.workItemType)}-${parent.id} - ${parent.title || "Parent"}`;
+          const label = `${typePrefix(parent.workItemType)}-${parent.id} - ${parent.assignedTo || "-"} - ${
+            parent.title || "Parent"
+          }`;
           options = [{ label, value: currentParentId }, ...options];
         } catch {
           options = [{ label: String(currentParentId), value: currentParentId }, ...options];
@@ -204,7 +257,7 @@ export function TodosPage() {
     const cleanIteration =
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
     const parentId =
-      values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : undefined;
+      values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : null;
     const originalEstimate = values.originalEstimate;
     const stateLower = (values.state || "").toString().toLowerCase();
     const isClosed = stateLower === "closed" || stateLower === "resolved";
@@ -361,6 +414,28 @@ export function TodosPage() {
         title: "Priority",
         dataIndex: "priority",
         width: 90,
+        render: (value: number) => {
+          const display = value != null && value !== undefined ? value : "-";
+          const style = priorityTokenStyle(value);
+          return (
+            <span
+              style={{
+                display: "inline-block",
+                minWidth: 28,
+                padding: "0 8px",
+                textAlign: "center",
+                borderRadius: 12,
+                fontSize: 12,
+                lineHeight: "20px",
+                backgroundColor: style.background,
+                color: style.color,
+                border: style.border,
+              }}
+            >
+              {display}
+            </span>
+          );
+        },
       },
       {
         title: "Assigned To",
@@ -431,7 +506,7 @@ export function TodosPage() {
       >
         <Form layout="vertical" form={form}>
           <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-            <Input />
+            <Input style={{ borderRadius: 0 }} />
           </Form.Item>
           <Row gutter={12}>
             <Col span={12}>
@@ -495,7 +570,7 @@ export function TodosPage() {
           <Row gutter={12}>
             <Col span={12}>
               <Form.Item label="Assigned To" name="assignedTo">
-                <Input placeholder="e.g. user@domain.com" />
+                <Input placeholder="e.g. user@domain.com" style={{ borderRadius: 0 }} />
               </Form.Item>
             </Col>
             <Col span={12}>

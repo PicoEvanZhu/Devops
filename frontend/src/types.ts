@@ -18,6 +18,7 @@ export type TodoItem = {
   tags?: string[];
   changedDate?: string;
   createdDate?: string;
+   closedDate?: string;
   areaPath?: string;
   iterationPath?: string;
   projectId?: string;

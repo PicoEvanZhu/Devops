@@ -1,5 +1,6 @@
 import { EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Drawer, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message, Checkbox } from "antd";
+import { Button, Card, Col, DatePicker, Drawer, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message, Checkbox } from "antd";
+import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 
 import { api } from "../api";
@@ -18,6 +19,60 @@ const ALL_WORK_ITEM_TYPES = ["Epic", "Feature", "User Story", "Product Backlog I
 const DEFAULT_WORK_ITEM_TYPES = ALL_WORK_ITEM_TYPES.filter((t) => t !== "Epic");
 const NO_EPIC_SENTINEL = "__NO_EPIC__";
 
+const priorityTokenStyle = (value: number | string | undefined) => {
+  const n = Number(value);
+  if (!Number.isFinite(n)) {
+    return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
+  }
+  if (n === 1) {
+    return { background: "#ffe7e6", color: "#cf1322", border: "none" };
+  }
+  if (n === 2) {
+    return { background: "#fff7e6", color: "#d48806", border: "none" };
+  }
+  if (n === 3) {
+    return { background: "#e6f4ff", color: "#1677ff", border: "none" };
+  }
+  // 4 or others: neutral
+  return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
+};
+
+function getCurrentWeekRange(): { from: string; to: string } {
+  const now = new Date();
+  const day = now.getDay(); // Sunday = 0, Monday = 1, ...
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+  const monday = new Date(now);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(now.getDate() + diffToMonday);
+
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  sunday.setHours(23, 59, 59, 999);
+
+  return { from: monday.toISOString(), to: sunday.toISOString() };
+}
+
+function getRelativeWeekRange(offset: number): { from: string; to: string } {
+  const base = new Date();
+  base.setDate(base.getDate() + offset * 7);
+  const day = base.getDay();
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+  const monday = new Date(base);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(base.getDate() + diffToMonday);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  sunday.setHours(23, 59, 59, 999);
+  return { from: monday.toISOString(), to: sunday.toISOString() };
+}
+
+function getCurrentMonthRange(): { from: string; to: string } {
+  const now = new Date();
+  const first = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+  const last = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+  return { from: first.toISOString(), to: last.toISOString() };
+}
+
 export function AllTodosPage() {
   const FILTER_STORAGE_KEY = "allTodosFilters";
   const [todos, setTodos] = useState<any[]>([]);
@@ -30,6 +85,8 @@ export function AllTodosPage() {
     project?: string; // projectId
     page?: number;
     pageSize?: number;
+    closedFrom?: string;
+    closedTo?: string;
   }>(() => {
     if (typeof window !== "undefined") {
       try {
@@ -41,6 +98,8 @@ export function AllTodosPage() {
             assignedTo?: string;
             type?: string;
             project?: string;
+            closedFrom?: string;
+            closedTo?: string;
           };
           const type = stored.type || NO_EPIC_SENTINEL;
           return { ...stored, type, page: 1, pageSize: 20 };
@@ -100,10 +159,25 @@ export function AllTodosPage() {
               return allowedStates.includes(s);
             });
       const projectFilter = nextFilters.project;
-      const filtered =
+      let filtered =
         projectFilter && projectFilter.length > 0
           ? filteredByState.filter((t) => String(t.projectId || "").toString() === projectFilter)
           : filteredByState;
+
+      if (currentTab === "completed" && (nextFilters.closedFrom || nextFilters.closedTo)) {
+        const from = nextFilters.closedFrom ? new Date(nextFilters.closedFrom) : undefined;
+        const to = nextFilters.closedTo ? new Date(nextFilters.closedTo) : undefined;
+        filtered = filtered.filter((t) => {
+          const raw = (t as any).closedDate || (t as any).createdDate;
+          if (!raw) return false;
+          const d = new Date(raw);
+          if (Number.isNaN(d.getTime())) return false;
+          if (from && d < from) return false;
+          if (to && d > to) return false;
+          return true;
+        });
+      }
+
       setTodos(filtered);
       const page = nextFilters.page || 1;
       const pageSize = nextFilters.pageSize || 20;
@@ -185,6 +259,18 @@ export function AllTodosPage() {
     return next;
   };
 
+  const applyClosedRangeShortcut = (range: { from: string; to: string }) => {
+    const next = {
+      ...filters,
+      closedFrom: range.from,
+      closedTo: range.to,
+      page: 1,
+    };
+    setFilters(next);
+    persistFilters(next);
+    loadTodos(next, "completed");
+  };
+
   const totalRemaining = useMemo(
     () =>
       todos.reduce((sum, item) => {
@@ -248,6 +334,11 @@ export function AllTodosPage() {
       next.state = undefined;
     } else if (key === "completed") {
       next.state = undefined;
+      if (!next.closedFrom && !next.closedTo) {
+        const range = getCurrentWeekRange();
+        next.closedFrom = range.from;
+        next.closedTo = range.to;
+      }
     } else {
       next.state = filters.state;
     }
@@ -327,7 +418,9 @@ export function AllTodosPage() {
         : type === "Bug"
         ? "bug"
         : type.toLowerCase();
-    return typePrefix ? `${typePrefix}-${item.id} - ${item.title || "Untitled"}` : `${item.id} - ${item.title || "Untitled"}`;
+    const base = typePrefix ? `${typePrefix}-${item.id}` : `${item.id}`;
+    const owner = item.assignedTo || "-";
+    return `${base} - ${owner} - ${item.title || "Untitled"}`;
   };
 
   const loadParents = async (projectId?: string, search?: string) => {
@@ -336,9 +429,28 @@ export function AllTodosPage() {
       return;
     }
     try {
-      // Fetch candidate parents across all work item types
-      const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 200 });
-      let options = (res.todos || []).map((t) => ({
+      let items: any[] = [];
+      const trimmed = (search || "").trim();
+
+      // 纯数字优先按 ID 精确查一条
+      if (trimmed && /^\d+$/.test(trimmed)) {
+        try {
+          const detail = await api.getTodo(projectId, Number(trimmed));
+          if (detail?.todo) {
+            items = [detail.todo];
+          }
+        } catch {
+          // ignore, fall back to listTodos
+        }
+      }
+
+      if (items.length === 0) {
+        // Fetch candidate parents across all work item types
+        const res = await api.listTodos(projectId, { keyword: search, page: 1, pageSize: 50 });
+        items = res.todos || [];
+      }
+
+      let options = items.map((t) => ({
         label: formatParentLabel(t),
         value: t.id,
       }));
@@ -378,7 +490,7 @@ export function AllTodosPage() {
     const cleanIteration =
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
     const parentId =
-      values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : undefined;
+      values.parentId !== undefined && values.parentId !== null ? Number(values.parentId) : null;
     const originalEstimate = values.originalEstimate;
     const stateLower = (values.state || "").toString().toLowerCase();
     const isClosed = stateLower === "closed" || stateLower === "resolved";
@@ -590,6 +702,49 @@ export function AllTodosPage() {
             }}
           />
         </Col>
+        {tabKey === "completed" && (
+          <>
+            <Col xs={24} md={8}>
+              <DatePicker.RangePicker
+                style={{ width: "100%" }}
+                placeholder={["Closed from", "Closed to"]}
+                value={
+                  filters.closedFrom && filters.closedTo
+                    ? [dayjs(filters.closedFrom), dayjs(filters.closedTo)]
+                    : undefined
+                }
+                onChange={(values) => {
+                  const [start, end] = values || [];
+                  const next = {
+                    ...filters,
+                    closedFrom: start ? start.startOf("day").toDate().toISOString() : undefined,
+                    closedTo: end ? end.endOf("day").toDate().toISOString() : undefined,
+                    page: 1,
+                  };
+                  setFilters(next);
+                  persistFilters(next);
+                  loadTodos(next, "completed");
+                }}
+              />
+            </Col>
+            <Col xs={24} md={10}>
+              <Space wrap>
+                <Button size="small" onClick={() => applyClosedRangeShortcut(getRelativeWeekRange(0))}>
+                  本周
+                </Button>
+                <Button size="small" onClick={() => applyClosedRangeShortcut(getRelativeWeekRange(-1))}>
+                  上周
+                </Button>
+                <Button size="small" onClick={() => applyClosedRangeShortcut(getRelativeWeekRange(-2))}>
+                  上上周
+                </Button>
+                <Button size="small" onClick={() => applyClosedRangeShortcut(getCurrentMonthRange())}>
+                  本月
+                </Button>
+              </Space>
+            </Col>
+          </>
+        )}
       </Row>
 
       <Table<any>
@@ -639,7 +794,33 @@ export function AllTodosPage() {
             render: (value?: string) => (value ? <Tag color={typeColors[value] || "default"}>{value}</Tag> : "-"),
           },
           { title: "State", dataIndex: "state" },
-          { title: "Priority", dataIndex: "priority", width: 90 },
+          {
+            title: "Priority",
+            dataIndex: "priority",
+            width: 90,
+            render: (value: number) => {
+              const display = value != null && value !== undefined ? value : "-";
+              const style = priorityTokenStyle(value);
+              return (
+                <span
+                  style={{
+                    display: "inline-block",
+                    minWidth: 28,
+                    padding: "0 8px",
+                    textAlign: "center",
+                    borderRadius: 12,
+                    fontSize: 12,
+                    lineHeight: "20px",
+                    backgroundColor: style.background,
+                    color: style.color,
+                    border: style.border,
+                  }}
+                >
+                  {display}
+                </span>
+              );
+            },
+          },
           {
             title: "Original Estimate",
             dataIndex: "originalEstimate",
@@ -672,9 +853,12 @@ export function AllTodosPage() {
             render: (value: string) => (value ? new Date(value).toLocaleString() : "-"),
           },
           {
-            title: "Created",
-            dataIndex: "createdDate",
-            render: (value: string) => (value ? new Date(value).toLocaleString() : "-"),
+            title: tabKey === "completed" ? "Closed" : "Created",
+            dataIndex: tabKey === "completed" ? "closedDate" : "createdDate",
+            render: (_: any, record: any) => {
+              const raw = tabKey === "completed" ? record.closedDate || record.createdDate : record.createdDate;
+              return raw ? new Date(raw).toLocaleString() : "-";
+            },
           },
           {
             title: "Actions",
@@ -800,7 +984,7 @@ export function AllTodosPage() {
             />
           </Form.Item>
           <Form.Item label="Title" name="title" rules={[{ required: true }]}>
-            <Input />
+            <Input style={{ borderRadius: 0 }} />
           </Form.Item>
           <Row gutter={12}>
             <Col span={12}>
@@ -832,7 +1016,7 @@ export function AllTodosPage() {
           <Row gutter={12}>
             <Col span={12}>
               <Form.Item label="Assigned To" name="assignedTo">
-                <Input />
+                <Input style={{ borderRadius: 0 }} />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -938,6 +1122,7 @@ export function AllTodosPage() {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   onPressEnter={(e) => e.preventDefault()}
+                  style={{ borderRadius: 0 }}
                 />
                 <Button
                   style={{ marginTop: 8 }}

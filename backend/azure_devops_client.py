@@ -204,7 +204,33 @@ class AzureDevOpsClient:
         return self._map_work_item(resp)
 
     def update_todo(self, project: str, item_id: int, data: Dict[str, Any]) -> Dict[str, Any]:
-        body = self._build_patch_body(data, project)
+        existing_parent_index: Optional[int] = None
+        existing_parent_id: Optional[int] = None
+
+        if "parentId" in data:
+            try:
+                current = self._request(
+                    "GET",
+                    f"{self.base_url}/{project}/_apis/wit/workitems/{item_id}",
+                    params={"api-version": self.API_VERSION, "$expand": "relations"},
+                ).json()
+                for idx, rel in enumerate(current.get("relations", []) or []):
+                    rel_name = rel.get("rel")
+                    if rel_name and "Hierarchy-Reverse" in rel_name:
+                        url = rel.get("url") or ""
+                        if "/workItems/" in url:
+                            try:
+                                existing_parent_id = int(url.rsplit("/", 1)[-1])
+                            except (TypeError, ValueError):
+                                existing_parent_id = None
+                        existing_parent_index = idx
+                        break
+            except Exception:
+                # 读取现有父级失败时，保留其它字段更新逻辑
+                existing_parent_index = None
+                existing_parent_id = None
+
+        body = self._build_patch_body(data, project, existing_parent_index, existing_parent_id)
         resp = self._request(
             "PATCH",
             f"{self.base_url}/{project}/_apis/wit/workitems/{item_id}",
@@ -273,7 +299,13 @@ class AzureDevOpsClient:
         resp = self._request("POST", url, params=params, headers=headers, data=content).json()
         return resp.get("url")
 
-    def _build_patch_body(self, data: Dict[str, Any], project: Optional[str] = None) -> List[Dict[str, Any]]:
+    def _build_patch_body(
+        self,
+        data: Dict[str, Any],
+        project: Optional[str] = None,
+        existing_parent_index: Optional[int] = None,
+        existing_parent_id: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
         ops: List[Dict[str, Any]] = []
         mapping = {
             "title": "/fields/System.Title",
@@ -350,16 +382,37 @@ class AzureDevOpsClient:
                 tags_value = "; ".join(tags_value)
             ops.append({"op": "add", "path": "/fields/System.Tags", "value": tags_value})
 
-        if "parentId" in data and data.get("parentId") is not None:
-            parent_id = data.get("parentId")
-            parent_url = f"{self.base_url}/_apis/wit/workItems/{parent_id}"
-            ops.append(
-                {
-                    "op": "add",
-                    "path": "/relations/-",
-                    "value": {"rel": "System.LinkTypes.Hierarchy-Reverse", "url": parent_url, "attributes": {"name": "Parent"}},
-                }
-            )
+        if "parentId" in data:
+            new_parent_raw = data.get("parentId")
+            try:
+                new_parent_id = int(new_parent_raw) if new_parent_raw is not None else None
+            except (TypeError, ValueError):
+                new_parent_id = None
+
+            # null / None 表示清空父级
+            if new_parent_id is None:
+                if existing_parent_index is not None:
+                    ops.append({"op": "remove", "path": f"/relations/{existing_parent_index}"})
+            else:
+                # 如果父级未变化，则不做任何操作
+                if existing_parent_id == new_parent_id:
+                    pass
+                else:
+                    # 如已有父级，先移除旧的再添加新的
+                    if existing_parent_index is not None:
+                        ops.append({"op": "remove", "path": f"/relations/{existing_parent_index}"})
+                    parent_url = f"{self.base_url}/_apis/wit/workItems/{new_parent_id}"
+                    ops.append(
+                        {
+                            "op": "add",
+                            "path": "/relations/-",
+                            "value": {
+                                "rel": "System.LinkTypes.Hierarchy-Reverse",
+                                "url": parent_url,
+                                "attributes": {"name": "Parent"},
+                            },
+                        }
+                    )
         return ops
 
     def _map_work_item(self, item: Dict[str, Any]) -> Dict[str, Any]:
@@ -388,6 +441,7 @@ class AzureDevOpsClient:
             "state": fields.get("System.State"),
             "workItemType": fields.get("System.WorkItemType"),
             "createdDate": fields.get("System.CreatedDate"),
+            "closedDate": fields.get("Microsoft.VSTS.Common.ClosedDate"),
             "project": fields.get("System.TeamProject"),
             "areaPath": area,
             "iterationPath": iteration,
