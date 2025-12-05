@@ -21,8 +21,11 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = False
 app.logger.setLevel(logging.INFO)
 
-# Allow all origins for local dev; still requires cookies for auth
-CORS(app, supports_credentials=True, origins="*")
+# Configure CORS: allow specifying a production origin via CORS_ORIGIN env var.
+# For local development the default remains '*' but when credentials are used
+# browsers reject '*' with credentials, so set CORS_ORIGIN in production.
+cors_origin = os.environ.get("CORS_ORIGIN", "*")
+CORS(app, supports_credentials=True, origins=cors_origin)
 
 
 def _require_client() -> AzureDevOpsClient:
