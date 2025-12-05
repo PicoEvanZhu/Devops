@@ -23,7 +23,7 @@
 
 ```bash
 ./deploy/deploy.sh
-# 或： ./deploy/deploy.sh user@host /remote/path
+# 或： ./deploy/deploy.sh deployer@host /remote/path
 ```
 
 指定仅同步子目录：
@@ -40,7 +40,7 @@
 快速校验（部署后）：
 
 ```bash
-ssh user@host
+ssh deployer@host
 cd /opt/azure-devops-todo
 docker compose --env-file .env.production ps
 docker compose --env-file .env.production logs --tail 200

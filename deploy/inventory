@@ -2,4 +2,4 @@
 # 举例：
 # 可选目标主机列表（示例），每行格式：user@host:/remote/path
 # 第一条非注释行会被用作默认目标（当未传入命令行位置参数时）
-root@158.178.215.93:/opt/azure-devops-todo
+deployer@158.178.215.93:/opt/azure-devops-todo

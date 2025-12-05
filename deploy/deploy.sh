@@ -144,17 +144,26 @@ fi
 
 rsync -az -e "$RSYNC_SSH_CMD" --delete "${RSYNC_EXCLUDES[@]}" "$SOURCE_DIR"/ "${TARGET}:${REMOTE_DIR}/"
 
-# Detect whether remote needs sudo to run docker compose
+# Detect whether remote needs sudo to run docker/docker compose.
+# Use 'docker info' which requires access to the docker socket. Checking
+# 'docker compose version' may succeed without socket access and give a
+# false negative for permission issues.
 REMOTE_DOCKER_CMD="docker compose"
 if [ "$DETECT_SUDO" -eq 1 ]; then
-  echo "Detecting whether remote requires sudo to run 'docker compose'..."
-  if ssh $SSH_COMMON_OPTS "$TARGET" "${REMOTE_DOCKER_CMD} version >/dev/null 2>&1"; then
-    echo "Remote can run 'docker compose' without sudo."
-  elif ssh $SSH_COMMON_OPTS "$TARGET" "sudo ${REMOTE_DOCKER_CMD} version >/dev/null 2>&1"; then
-    echo "Remote requires sudo for 'docker compose' - will use sudo on remote commands."
+  echo "Detecting whether remote requires sudo to access the Docker daemon..."
+  # If docker info works without sudo, no need for sudo.
+  if ssh $SSH_COMMON_OPTS "$TARGET" "docker info >/dev/null 2>&1"; then
+    echo "Remote's Docker daemon is accessible to the user (no sudo required)."
+  elif ssh $SSH_COMMON_OPTS "$TARGET" "sudo docker info >/dev/null 2>&1"; then
+    echo "Remote requires sudo to access Docker - will prefix remote compose commands with sudo."
     REMOTE_DOCKER_CMD="sudo ${REMOTE_DOCKER_CMD}"
   else
-    echo "Warning: remote does not seem to have 'docker compose' available (even with sudo). Continuing, but compose may fail on remote."
+    # Fall back: check if 'docker compose' binary exists at all (best-effort).
+    if ssh $SSH_COMMON_OPTS "$TARGET" "command -v docker >/dev/null 2>&1 || command -v docker-compose >/dev/null 2>&1"; then
+      echo "Warning: Docker appears installed but access may be restricted. Will attempt compose; it may fail due to permissions."
+    else
+      echo "Warning: remote does not seem to have Docker or docker-compose available (even with sudo). Continuing, but compose will likely fail on remote."
+    fi
   fi
 else
   echo "Skipping remote sudo detection (per --no-detect-sudo). Using 'docker compose' on remote."
