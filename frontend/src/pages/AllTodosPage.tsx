@@ -40,6 +40,13 @@ const rewriteAzureAttachmentHtml = (html: string): string => {
   }
 };
 
+const hasRichContent = (html: string): boolean => {
+  if (!html) return false;
+  const text = html.replace(/<[^>]*>/g, "").trim();
+  if (text.length > 0) return true;
+  return /<(img|video|audio|iframe|embed|object)\b/i.test(html);
+};
+
 const priorityTokenStyle = (value: number | string | undefined) => {
   const n = Number(value);
   if (!Number.isFinite(n)) {
@@ -1130,26 +1137,31 @@ export function AllTodosPage() {
           {editing && (
             <>
               <Form.Item label="Add Comment">
-                <Input.TextArea
-                  rows={3}
-                  placeholder="Add a comment"
+                <RichTextEditor
                   value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  onPressEnter={(e) => e.preventDefault()}
-                  style={{ borderRadius: 0 }}
+                  onChange={(html) => setNewComment(html)}
+                  placeholder="Add a comment"
+                  onUploadImage={async (file) => {
+                    if (!editing?.projectId) {
+                      message.error("Please select project first");
+                      throw new Error("projectId required");
+                    }
+                    const res = await api.uploadAttachment(editing.projectId, file);
+                    return res.url;
+                  }}
                 />
                 <Button
                   style={{ marginTop: 8 }}
                   onClick={async () => {
-                    const text = newComment.trim();
-                    if (!text) {
+                    const content = (newComment || "").trim();
+                    if (!hasRichContent(content)) {
                       message.warning("Comment is empty");
                       return;
                     }
-                    await handleAddComment(text);
+                    await handleAddComment(content);
                     setNewComment("");
                   }}
-                  disabled={!newComment.trim()}
+                  disabled={!hasRichContent(newComment)}
                 >
                   Post
                 </Button>
