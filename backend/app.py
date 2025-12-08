@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Optional, List
 
 from dotenv import load_dotenv
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, make_response
 from flask_cors import CORS
 
 from azure_devops_client import AzureDevOpsAuthError, AzureDevOpsClient, AzureDevOpsError
@@ -306,6 +306,26 @@ def upload_attachment(project_id: str) -> tuple:
         return jsonify({"url": url})
     except AzureDevOpsError as exc:
         return jsonify({"error": str(exc)}), exc.status_code or 500
+
+
+@app.route("/api/attachments/proxy", methods=["GET"])
+def proxy_attachment() -> tuple:
+    """
+    Proxy Azure DevOps attachment URLs so the browser can display images
+    without exposing PAT credentials directly to the client.
+    """
+    client = _require_client()
+    attachment_url = request.args.get("url")
+    if not attachment_url:
+        return jsonify({"error": "url is required"}), 400
+    try:
+        content, content_type = client.download_attachment(attachment_url)
+    except AzureDevOpsError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code or 500
+    resp = make_response(content)
+    resp.headers["Content-Type"] = content_type or "application/octet-stream"
+    resp.headers["Cache-Control"] = "private, max-age=60"
+    return resp
 
 
 @app.errorhandler(AzureDevOpsAuthError)

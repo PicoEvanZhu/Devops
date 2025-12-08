@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
@@ -298,6 +298,16 @@ class AzureDevOpsClient:
         headers = {"Content-Type": "application/octet-stream"}
         resp = self._request("POST", url, params=params, headers=headers, data=content).json()
         return resp.get("url")
+
+    def download_attachment(self, attachment_url: str) -> Tuple[bytes, str]:
+        """
+        Download an attachment from Azure DevOps and return (bytes, content_type).
+        """
+        if not attachment_url:
+            raise AzureDevOpsError("attachment url is required", status_code=400)
+        resp = self._request("GET", attachment_url, headers={"Accept": "*/*"})
+        content_type = resp.headers.get("Content-Type", "application/octet-stream")
+        return resp.content, content_type
 
     def _build_patch_body(
         self,

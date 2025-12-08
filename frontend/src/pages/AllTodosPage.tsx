@@ -3,7 +3,7 @@ import { Button, Card, Col, DatePicker, Drawer, Form, Input, InputNumber, Row, S
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 
-import { api } from "../api";
+import { api, API_BASE } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
 
 const typeColors: Record<string, string> = {
@@ -18,6 +18,27 @@ const typeColors: Record<string, string> = {
 const ALL_WORK_ITEM_TYPES = ["Epic", "Feature", "User Story", "Product Backlog Item", "Task", "Bug"];
 const DEFAULT_WORK_ITEM_TYPES = ALL_WORK_ITEM_TYPES.filter((t) => t !== "Epic");
 const NO_EPIC_SENTINEL = "__NO_EPIC__";
+
+const rewriteAzureAttachmentHtml = (html: string): string => {
+  if (!html) return "";
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const images = doc.querySelectorAll("img");
+    images.forEach((img) => {
+      const src = img.getAttribute("src");
+      if (!src) return;
+      const normalized = src.trim();
+      if (/dev\.azure\.com/i.test(normalized) && normalized.includes("_apis/wit/attachments")) {
+        const proxied = `${API_BASE}/api/attachments/proxy?url=${encodeURIComponent(normalized)}`;
+        img.setAttribute("src", proxied);
+      }
+    });
+    return doc.body.innerHTML;
+  } catch {
+    return html;
+  }
+};
 
 const priorityTokenStyle = (value: number | string | undefined) => {
   const n = Number(value);
@@ -354,7 +375,12 @@ export function AllTodosPage() {
     setCommentLoading(true);
     try {
       const res = await api.listComments(projectId, workItemId);
-      setComments(res.comments || []);
+      const sorted = [...(res.comments || [])].sort((a, b) => {
+        const aTime = new Date(a.createdDate || 0).getTime();
+        const bTime = new Date(b.createdDate || 0).getTime();
+        return bTime - aTime;
+      });
+      setComments(sorted);
     } catch (err: any) {
       message.error(err.message || "Failed to load comments");
     } finally {
@@ -1103,28 +1129,6 @@ export function AllTodosPage() {
           </Form.Item>
           {editing && (
             <>
-              <Form.Item label="Discussion">
-                <div style={{ maxHeight: 200, overflow: "auto", border: "1px solid #eee", padding: 8, borderRadius: 6 }}>
-                  {commentLoading ? (
-                    "Loading..."
-                  ) : comments.length ? (
-                    comments.map((c) => (
-                      <div key={c.id} style={{ marginBottom: 8 }}>
-                        <div style={{ fontWeight: 600 }}>{c.createdBy || "Unknown"}</div>
-                        <div style={{ fontSize: 12, color: "#666" }}>{c.createdDate ? new Date(c.createdDate).toLocaleString() : ""}</div>
-                        <div
-                          style={{ marginTop: 4 }}
-                          className="rich-text-preview"
-                          // Azure DevOps comment text already comes as HTML; render it to keep formatting/images.
-                          dangerouslySetInnerHTML={{ __html: c.text || "" }}
-                        />
-                      </div>
-                    ))
-                  ) : (
-                    <div style={{ color: "#999" }}>No comments</div>
-                  )}
-                </div>
-              </Form.Item>
               <Form.Item label="Add Comment">
                 <Input.TextArea
                   rows={3}
@@ -1149,6 +1153,29 @@ export function AllTodosPage() {
                 >
                   Post
                 </Button>
+              </Form.Item>
+              <Form.Item label="Discussion">
+                <div className="discussion-timeline">
+                  {commentLoading ? (
+                    "Loading..."
+                  ) : comments.length ? (
+                    comments.map((c, index) => (
+                      <div key={c.id || index} className="discussion-item">
+                        <div className="discussion-meta">
+                          <div className="discussion-author">{c.createdBy || "Unknown"}</div>
+                          <div className="discussion-date">{c.createdDate ? new Date(c.createdDate).toLocaleString() : ""}</div>
+                        </div>
+                        <div
+                          className="rich-text-preview"
+                          // Azure DevOps comment text already comes as HTML; render it to keep formatting/images.
+                          dangerouslySetInnerHTML={{ __html: rewriteAzureAttachmentHtml(c.text || "") }}
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div style={{ color: "#999" }}>No comments</div>
+                  )}
+                </div>
               </Form.Item>
             </>
           )}
