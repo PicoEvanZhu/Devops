@@ -1112,7 +1112,12 @@ export function AllTodosPage() {
                       <div key={c.id} style={{ marginBottom: 8 }}>
                         <div style={{ fontWeight: 600 }}>{c.createdBy || "Unknown"}</div>
                         <div style={{ fontSize: 12, color: "#666" }}>{c.createdDate ? new Date(c.createdDate).toLocaleString() : ""}</div>
-                        <div style={{ marginTop: 4 }}>{c.text}</div>
+                        <div
+                          style={{ marginTop: 4 }}
+                          className="rich-text-preview"
+                          // Azure DevOps comment text already comes as HTML; render it to keep formatting/images.
+                          dangerouslySetInnerHTML={{ __html: c.text || "" }}
+                        />
                       </div>
                     ))
                   ) : (

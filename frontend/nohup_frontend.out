@@ -1,0 +1,12 @@
+
+> frontend@0.0.0 dev
+> vite
+
+
+  VITE v7.2.6  ready in 188 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+2:09:40 PM [vite] (client) hmr update /src/pages/TodosPage.tsx
+2:09:46 PM [vite] (client) hmr update /src/pages/TodosPage.tsx
+2:13:14 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
