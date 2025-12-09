@@ -639,12 +639,16 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
 
   const buildMentionHtml = (identity: Identity) => {
     const safeName = identity.displayName || identity.uniqueName || identity.mail || "User";
-    const parts = ["version:2.0", `name:${safeName}`];
+    const parts = ["version:2.0", "type:person", `name:${safeName}`];
     if (identity.id) parts.push(`id:${identity.id}`);
-    if (identity.descriptor) parts.push(`descriptor:${identity.descriptor}`);
+    if (identity.descriptor) {
+      parts.push(`descriptor:${identity.descriptor}`);
+      parts.push(`ref:${identity.descriptor}`);
+    }
     if (identity.uniqueName) parts.push(`uniqueName:${identity.uniqueName}`);
+    if (identity.mail) parts.push(`mailto:${identity.mail}`);
     const attr = parts.join(",");
-    return `<a class="mention-link" data-vss-mention="${attr}" data-vss-mention-name="${safeName}">@${safeName}</a>&nbsp;`;
+    return `<a class="mention" data-vss-mention="${attr}" data-vss-mention-name="${safeName}" href="#">@${safeName}</a>&nbsp;`;
   };
 
   const insertMention = (identity: Identity) => {
