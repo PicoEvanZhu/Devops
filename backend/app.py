@@ -90,6 +90,8 @@ def list_todos(project_id: str) -> tuple:
     keyword = request.args.get("keyword")
     assigned_to = request.args.get("assignedTo")
     work_item_type = request.args.get("type")
+    planned_from = request.args.get("plannedFrom")
+    planned_to = request.args.get("plannedTo")
     page = int(request.args.get("page", 1))
     page_size = int(request.args.get("pageSize", 20))
 
@@ -100,6 +102,8 @@ def list_todos(project_id: str) -> tuple:
             keyword=keyword,
             assigned_to=assigned_to,
             work_item_type=work_item_type,
+            planned_from=planned_from,
+            planned_to=planned_to,
             page=page,
             page_size=page_size,
         )
@@ -116,6 +120,8 @@ def list_all_todos() -> tuple:
     keyword = request.args.get("keyword")
     assigned_to = request.args.get("assignedTo")
     work_item_type = request.args.get("type")
+    planned_from = request.args.get("plannedFrom")
+    planned_to = request.args.get("plannedTo")
     page = int(request.args.get("page", 1))
     page_size = int(request.args.get("pageSize", 20))
 
@@ -138,6 +144,8 @@ def list_all_todos() -> tuple:
                     keyword=keyword,
                     assigned_to=assigned_to,
                     work_item_type=work_item_type,
+                    planned_from=planned_from,
+                    planned_to=planned_to,
                     page=1,
                     page_size=page_size,
                 )
@@ -326,6 +334,19 @@ def proxy_attachment() -> tuple:
     resp.headers["Content-Type"] = content_type or "application/octet-stream"
     resp.headers["Cache-Control"] = "private, max-age=60"
     return resp
+
+
+@app.route("/api/identities", methods=["GET"])
+def search_identities() -> tuple:
+    client = _require_client()
+    query = (request.args.get("q") or "").strip()
+    if not query:
+        return jsonify({"identities": []})
+    try:
+        identities = client.search_identities(query)
+        return jsonify({"identities": identities})
+    except AzureDevOpsError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code or 500
 
 
 @app.errorhandler(AzureDevOpsAuthError)

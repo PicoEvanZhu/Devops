@@ -19,6 +19,8 @@ export type TodoItem = {
   changedDate?: string;
   createdDate?: string;
    closedDate?: string;
+  plannedStartDate?: string;
+  targetDate?: string;
   areaPath?: string;
   iterationPath?: string;
   projectId?: string;
@@ -29,4 +31,12 @@ export type TodoItem = {
 export type SessionInfo = {
   authenticated: boolean;
   organization?: string;
+};
+
+export type Identity = {
+  id?: string;
+  descriptor?: string;
+  displayName?: string;
+  uniqueName?: string;
+  mail?: string;
 };

@@ -1,28 +1,86 @@
 import { BoldOutlined, ItalicOutlined, LinkOutlined, UnderlineOutlined, PictureOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Tooltip, message } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+
+import { API_BASE } from "../api";
 
 type Props = {
   value?: string;
   onChange?: (html: string) => void;
   placeholder?: string;
   onUploadImage?: (file: File) => Promise<string>;
+  rewriteAzureAttachments?: boolean;
 };
 
-export function RichTextEditor({ value, onChange, placeholder, onUploadImage }: Props) {
+export type RichTextEditorHandle = {
+  insertHtml: (html: string) => void;
+  focus: () => void;
+};
+
+const isAzureAttachmentUrl = (url: string) => /dev\.azure\.com/i.test(url) && url.includes("_apis/wit/attachments");
+
+const toProxyUrl = (url: string) => `${API_BASE}/api/attachments/proxy?url=${encodeURIComponent(url)}`;
+
+const convertHtmlForEditor = (html: string) => {
+  if (!html) return "";
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    doc.querySelectorAll("img").forEach((img) => {
+      const src = img.getAttribute("src");
+      if (!src) return;
+      if (isAzureAttachmentUrl(src)) {
+        if (!img.getAttribute("data-original-src")) {
+          img.setAttribute("data-original-src", src);
+        }
+        img.setAttribute("src", toProxyUrl(src));
+      }
+    });
+    return doc.body.innerHTML;
+  } catch {
+    return html;
+  }
+};
+
+const convertHtmlForSave = (html: string) => {
+  if (!html) return "";
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    doc.querySelectorAll("img").forEach((img) => {
+      const original = img.getAttribute("data-original-src");
+      if (original) {
+        img.setAttribute("src", original);
+        img.removeAttribute("data-original-src");
+      }
+    });
+    return doc.body.innerHTML;
+  } catch {
+    return html;
+  }
+};
+
+export const RichTextEditor = forwardRef<RichTextEditorHandle, Props>(function RichTextEditor(
+  { value, onChange, placeholder, onUploadImage, rewriteAzureAttachments = true },
+  ref
+) {
   const editorRef = useRef<HTMLDivElement>(null);
   const [linkInputVisible, setLinkInputVisible] = useState(false);
   const [linkValue, setLinkValue] = useState("");
 
   useEffect(() => {
-    if (editorRef.current && value !== undefined && editorRef.current.innerHTML !== value) {
-      editorRef.current.innerHTML = value;
+    if (editorRef.current && value !== undefined) {
+      const nextHtml = rewriteAzureAttachments ? convertHtmlForEditor(value) : value;
+      if (editorRef.current.innerHTML !== nextHtml) {
+        editorRef.current.innerHTML = nextHtml;
+      }
     }
-  }, [value]);
+  }, [value, rewriteAzureAttachments]);
 
   const emitChange = () => {
     if (!onChange || !editorRef.current) return;
-    onChange(editorRef.current.innerHTML);
+    const html = rewriteAzureAttachments ? convertHtmlForSave(editorRef.current.innerHTML) : editorRef.current.innerHTML;
+    onChange(html);
   };
 
   const applyCommand = (command: string, arg?: string) => {
@@ -89,12 +147,13 @@ export function RichTextEditor({ value, onChange, placeholder, onUploadImage }: 
   };
 
   const insertHtmlAtCursor = (html: string) => {
+    const content = rewriteAzureAttachments ? convertHtmlForEditor(html) : html;
     const sel = window.getSelection();
     if (!sel || !sel.rangeCount) return;
     sel.getRangeAt(0).deleteContents();
     const range = sel.getRangeAt(0);
     const temp = document.createElement("div");
-    temp.innerHTML = html;
+    temp.innerHTML = content;
     const frag = document.createDocumentFragment();
     let node: ChildNode | null = null;
     let lastNode: ChildNode | null = null;
@@ -109,6 +168,16 @@ export function RichTextEditor({ value, onChange, placeholder, onUploadImage }: 
       sel.addRange(range);
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    insertHtml: (html: string) => {
+      insertHtmlAtCursor(html);
+      emitChange();
+    },
+    focus: () => {
+      editorRef.current?.focus();
+    },
+  }));
 
   const handleLinkAdd = () => {
     if (!linkValue) return;
@@ -159,4 +228,4 @@ export function RichTextEditor({ value, onChange, placeholder, onUploadImage }: 
       />
     </div>
   );
-}
+});

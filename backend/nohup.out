@@ -2,5 +2,1425 @@
   warnings.warn(
  * Serving Flask app 'app'
  * Debug mode: on
-Address already in use
-Port 5001 is in use by another program. Either identify and stop that program, or start the server with a different port.
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.200.114:5001
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+/Users/zhutianyu/Documents/code/Devops/backend/.venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+ * Debugger is active!
+ * Debugger PIN: 660-605-919
+127.0.0.1 - - [09/Dec/2025 10:30:45] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:45] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:45] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:45] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:45] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:45] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:47] "GET /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:48] "GET /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:48] "GET /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:49] "GET /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:55] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:30:56] "GET /api/projects HTTP/1.1" 200 -
+[2025-12-09 10:30:56,755] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:30:57,116] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [09/Dec/2025 10:30:57] "GET /api/projects HTTP/1.1" 200 -
+[2025-12-09 10:30:57,764] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:30:57,987] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:30:57,988] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:30:58,064] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:30:58,068] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:30:58,123] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:30:58,169] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:30:58,323] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:30:58,362] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:30:59,646] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [09/Dec/2025 10:30:59] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:31:00,578] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:31:00,830] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:31:01,399] INFO in app: list_all_todos: Pico Services items=10
+127.0.0.1 - - [09/Dec/2025 10:31:01] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:01,577] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:31:01,595] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:31:01,625] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:01,643] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:01,755] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:31:01,807] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:31:01,819] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:31:01,845] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:31:02,074] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:31:02] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:31:02,586] INFO in app: list_all_todos: 11 projects
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:03,292] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:03,992] INFO in app: list_all_todos: Helpdesk-SH items=0
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:04,188] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:31:04,214] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:04,247] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:31:04,285] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:04,292] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:31:04,298] INFO in app: list_all_todos: Pico Services items=10
+127.0.0.1 - - [09/Dec/2025 10:31:04] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:04,549] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:04,805] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:31:04] "GET /api/session HTTP/1.1" 200 -
+[2025-12-09 10:31:04,970] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 10:31:04] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:05,295] INFO in app: list_all_todos: 11 projects
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:05,788] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:06,510] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:31:06,511] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:31:06,538] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:06,542] INFO in app: list_all_todos: Pico Services items=10
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:06,793] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:31:06,796] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:31:06,899] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:31:06,997] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:31:07,002] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:07,127] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 10:31:07] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:07,359] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:07,997] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:08,752] INFO in app: list_all_todos: Helpdesk-SH items=0
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:08,892] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:31:08,909] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:08,936] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:31:08,987] INFO in app: list_all_todos: Power One System Support items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:09,091] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:09,189] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:31:09,244] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:09,254] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:09,390] INFO in app: list_all_todos: Salesforce-CRM items=20
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:09,498] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:31:09] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:09,745] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:10,399] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:31:10,582] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:31:10,585] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:31:10,600] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:10,635] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:31:10,649] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:10,664] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:31:10,844] INFO in app: list_all_todos: Salesforce-CRM items=20
+[2025-12-09 10:31:10,916] INFO in app: list_all_todos: IES-X items=0
+127.0.0.1 - - [09/Dec/2025 10:31:10] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:11,507] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:31:11] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:12,184] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:12,684] INFO in app: list_all_todos: Helpdesk-SH items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:13,353] INFO in app: list_all_todos: Epicor-ERP items=0
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:13,400] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:31:13,406] INFO in app: list_all_todos: Pico Services items=10
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:13,634] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:13,642] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:31:13,666] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:13,740] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:31:13,933] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:13,975] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:31:13,976] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 10:31:13] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:15,490] INFO in app: list_all_todos: 11 projects
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:16,055] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:16,718] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:31:16,721] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:31:16,896] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:31:16,926] INFO in app: list_all_todos: Power One System Support items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:16,969] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:31:16,973] INFO in app: list_all_todos: Salesforce-CRM items=20
+[2025-12-09 10:31:16,977] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:17,076] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:31:17,202] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:17,226] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:31:17] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:31:34] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:31:35,242] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:36,211] INFO in app: list_all_todos: Salesforce-CRM items=20
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:36,475] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:36,497] INFO in app: list_all_todos: Power One System Support items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:36,530] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:31:36,730] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:31:36,734] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:31:36,780] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:31:36,808] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:31:36,999] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:31:37,074] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:31:37,191] INFO in app: list_all_todos: Pico Services items=10
+127.0.0.1 - - [09/Dec/2025 10:31:37] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:34:39] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:34:40,677] INFO in app: list_all_todos: 11 projects
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:41,267] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:41,925] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:34:41,931] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:34:41,948] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:42,131] INFO in app: list_all_todos: Pico Services items=10
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:42,188] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:34:42,244] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:34:42,253] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:34:42,448] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:34:42,467] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:34:42,514] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 10:34:42] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:34:43] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:34:45,022] INFO in app: list_all_todos: 11 projects
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:45,610] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:46,435] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:34:46,509] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:46,638] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:34:46,671] INFO in app: list_all_todos: Epicor-ERP items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:46,687] INFO in app: list_all_todos: Pico Services items=10
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:34:46,775] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:34:46,869] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:34:46,924] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:34:46,927] INFO in app: list_all_todos: Salesforce-CRM items=20
+[2025-12-09 10:34:47,014] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:34:47] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:34:47] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:34:48,741] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:34:49,016] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:34:49,534] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:34:49,784] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:34:49,784] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:34:49,791] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:34:49,985] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:34:50,061] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:34:50,062] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:34:50,062] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:34:50,107] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:34:50,404] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:34:50] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:04] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:05] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:36:13] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:13] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:13] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:13] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:13] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:15] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/_apis/wit/attachments/9a0ee1ae-95ab-47b3-b20f-d24285aa2c71?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:15] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:15] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:16] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:36:18] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:20] "[31m[1mPATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:36:24] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:25] "[31m[1mPATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:36:32] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:33] "PATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:33] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:36:34,998] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:36:35,302] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:36:35,873] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:36:36,014] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:36:36,031] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:36:36,054] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:36:36,166] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:36:36,240] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:36:36,241] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:36:36,258] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:36:36,279] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:36:36,578] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:36:36] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60257/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:57] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60257/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:57] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:58] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:36:59] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:37:19] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:19] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:19] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:19] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60421/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:19] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60421/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:20] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/af1bbab1-a771-4987-887a-3b38f31ff283?fileName%3D308b3eee47c09905170c67c312883f9f.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:21] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/c5727853-7c16-4081-8b1a-198e42a5c5a2?fileName%3D116a566a27cc964ebf7c5591e94c2d6a.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:28] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60421 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:29] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60421 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:37:29] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:37:31,208] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:37:31,507] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:37:32,083] INFO in app: list_all_todos: Pico Services items=9
+[2025-12-09 10:37:32,360] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:37:32,367] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:37:32,368] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:37:32,412] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:37:32,421] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:37:32,428] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:37:32,651] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:37:32,712] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:37:33,601] INFO in app: list_all_todos: Epicor-ERP items=0
+127.0.0.1 - - [09/Dec/2025 10:37:33] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60419/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60419/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:41] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60419 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:44] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60419 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:38:44] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:38:45,783] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:38:46,380] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:38:46,810] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:38:46,812] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:38:46,945] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:38:46,974] INFO in app: list_all_todos: Pico Services items=9
+[2025-12-09 10:38:46,982] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:38:46,989] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:38:47,026] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:38:47,053] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:38:47,069] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:38:47,069] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:38:47] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:39:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:12] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:14] "[35m[1mPOST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1[0m" 201 -
+127.0.0.1 - - [09/Dec/2025 10:40:14] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:40:15,612] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:40:16,120] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:40:16,561] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:40:16,588] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:40:16,588] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:40:16,591] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:40:16,603] INFO in app: list_all_todos: Pico Services items=9
+[2025-12-09 10:40:16,784] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:40:16,785] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:40:16,800] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:40:16,805] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:40:16,849] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:40:16] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:20] "OPTIONS /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:40:21,313] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:40:22,062] INFO in app: list_all_todos: Salesforce-CRM items=20
+[2025-12-09 10:40:22,331] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:40:22,364] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:40:22,530] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:40:22,604] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:40:22,634] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:40:22,637] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:40:22,706] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:40:22,733] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:40:22,809] INFO in app: list_all_todos: Pico Services items=2
+[2025-12-09 10:40:23,708] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [09/Dec/2025 10:40:23] "GET /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:29] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60523 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:30] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60523 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:30] "OPTIONS /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:40:31,404] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:40:31,649] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [09/Dec/2025 10:40:32] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:40:32,123] INFO in app: list_all_todos: Pico Services items=1
+[2025-12-09 10:40:32,362] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:40:32,407] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:40:32,562] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:40:32,579] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:40:32,614] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:40:32,614] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:40:32,633] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:40:32,662] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:40:32,895] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 10:40:32] "GET /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:40:33,211] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:40:33,517] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:40:34,105] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:40:34,180] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:40:34,298] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:40:34,351] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:40:34,403] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:40:34,409] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:40:34,417] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:40:34,501] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:40:34,623] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:40:34,759] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:40:34] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:50] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:50] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:50] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:50] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:50] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:51] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:51] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:51] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:51] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:51] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:51] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:40:53] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:41:00] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:02] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:02] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:41:04,013] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:41:04,534] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:41:05,052] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:41:05,070] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:41:05,107] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:41:05,115] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:41:05,210] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:41:05,221] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:41:05,222] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:41:05,293] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:41:05,313] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:41:05,325] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:41:05] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:08] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:08] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:08] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:08] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:08] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:09] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:09] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:09] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:09] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:10] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:11] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:41:17] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:20] "PATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:20] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:41:20,952] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:41:21,440] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:41:21,912] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:41:22,078] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:41:22,110] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:41:22,112] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:41:22,145] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:41:22,158] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:41:22,159] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:41:22,197] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:41:22,235] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:41:22,490] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:41:22] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:28] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:41:32] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:34] "PATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:34] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:41:36,562] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:41:37,286] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:41:37,689] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:41:37,692] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:41:37,694] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:41:37,929] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:41:38,014] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:41:38,016] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:41:38,019] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:41:38,019] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:41:38,022] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:41:38,369] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [09/Dec/2025 10:41:38] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:43] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:43] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:43] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:43] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:43] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:44] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:44] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:44] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:44] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:45] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:51] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:53] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:41:53] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:41:55,046] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:41:55,530] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:41:56,037] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:41:56,098] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:41:56,107] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:41:56,134] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:41:56,195] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:41:56,231] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:41:56,279] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:41:56,313] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:41:56,345] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:41:56,426] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:41:56] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:04] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:04] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:04] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:04] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:04] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:05] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:05] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:05] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:05] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:06] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:07] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:42:43] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:45] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:45] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:42:47,499] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:42:47,756] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:42:48,237] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:42:48,486] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:42:48,490] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:42:48,650] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:42:48,667] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:42:48,681] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:42:48,694] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:42:48,735] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:42:49,019] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:42:49,769] INFO in app: list_all_todos: Epicor-ERP items=0
+127.0.0.1 - - [09/Dec/2025 10:42:49] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60434/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60434/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:54] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:42:55] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:43:15] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:15] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:15] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:15] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:15] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60434/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:16] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:16] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:17] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:17] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60434/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:17] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:17] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:18] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:43:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:58] "PATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:43:58] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:43:59,893] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:44:00,473] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 10:44:00,872] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:44:00,945] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:44:01,036] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:44:01,092] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:44:01,116] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:44:01,130] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:44:01,132] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:44:01,142] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:44:01,155] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:44:01,203] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:44:01] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:22] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:22] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:22] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:22] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:22] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:38] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:46] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:48] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:48] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:44:49,761] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:44:50,110] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:44:50,735] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:44:50,774] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:44:50,839] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:44:50,865] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:44:51,045] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:44:51,046] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:44:51,057] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:44:51,087] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:44:51,087] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:44:51,136] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:44:51] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:53] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:53] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:53] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:53] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:53] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60434/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60434/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:55] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:55] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:44:56] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:45:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=r&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=r&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:28] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:30] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:30] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+su'b&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=r&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub&page=1&pageSize=50 HTTP/1.1" 200 -
+WIQL query failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9:  Expecting closing quote. The error is caused by «' ORDER BY [System.ChangedDate] DESC'». (status 400)
+127.0.0.1 - - [09/Dec/2025 10:45:31] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+su'b&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:31] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:31] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-%3D&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:44] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-%3D%3D&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-%3D&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-%3D%3D&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=r&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub-%3D&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:46] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:47] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf+&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=rf&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=r&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=subm&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:48] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:49] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submis&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:49] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submiss&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissio&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submission&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=subm&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:50] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=r&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:51] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:51] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:51] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submis&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:51] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submiss&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:52] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:52] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissio&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:52] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submission&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissio&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submiss&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submis&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:56] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=subm&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:57] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:57] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:57] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:57] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:57] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissio&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submissi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submiss&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submis&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=submi&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=subm&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sa&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:58] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sal&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:59] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sale&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:59] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sales&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:59] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sub&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:45:59] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=su&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesf&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesfo&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesfor&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sa&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesforc&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesforce&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sal&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sale&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=sales&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesfo&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=s&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesfor&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesforc&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesf&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?keyword=salesforce&page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:27] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:29] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:36] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:36] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:36] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:36] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:36] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:37] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:37] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:37] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:38] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:39] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:40] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:46:44] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:46] "PATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:46] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:46:47,720] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:46:47,967] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:46:48,468] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:46:48,669] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:46:48,708] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:46:48,917] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:46:48,919] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:46:48,978] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:46:48,979] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:46:48,995] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:46:49,074] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:46:49,198] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:46:49] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:58] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:58] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:58] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:58] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:58] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:59] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:59] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:59] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:46:59] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:47:00] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:47:00] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:47:01] "[31m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:47:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:47:10] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:47:10] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 10:47:11,900] INFO in app: list_all_todos: 11 projects
+[2025-12-09 10:47:12,329] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 10:47:12,887] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:47:12,908] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:47:12,923] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:47:13,086] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:47:13,104] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:47:13,106] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:47:13,107] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:47:13,131] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:47:13,208] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:47:13,472] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 10:47:13] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:47:58] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:47:59,304] INFO in app: list_all_todos: 11 projects
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:48:00,042] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:48:00,610] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 10:48:00,815] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 10:48:00,818] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:48:00,820] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:48:00,842] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:48:00,844] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:48:00,867] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:48:01,091] INFO in app: list_all_todos: Salesforce-CRM items=20
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:48:01,227] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:48:01,490] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:48:01] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:49:24] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=2&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:49:25,948] INFO in app: list_all_todos: 11 projects
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:26,557] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:27,136] INFO in app: list_all_todos: Helpdesk-SH items=0
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:27,205] INFO in app: list_all_todos: Epicor-ERP items=0
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:27,417] INFO in app: list_all_todos: Power One System Support items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:27,460] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:49:27,464] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:49:27,484] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:49:27,500] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:27,698] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 10:49:27,766] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:49:27,771] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 10:49:27] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=2&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:49:30] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 10:49:31,709] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:32,662] INFO in app: list_all_todos: Salesforce-CRM items=20
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:32,882] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:32,959] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 10:49:33,131] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:33,141] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 10:49:33,156] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 10:49:33,158] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 10:49:33,185] INFO in app: list_all_todos: Epicor-ERP items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 10:49:33,407] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 10:49:33,536] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 10:49:33,625] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [09/Dec/2025 10:49:33] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:31] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:32] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 10:51:38] "POST /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/attachments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:40] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/_apis/wit/attachments/478fbec7-9c9c-44c9-9ef0-6b61fdd8033e?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:57] "POST /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/attachments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:51:58] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/_apis/wit/attachments/9ac478fc-e7c0-43e2-8d45-0ee585f07bf0?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:08] "OPTIONS /api/identities?q=k HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:08] "OPTIONS /api/identities?q=ka HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:08] "OPTIONS /api/identities?q=ka'y HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:08] "OPTIONS /api/identities?q=ka'y'c HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:08] "OPTIONS /api/identities?q=kayce HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:09] "OPTIONS /api/identities?q=kaycee HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:10] "GET /api/identities?q=k HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:10] "GET /api/identities?q=ka'y HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:10] "GET /api/identities?q=ka HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:10] "GET /api/identities?q=ka'y'c HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:10] "GET /api/identities?q=kayce HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:11] "GET /api/identities?q=kaycee HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:30] "POST /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/attachments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 10:59:31] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/_apis/wit/attachments/78f9930b-3d37-4e72-b083-3a04416d1632?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:45] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:47] "PATCH /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:47] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 11:00:48,544] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:00:49,061] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:00:49,799] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 11:00:49,806] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:00:49,991] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:00:50,063] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:00:50,072] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:00:50,124] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:00:50,211] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:00:50,280] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:00:50,315] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:00:50,338] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 11:00:50] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:54] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:54] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:54] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:54] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:54] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:55] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:55] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:55] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:55] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:00:56] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:01] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:01] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:01] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:01] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:01] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:04] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:05] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 11:01:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:18] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:18] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:18] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:18] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:18] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60523/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60523/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:26] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/_apis/wit/attachments/9a0ee1ae-95ab-47b3-b20f-d24285aa2c71?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:27] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 11:01:28] "[35m[1mGET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1[0m" 500 -
+127.0.0.1 - - [09/Dec/2025 11:01:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:31] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:33] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:33] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:34] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 11:01:37] "[35m[1mPOST /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1[0m" 201 -
+127.0.0.1 - - [09/Dec/2025 11:01:37] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:38] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:44] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:44] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:44] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:44] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:44] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:45] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:46] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:46] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:46] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60475/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:01:46] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:26:25] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:26:27,171] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:26:27,500] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:26:28,072] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 11:26:28,155] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:26:28,158] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:26:28,194] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:26:28,565] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:26:28,566] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:26:28,566] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:26:28,568] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:26:28,569] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:26:28,836] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 11:26:28] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:34:25] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 11:34:26,465] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:27,648] INFO in app: list_all_todos: Salesforce-CRM items=20
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:27,739] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:34:27,836] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:34:27,875] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:27,943] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:28,005] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:34:28,007] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:34:28,030] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:28,275] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:34:28,337] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:34:28,523] INFO in app: list_all_todos: Pico Services items=10
+127.0.0.1 - - [09/Dec/2025 11:34:28] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-08T16:00:00.000Z&plannedTo=2025-12-09T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:34:30] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+[2025-12-09 11:34:31,540] INFO in app: list_all_todos: 11 projects
+WIQL failed for project 4a28de41-d99d-4b60-b5c8-c7a667fa94f9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 75f9e554-22ee-49c9-8957-b15dd2984a2f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 55d95a01-8f58-4b2a-be1a-efbe29be356f with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:32,725] INFO in app: list_all_todos: fe-test-sample items=0
+WIQL failed for project 06d5d94c-84ba-4a61-97f4-5d1fa2d9aa0c with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project 50c4a4f1-e600-4516-b912-9b36259375da with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:32,811] INFO in app: list_all_todos: Salesforce-CRM items=20
+WIQL failed for project aa3ff44e-c960-44d3-b4c7-39b760e7d160 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project ec6ba073-804a-4fc0-a8ca-6757c0f8e6a9 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project f4b1fdbd-62c6-4ccf-add2-a786329c118a with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+WIQL failed for project c63486b9-3f83-49d9-b289-c9b25f4cfccb with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:32,973] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:34:33,025] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:34:33,045] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:34:33,135] INFO in app: list_all_todos: Epicor-ERP items=0
+WIQL failed for project 94afdf09-939f-4904-aa2b-f5383a806577 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:33,187] INFO in app: list_all_todos: Project Sniff items=0
+WIQL failed for project 32efcb12-e631-44b2-973c-eb2791506039 with types 'Feature,User Story,Product Backlog Item,Task', retrying without type
+[2025-12-09 11:34:33,457] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:34:33,554] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 11:34:33,617] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:34:33,947] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [09/Dec/2025 11:34:33] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20&plannedFrom=2025-12-07T16:00:00.000Z&plannedTo=2025-12-14T15:59:59.999Z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:12] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:14] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:14] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:15] "[31m[1mGET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 11:51:32] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:51:33,166] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:51:33,793] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 11:51:34,093] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:51:34,149] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:51:34,318] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:51:34,320] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:51:34,347] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:51:34,347] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:51:34,348] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:51:34,378] INFO in app: list_all_todos: Pico Services items=10
+[2025-12-09 11:51:34,398] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:51:34,400] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [09/Dec/2025 11:51:34] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:42] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:42] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:42] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:42] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:43] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:43] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:43] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:51:44] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:04] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:05] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:05] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:41] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:43] "[31m[1mPOST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 11:52:48] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:49] "[31m[1mPOST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1[0m" 400 -
+127.0.0.1 - - [09/Dec/2025 11:52:55] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:52:57] "[35m[1mPOST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos HTTP/1.1[0m" 201 -
+127.0.0.1 - - [09/Dec/2025 11:52:57] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:52:58,432] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:52:59,095] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 11:52:59,383] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:52:59,422] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:52:59,443] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:52:59,466] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:52:59,536] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:52:59,622] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:52:59,651] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:52:59,658] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:52:59,678] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:52:59,755] INFO in app: list_all_todos: Pico Services items=10
+127.0.0.1 - - [09/Dec/2025 11:52:59] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:02] "OPTIONS /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:53:03,818] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:53:04,122] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:53:04,715] INFO in app: list_all_todos: Pico Services items=2
+[2025-12-09 11:53:04,788] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:53:04,791] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:53:04,975] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:53:05,012] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:53:05,020] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:53:05,021] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:53:05,043] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:53:05,063] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:53:05,161] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 11:53:05] "GET /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:05] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:07] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536 HTTP/1.1" 200 -
+[2025-12-09 11:53:08,422] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:53:08,731] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [09/Dec/2025 11:53:08] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:53:09,278] INFO in app: list_all_todos: Pico Services items=1
+[2025-12-09 11:53:09,392] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:53:09,395] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:53:09,565] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:53:09,604] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:53:09,632] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:53:09,645] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:53:09,646] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:53:09,692] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:53:09,949] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:53:09,959] INFO in app: list_all_todos: Salesforce-CRM items=20
+127.0.0.1 - - [09/Dec/2025 11:53:09] "GET /api/todos?state=New&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:53:10,536] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 11:53:10,869] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:53:10,963] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:53:11,097] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:53:11,125] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-09 11:53:11,127] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:53:11,153] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:53:11,198] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:53:11,218] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:53:11,226] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:53:12,195] INFO in app: list_all_todos: Power One System Support items=0
+127.0.0.1 - - [09/Dec/2025 11:53:12] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:17] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:17] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:17] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:17] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:17] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:55] "POST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/attachments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:53:56] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/fd4f6588-fc62-4440-9029-b4c28442a325?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:21] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:22] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:29] "OPTIONS /api/identities?q=w HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:29] "OPTIONS /api/identities?q=wi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:29] "OPTIONS /api/identities?q=wil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:29] "OPTIONS /api/identities?q=wils HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:29] "OPTIONS /api/identities?q=wilso HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:30] "OPTIONS /api/identities?q=wilson HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:31] "GET /api/identities?q=w HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:31] "GET /api/identities?q=wilso HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:31] "GET /api/identities?q=wil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:31] "GET /api/identities?q=wi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:31] "GET /api/identities?q=wilson HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:31] "GET /api/identities?q=wils HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:35] "OPTIONS /api/identities?q=wilson+z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:35] "OPTIONS /api/identities?q=wilson+zh HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:35] "OPTIONS /api/identities?q=wilson+zha HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:35] "OPTIONS /api/identities?q=wilson+zhao HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:35] "GET /api/identities?q=wilson HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:36] "GET /api/identities?q=wilson+zhao HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:37] "GET /api/identities?q=wilson+zh HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:37] "GET /api/identities?q=wilson+z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:54:37] "GET /api/identities?q=wilson+zha HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:55:18] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:55:19] "[35m[1mPOST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1[0m" 201 -
+127.0.0.1 - - [09/Dec/2025 11:55:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:16] "POST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/attachments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:18] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/a94517d9-4b18-4a17-a99d-32a6bbad4a6f?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:45] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:47] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:47] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:57:49,073] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:57:49,372] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:57:49,938] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-09 11:57:50,039] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:57:50,072] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:57:50,073] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:57:50,222] INFO in app: list_all_todos: IES-X items=0
+[2025-12-09 11:57:50,250] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:57:50,265] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:57:50,283] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:57:50,298] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:57:50,672] INFO in app: list_all_todos: Salesforce-CRM items=8
+127.0.0.1 - - [09/Dec/2025 11:57:50] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:57:55] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/fd4f6588-fc62-4440-9029-b4c28442a325?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:58:05] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:58:07] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 11:58:07] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+[2025-12-09 11:58:08,684] INFO in app: list_all_todos: 11 projects
+[2025-12-09 11:58:09,280] INFO in app: list_all_todos: Salesforce-CRM items=8
+[2025-12-09 11:58:09,677] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-09 11:58:09,753] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-09 11:58:09,849] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-09 11:58:09,865] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-09 11:58:09,877] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-09 11:58:09,880] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-09 11:58:09,912] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-09 11:58:10,008] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-09 11:58:10,016] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-09 11:58:10,110] INFO in app: list_all_todos: IES-X items=0
+127.0.0.1 - - [09/Dec/2025 11:58:10] "GET /api/todos?state=Active,Validate&assignedTo=evan&type=Feature,User+Story,Product+Backlog+Item,Task&page=1&pageSize=20 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:32] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:32] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:32] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:32] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:32] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:35] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/fd4f6588-fc62-4440-9029-b4c28442a325?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:40] "OPTIONS /api/identities?q=@ HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:41] "OPTIONS /api/identities?q=@e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:42] "GET /api/identities?q=@ HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:42] "OPTIONS /api/identities?q=@e'm HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:42] "OPTIONS /api/identities?q=@emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:42] "OPTIONS /api/identities?q=@emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:42] "OPTIONS /api/identities?q=@emily HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:43] "GET /api/identities?q=@e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:43] "GET /api/identities?q=@e'm HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:43] "GET /api/identities?q=@emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:44] "GET /api/identities?q=@emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:44] "GET /api/identities?q=@emily HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:49] "OPTIONS /api/identities?q=@emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:49] "OPTIONS /api/identities?q=@emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:49] "OPTIONS /api/identities?q=@em HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:49] "OPTIONS /api/identities?q=@e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:49] "OPTIONS /api/identities?q=@ HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:50] "GET /api/identities?q=@emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:50] "GET /api/identities?q=@emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:50] "GET /api/identities?q=@e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:50] "GET /api/identities?q=@em HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:50] "GET /api/identities?q=@ HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:53] "GET /api/identities?q=@ HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:53] "GET /api/identities?q=@e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:53] "GET /api/identities?q=@emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:53] "GET /api/identities?q=@em HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:53] "OPTIONS /api/identities?q=e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "GET /api/identities?q=@emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "OPTIONS /api/identities?q=em HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "OPTIONS /api/identities?q=emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "GET /api/identities?q=@ HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "OPTIONS /api/identities?q=emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "GET /api/identities?q=@e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:54] "OPTIONS /api/identities?q=emily HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:55] "GET /api/identities?q=@em HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:55] "GET /api/identities?q=@emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:55] "GET /api/identities?q=e HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:55] "GET /api/identities?q=em HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:56] "GET /api/identities?q=emil HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:56] "GET /api/identities?q=emi HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:56] "GET /api/identities?q=emily HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:57] "OPTIONS /api/identities?q=emily+z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:58] "OPTIONS /api/identities?q=emily+zh HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:58] "OPTIONS /api/identities?q=emily+zho HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:58] "OPTIONS /api/identities?q=emily+zhou HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:59] "GET /api/identities?q=emily HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:59] "GET /api/identities?q=emily+z HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:59] "GET /api/identities?q=emily+zhou HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:59] "GET /api/identities?q=emily+zh HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:00:59] "GET /api/identities?q=emily+zho HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:01:03] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -
+127.0.0.1 - - [09/Dec/2025 12:01:05] "[35m[1mPOST /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1[0m" 201 -
+127.0.0.1 - - [09/Dec/2025 12:01:06] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60536/comments HTTP/1.1" 200 -

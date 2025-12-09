@@ -70,6 +70,8 @@ class AzureDevOpsClient:
         keyword: Optional[str] = None,
         assigned_to: Optional[str] = None,
         work_item_type: Optional[str] = None,
+        planned_from: Optional[str] = None,
+        planned_to: Optional[str] = None,
         page: int = 1,
         page_size: int = 20,
     ) -> List[Dict[str, Any]]:
@@ -114,13 +116,18 @@ class AzureDevOpsClient:
                 clauses.append(f"([System.Id] = {keyword_str} OR [System.Title] CONTAINS '{keyword_str}')")
             else:
                 clauses.append(f"[System.Title] CONTAINS '{keyword_str}'")
+        if planned_from:
+            clauses.append(f"[Microsoft.VSTS.Scheduling.StartDate] >= '{planned_from}'")
+        if planned_to:
+            clauses.append(f"[Microsoft.VSTS.Scheduling.StartDate] <= '{planned_to}'")
 
         wiql = (
             "SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], "
             "[System.Tags], [Microsoft.VSTS.Common.Priority], [System.ChangedDate], "
             "[System.Description], [System.WorkItemType], [System.CreatedDate], [System.TeamProject], "
             "[System.AreaPath], [System.IterationPath], "
-            "[Microsoft.VSTS.Scheduling.OriginalEstimate], [Microsoft.VSTS.Scheduling.RemainingWork] "
+            "[Microsoft.VSTS.Scheduling.OriginalEstimate], [Microsoft.VSTS.Scheduling.RemainingWork], "
+            "[Microsoft.VSTS.Scheduling.StartDate], [Microsoft.VSTS.Scheduling.FinishDate] "
             "FROM WorkItems WHERE "
             + " AND ".join(clauses)
             + " ORDER BY [System.ChangedDate] DESC"
@@ -197,7 +204,8 @@ class AzureDevOpsClient:
                     "System.Id,System.Title,System.State,System.AssignedTo,System.Tags,"
                     "Microsoft.VSTS.Common.Priority,System.ChangedDate,System.Description,"
                     "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,"
-                    "System.TeamProject,Microsoft.VSTS.Scheduling.OriginalEstimate,Microsoft.VSTS.Scheduling.RemainingWork"
+                    "System.TeamProject,Microsoft.VSTS.Scheduling.OriginalEstimate,Microsoft.VSTS.Scheduling.RemainingWork,"
+                    "Microsoft.VSTS.Scheduling.StartDate,Microsoft.VSTS.Scheduling.FinishDate"
                 ),
             },
         ).json()
@@ -309,6 +317,41 @@ class AzureDevOpsClient:
         content_type = resp.headers.get("Content-Type", "application/octet-stream")
         return resp.content, content_type
 
+    def search_identities(self, query: str, top: int = 10) -> List[Dict[str, Any]]:
+        if not query:
+            return []
+        url = f"https://vssps.dev.azure.com/{self.organization}/_apis/IdentityPicker/Identities"
+        payload = {
+            "query": query,
+            "identityTypes": ["user"],
+            "operationScopes": ["ims", "source"],
+            "options": {
+                "MinResults": 1,
+                "MaxResults": max(top, 1),
+                "ShowMru": False,
+            },
+            "properties": ["DisplayName", "Mail", "UserPrincipalName"],
+        }
+        resp = self._request(
+            "POST",
+            url,
+            params={"api-version": "7.1-preview.1"},
+            json=payload,
+        ).json()
+        identities: List[Dict[str, Any]] = []
+        for result in resp.get("results", []):
+            for identity in result.get("identities", []) or []:
+                identities.append(
+                    {
+                        "id": identity.get("localId") or identity.get("entityId"),
+                        "descriptor": identity.get("descriptor"),
+                        "displayName": identity.get("friendlyDisplayName") or identity.get("displayName"),
+                        "uniqueName": identity.get("signInAddress") or identity.get("uniqueName"),
+                        "mail": identity.get("mail") or identity.get("signInAddress"),
+                    }
+                )
+        return identities
+
     def _build_patch_body(
         self,
         data: Dict[str, Any],
@@ -327,36 +370,42 @@ class AzureDevOpsClient:
             "iterationPath": "/fields/System.IterationPath",
             "originalEstimate": "/fields/Microsoft.VSTS.Scheduling.OriginalEstimate",
             "remaining": "/fields/Microsoft.VSTS.Scheduling.RemainingWork",
+            "plannedStartDate": "/fields/Microsoft.VSTS.Scheduling.StartDate",
+            "targetDate": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
             # Common custom field in this process – if it does not exist
             # in a given project, Azure DevOps will simply ignore it.
             "requester": "/fields/Custom.Requester",
         }
 
         for key, path in mapping.items():
-            if key in data and data.get(key) is not None:
-                value = data[key]
-                if key in ("areaPath", "iterationPath") and isinstance(value, str):
-                    # Azure DevOps expects tree paths without a leading slash/backslash
-                    value = self._normalize_tree_path(value)
-                    # Skip container-only roots like "\Area" or "\Iteration"
-                    lower_val = value.lower()
-                    if lower_val in ("area", "iteration") or lower_val.endswith("\\area") or lower_val.endswith("\\iteration"):
-                        continue
-                    # Validate against known nodes to avoid invalid tree name errors
-                    if project:
-                        try:
-                            valid_paths = (
-                                self.list_area_paths(project)
-                                if key == "areaPath"
-                                else self.list_iteration_paths(project)
-                            )
-                            valid_paths = [self._normalize_tree_path(p) for p in valid_paths]
-                            if value not in valid_paths:
-                                continue
-                        except Exception:
-                            # if validation fails, proceed without dropping to avoid masking other issues
-                            pass
-                ops.append({"op": "add", "path": path, "value": value})
+            if key not in data:
+                continue
+            value = data.get(key)
+            allow_none = key in ("plannedStartDate", "targetDate")
+            if value is None and not allow_none:
+                continue
+            if key in ("areaPath", "iterationPath") and isinstance(value, str):
+                # Azure DevOps expects tree paths without a leading slash/backslash
+                value = self._normalize_tree_path(value)
+                # Skip container-only roots like "\Area" or "\Iteration"
+                lower_val = value.lower()
+                if lower_val in ("area", "iteration") or lower_val.endswith("\\area") or lower_val.endswith("\\iteration"):
+                    continue
+                # Validate against known nodes to avoid invalid tree name errors
+                if project:
+                    try:
+                        valid_paths = (
+                            self.list_area_paths(project)
+                            if key == "areaPath"
+                            else self.list_iteration_paths(project)
+                        )
+                        valid_paths = [self._normalize_tree_path(p) for p in valid_paths]
+                        if value not in valid_paths:
+                            continue
+                    except Exception:
+                        # if validation fails, proceed without dropping to avoid masking other issues
+                        pass
+            ops.append({"op": "add", "path": path, "value": value})
 
         # Keep OriginalEstimate 和 RemainingWork 尽量同步：
         original = data.get("originalEstimate")
@@ -459,6 +508,8 @@ class AzureDevOpsClient:
             "priority": fields.get("Microsoft.VSTS.Common.Priority"),
             "originalEstimate": fields.get("Microsoft.VSTS.Scheduling.OriginalEstimate"),
             "remaining": fields.get("Microsoft.VSTS.Scheduling.RemainingWork"),
+            "plannedStartDate": fields.get("Microsoft.VSTS.Scheduling.StartDate"),
+            "targetDate": fields.get("Microsoft.VSTS.Scheduling.FinishDate"),
             "tags": self._split_tags(fields.get("System.Tags")),
             "changedDate": fields.get("System.ChangedDate"),
             "parentId": parent_id,

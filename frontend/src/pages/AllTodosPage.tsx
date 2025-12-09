@@ -1,10 +1,28 @@
-import { EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Card, Col, DatePicker, Drawer, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message, Checkbox } from "antd";
+import { EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, UserAddOutlined } from "@ant-design/icons";
+import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { api, API_BASE } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
+import type { RichTextEditorHandle } from "../components/RichTextEditor";
+import type { Identity } from "../types";
+
+type FiltersState = {
+  state?: string;
+  keyword?: string;
+  assignedTo?: string;
+  type?: string;
+  project?: string;
+  page?: number;
+  pageSize?: number;
+  closedFrom?: string;
+  closedTo?: string;
+  plannedFrom?: string;
+  plannedTo?: string;
+};
+
+type TabKey = "all" | "no-start" | "on-going" | "completed";
 
 const typeColors: Record<string, string> = {
   Epic: "magenta",
@@ -18,6 +36,33 @@ const typeColors: Record<string, string> = {
 const ALL_WORK_ITEM_TYPES = ["Epic", "Feature", "User Story", "Product Backlog Item", "Task", "Bug"];
 const DEFAULT_WORK_ITEM_TYPES = ALL_WORK_ITEM_TYPES.filter((t) => t !== "Epic");
 const NO_EPIC_SENTINEL = "__NO_EPIC__";
+
+const projectBadgePalette = [
+  { background: "#e6f4ff", color: "#0958d9" },
+  { background: "#f9f0ff", color: "#722ed1" },
+  { background: "#fef0f6", color: "#c41d7f" },
+  { background: "#fff7e6", color: "#d46b08" },
+  { background: "#f6ffed", color: "#389e0d" },
+  { background: "#e6fffb", color: "#08979c" },
+  { background: "#fff1f0", color: "#d4380d" },
+];
+
+const hashString = (value: string): number => {
+  let hash = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    hash = (hash << 5) - hash + value.charCodeAt(i);
+    hash |= 0; // convert to 32bit int
+  }
+  return Math.abs(hash);
+};
+
+const projectBadgeStyle = (projectName?: string) => {
+  if (!projectName) {
+    return { background: "#f5f5f5", color: "#595959" };
+  }
+  const index = hashString(projectName) % projectBadgePalette.length;
+  return projectBadgePalette[index];
+};
 
 const rewriteAzureAttachmentHtml = (html: string): string => {
   if (!html) return "";
@@ -65,6 +110,13 @@ const priorityTokenStyle = (value: number | string | undefined) => {
   return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
 };
 
+const serializeDateValue = (value: any): string | null | undefined => {
+  if (value === null) return null;
+  if (!value) return undefined;
+  const parsed = dayjs.isDayjs(value) ? value : dayjs(value);
+  return parsed.isValid() ? parsed.toISOString() : undefined;
+};
+
 function getCurrentWeekRange(): { from: string; to: string } {
   const now = new Date();
   const day = now.getDay(); // Sunday = 0, Monday = 1, ...
@@ -101,43 +153,41 @@ function getCurrentMonthRange(): { from: string; to: string } {
   return { from: first.toISOString(), to: last.toISOString() };
 }
 
-export function AllTodosPage() {
+function getDayRange(offsetDays = 0): { from: string; to: string } {
+  const start = new Date();
+  start.setDate(start.getDate() + offsetDays);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(start);
+  end.setHours(23, 59, 59, 999);
+  return { from: start.toISOString(), to: end.toISOString() };
+}
+
+type AllTodosPageProps = {
+  forcedProjectId?: string;
+  hideProjectSelector?: boolean;
+};
+
+export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: AllTodosPageProps = {}) {
   const FILTER_STORAGE_KEY = "allTodosFilters";
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filters, setFilters] = useState<{
-    state?: string;
-    keyword?: string;
-    assignedTo?: string;
-    type?: string;
-    project?: string; // projectId
-    page?: number;
-    pageSize?: number;
-    closedFrom?: string;
-    closedTo?: string;
-  }>(() => {
+  const [filters, setFilters] = useState<FiltersState>(() => {
     if (typeof window !== "undefined") {
       try {
         const raw = window.localStorage.getItem(FILTER_STORAGE_KEY);
         if (raw) {
-          const stored = JSON.parse(raw) as {
-            state?: string;
-            keyword?: string;
-            assignedTo?: string;
-            type?: string;
-            project?: string;
-            closedFrom?: string;
-            closedTo?: string;
-          };
+          const stored = JSON.parse(raw) as Partial<FiltersState>;
           const type = stored.type || NO_EPIC_SENTINEL;
-          return { ...stored, type, page: 1, pageSize: 20 };
+          const base: FiltersState = { page: 1, pageSize: 20, ...stored, type };
+          return forcedProjectId ? { ...base, project: forcedProjectId } : base;
         }
       } catch {
         // ignore parse errors
       }
     }
     // 默认：过滤掉 Epic（使用后端约定的哨兵值）
-    return { page: 1, pageSize: 20, type: NO_EPIC_SENTINEL };
+    const base = { page: 1, pageSize: 20, type: NO_EPIC_SENTINEL } as FiltersState;
+    return forcedProjectId ? { ...base, project: forcedProjectId } : base;
   });
   const [pagination, setPagination] = useState({ current: 1, pageSize: 20, total: 0 });
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -148,11 +198,16 @@ export function AllTodosPage() {
   const [iterationOptions, setIterationOptions] = useState<{ label: string; value: string }[]>([]);
   const [parentOptions, setParentOptions] = useState<{ label: string; value: number }[]>([]);
   const [form] = Form.useForm();
-  const [tabKey, setTabKey] = useState<"all" | "no-start" | "on-going" | "completed">("on-going");
+  const [tabKey, setTabKey] = useState<TabKey>("on-going");
   const [comments, setComments] = useState<any[]>([]);
   const [commentLoading, setCommentLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [organization, setOrganization] = useState("");
+  const commentEditorRef = useRef<RichTextEditorHandle>(null);
+  const [mentionPickerOpen, setMentionPickerOpen] = useState(false);
+  const [mentionOptions, setMentionOptions] = useState<{ label: string; value: string; identity: Identity }[]>([]);
+  const [mentionSearchValue, setMentionSearchValue] = useState("");
+  const [mentionLoading, setMentionLoading] = useState(false);
 
   const advanceState = (state?: string) => {
     const normalized = (state || "").toLowerCase();
@@ -162,8 +217,9 @@ export function AllTodosPage() {
   };
 
   const loadTodos = async (nextFilters = filters, tabOverride?: string) => {
+    const effectiveFilters = enforceProjectFilter(nextFilters);
     const currentTab = tabOverride || tabKey;
-    let stateFilter = nextFilters.state;
+    let stateFilter = effectiveFilters.state;
     let allowedStates: string[] = [];
     if (currentTab === "no-start") {
       stateFilter = "New";
@@ -177,7 +233,7 @@ export function AllTodosPage() {
     }
     setLoading(true);
     try {
-      const res = await api.listAllTodos({ ...nextFilters, state: stateFilter });
+        const res = await api.listAllTodos({ ...effectiveFilters, state: stateFilter });
       const raw = res.todos || [];
       const filteredByState =
         allowedStates.length === 0
@@ -186,7 +242,7 @@ export function AllTodosPage() {
               const s = (t.state || "").toString().trim().toLowerCase();
               return allowedStates.includes(s);
             });
-      const projectFilter = nextFilters.project;
+      const projectFilter = effectiveFilters.project;
       let filtered =
         projectFilter && projectFilter.length > 0
           ? filteredByState.filter((t) => String(t.projectId || "").toString() === projectFilter)
@@ -205,10 +261,23 @@ export function AllTodosPage() {
           return true;
         });
       }
+      if (nextFilters.plannedFrom || nextFilters.plannedTo) {
+        const from = nextFilters.plannedFrom ? new Date(nextFilters.plannedFrom) : undefined;
+        const to = nextFilters.plannedTo ? new Date(nextFilters.plannedTo) : undefined;
+        filtered = filtered.filter((t) => {
+          const raw = (t as any).plannedStartDate;
+          if (!raw) return false;
+          const d = new Date(raw);
+          if (Number.isNaN(d.getTime())) return false;
+          if (from && d < from) return false;
+          if (to && d > to) return false;
+          return true;
+        });
+      }
 
       setTodos(filtered);
-      const page = nextFilters.page || 1;
-      const pageSize = nextFilters.pageSize || 20;
+      const page = effectiveFilters.page || 1;
+      const pageSize = effectiveFilters.pageSize || 20;
       const hasMore = res.hasMore;
       const total = hasMore ? page * pageSize + 1 : (page - 1) * pageSize + (filtered.length || 0);
       setPagination({ current: page, pageSize, total });
@@ -237,8 +306,8 @@ export function AllTodosPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const persistFilters = (next: typeof filters) => {
-    if (typeof window === "undefined") return;
+  const persistFilters = (next: FiltersState) => {
+    if (typeof window === "undefined" || forcedProjectId) return;
     try {
       const { page, pageSize, ...rest } = next;
       window.localStorage.setItem(FILTER_STORAGE_KEY, JSON.stringify(rest));
@@ -247,13 +316,34 @@ export function AllTodosPage() {
     }
   };
 
-  const applyKeywordSearch = (raw: string | undefined): typeof filters => {
+  const enforceProjectFilter = (input: FiltersState): FiltersState =>
+    forcedProjectId ? { ...input, project: forcedProjectId } : input;
+
+  const applyFilters = (next: FiltersState) => {
+    const enforced = enforceProjectFilter(next);
+    setFilters(enforced);
+    return enforced;
+  };
+
+  useEffect(() => {
+    if (forcedProjectId) {
+      form.setFieldsValue({ projectId: forcedProjectId });
+    }
+  }, [forcedProjectId, form]);
+
+  useEffect(() => {
+    if (forcedProjectId && filters.project !== forcedProjectId) {
+      setFilters((prev) => ({ ...prev, project: forcedProjectId }));
+    }
+  }, [forcedProjectId, filters.project]);
+
+  const applyKeywordSearch = (raw: string | undefined): FiltersState => {
     const text = raw?.trim();
     if (!text) {
       const next = { ...filters, keyword: undefined, page: 1 };
-      setFilters(next);
-      persistFilters(next);
-      return next;
+      const enforced = applyFilters(next);
+      persistFilters(enforced);
+      return enforced;
     }
 
     const typeMap: Record<string, string> = {
@@ -276,15 +366,15 @@ export function AllTodosPage() {
         type: mappedType || filters.type,
         page: 1,
       };
-      setFilters(next);
-      persistFilters(next);
-      return next;
+      const enforced = applyFilters(next);
+      persistFilters(enforced);
+      return enforced;
     }
 
     const next = { ...filters, keyword: text, page: 1 };
-    setFilters(next);
-    persistFilters(next);
-    return next;
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    return enforced;
   };
 
   const applyClosedRangeShortcut = (range: { from: string; to: string }) => {
@@ -294,9 +384,21 @@ export function AllTodosPage() {
       closedTo: range.to,
       page: 1,
     };
-    setFilters(next);
-    persistFilters(next);
-    loadTodos(next, "completed");
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    loadTodos(enforced, "completed");
+  };
+
+  const applyPlannedRangeShortcut = (range: { from: string; to: string }) => {
+    const next = {
+      ...filters,
+      plannedFrom: range.from,
+      plannedTo: range.to,
+      page: 1,
+    };
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    loadTodos(enforced, "on-going");
   };
 
   const totalRemaining = useMemo(
@@ -322,6 +424,12 @@ export function AllTodosPage() {
     return map;
   }, [todos]);
 
+  const cardTitle = useMemo(() => {
+    if (!forcedProjectId) return "All Projects - To-Dos";
+    const match = projects.find((p) => p.value === forcedProjectId);
+    return match ? `${match.label} - To-Dos` : "Project To-Dos";
+  }, [forcedProjectId, projects]);
+
   const openChildTask = (record: any) => {
     setEditing(null);
     form.resetFields();
@@ -332,6 +440,8 @@ export function AllTodosPage() {
       state: "New",
       priority: 2,
       originalEstimate: undefined,
+      plannedStartDate: undefined,
+      targetDate: undefined,
       description: "",
       tags: [],
       workItemType: "Task",
@@ -349,18 +459,20 @@ export function AllTodosPage() {
 
   const handlePageChange = (page: number, pageSize?: number) => {
     const next = { ...filters, page, pageSize: pageSize || filters.pageSize };
-    setFilters(next);
-    loadTodos(next);
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    loadTodos(enforced);
   };
 
   const handleTabChange = (key: string) => {
-    setTabKey(key);
+    const normalized = (key as TabKey) || "all";
+    setTabKey(normalized);
     const next = { ...filters, page: 1 };
-    if (key === "no-start") {
+    if (normalized === "no-start") {
       next.state = "New";
-    } else if (key === "on-going") {
+    } else if (normalized === "on-going") {
       next.state = undefined;
-    } else if (key === "completed") {
+    } else if (normalized === "completed") {
       next.state = undefined;
       if (!next.closedFrom && !next.closedTo) {
         const range = getCurrentWeekRange();
@@ -370,8 +482,9 @@ export function AllTodosPage() {
     } else {
       next.state = filters.state;
     }
-    setFilters(next);
-    loadTodos(next, key);
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    loadTodos(enforced, normalized);
   };
 
   const loadComments = async (projectId?: string, workItemId?: number) => {
@@ -503,6 +616,45 @@ export function AllTodosPage() {
     }
   };
 
+  const fetchMentionOptions = async (keyword: string) => {
+    const trimmed = keyword.trim();
+    if (!trimmed) {
+      setMentionOptions([]);
+      return;
+    }
+    setMentionLoading(true);
+    try {
+      const res = await api.searchIdentities(trimmed);
+      const options = (res.identities || []).map((identity) => {
+        const label = identity.displayName || identity.uniqueName || identity.mail || identity.descriptor || trimmed;
+        return { label, value: identity.id || identity.descriptor || label, identity };
+      });
+      setMentionOptions(options);
+    } catch (err: any) {
+      message.error(err.message || "Failed to search users");
+    } finally {
+      setMentionLoading(false);
+    }
+  };
+
+  const buildMentionHtml = (identity: Identity) => {
+    const safeName = identity.displayName || identity.uniqueName || identity.mail || "User";
+    const parts = ["version:2.0", `name:${safeName}`];
+    if (identity.id) parts.push(`id:${identity.id}`);
+    if (identity.descriptor) parts.push(`descriptor:${identity.descriptor}`);
+    if (identity.uniqueName) parts.push(`uniqueName:${identity.uniqueName}`);
+    const attr = parts.join(",");
+    return `<a class="mention-link" data-vss-mention="${attr}" data-vss-mention-name="${safeName}">@${safeName}</a>&nbsp;`;
+  };
+
+  const insertMention = (identity: Identity) => {
+    const html = buildMentionHtml(identity);
+    commentEditorRef.current?.focus();
+    commentEditorRef.current?.insertHtml(html);
+    setMentionPickerOpen(false);
+    setMentionSearchValue("");
+  };
+
   const handleAddComment = async (text: string) => {
     if (!editing?.id || !editing?.projectId) return;
     setCommentLoading(true);
@@ -529,6 +681,8 @@ export function AllTodosPage() {
     const stateLower = desiredState.toString().toLowerCase();
     const isClosed = stateLower === "closed" || stateLower === "resolved";
     let remainingValue = values.remaining;
+    const plannedStartDateValue = serializeDateValue(values.plannedStartDate);
+    const targetDateValue = serializeDateValue(values.targetDate);
     if (remainingValue == null && originalEstimate != null && !isClosed) {
       // 非关闭状态下，如果没单独填 Remaining，则默认与 Original Estimate 相同
       remainingValue = originalEstimate;
@@ -548,6 +702,12 @@ export function AllTodosPage() {
           iterationPath: cleanIteration,
           parentId,
         };
+        if (plannedStartDateValue !== undefined) {
+          updatePayload.plannedStartDate = plannedStartDateValue;
+        }
+        if (targetDateValue !== undefined) {
+          updatePayload.targetDate = targetDateValue;
+        }
         // 编辑已关闭的 item 时，不再自动改写 Remaining
         if (!isClosed && remainingValue != null) {
           updatePayload.remaining = remainingValue;
@@ -569,6 +729,8 @@ export function AllTodosPage() {
           parentId,
           originalEstimate,
           remaining: remainingValue,
+          plannedStartDate: plannedStartDateValue,
+          targetDate: targetDateValue,
         });
         if (isClosed && created?.todo?.id) {
           await api.updateTodo(values.projectId, created.todo.id, { state: desiredState });
@@ -591,7 +753,7 @@ export function AllTodosPage() {
 
   return (
     <Card
-      title="All Projects - To-Dos"
+      title={cardTitle}
       extra={
         <Space align="center" size={24}>
           <Space direction="vertical" size={0}>
@@ -613,6 +775,13 @@ export function AllTodosPage() {
             onClick={() => {
               setEditing(null);
               form.resetFields();
+              if (forcedProjectId) {
+                form.setFieldsValue({ projectId: forcedProjectId });
+                loadTags(forcedProjectId);
+                loadAreas(forcedProjectId);
+                loadIterations(forcedProjectId);
+                loadParents(forcedProjectId);
+              }
               setDrawerOpen(true);
             }}
           >
@@ -650,9 +819,9 @@ export function AllTodosPage() {
             value={filters.assignedTo}
             onChange={(e) => {
               const next = { ...filters, assignedTo: e.target.value || undefined, page: 1 };
-              setFilters(next);
-              persistFilters(next);
-              loadTodos(next);
+              const enforced = applyFilters(next);
+              persistFilters(enforced);
+              loadTodos(enforced);
             }}
           />
         </Col>
@@ -664,9 +833,9 @@ export function AllTodosPage() {
             disabled={tabKey !== "all"}
             onChange={(value) => {
               const next = { ...filters, state: value || undefined, page: 1 };
-              setFilters(next);
-              persistFilters(next);
-              loadTodos(next);
+              const enforced = applyFilters(next);
+              persistFilters(enforced);
+              loadTodos(enforced);
             }}
             options={["New", "Active", "Resolved", "Closed", "Removed"].map((value) => ({
               label: value,
@@ -711,9 +880,9 @@ export function AllTodosPage() {
                 }
               }
               const next = { ...filters, type: typeValue, page: 1 };
-              setFilters(next);
-              persistFilters(next);
-              loadTodos(next);
+              const enforced = applyFilters(next);
+              persistFilters(enforced);
+              loadTodos(enforced);
             }}
             options={ALL_WORK_ITEM_TYPES.map((value) => ({
               label: value,
@@ -723,23 +892,69 @@ export function AllTodosPage() {
         </Col>
       </Row>
       <Row gutter={12} style={{ marginBottom: 12 }}>
-        <Col xs={24} md={6}>
-          <Select
-            allowClear
-            showSearch
-            placeholder="Project"
-            style={{ width: "100%" }}
-            value={filters.project}
-            options={projects}
-            optionFilterProp="label"
-            onChange={(value) => {
-              const next = { ...filters, project: value || undefined, page: 1 };
-              setFilters(next);
-              persistFilters(next);
-              loadTodos(next);
-            }}
-          />
-        </Col>
+        {!hideProjectSelector && (
+          <Col xs={24} md={6}>
+            <Select
+              allowClear
+              showSearch
+              placeholder="Project"
+              style={{ width: "100%" }}
+              value={filters.project}
+              options={projects}
+              optionFilterProp="label"
+              onChange={(value) => {
+                const next = { ...filters, project: value || undefined, page: 1 };
+                const enforced = applyFilters(next);
+                persistFilters(enforced);
+                loadTodos(enforced);
+              }}
+            />
+          </Col>
+        )}
+        {tabKey === "on-going" && (
+          <>
+            <Col xs={24} md={8}>
+              <DatePicker.RangePicker
+                style={{ width: "100%" }}
+                allowClear
+                placeholder={["Planned start from", "Planned start to"]}
+                value={
+                  filters.plannedFrom || filters.plannedTo
+                    ? [
+                        filters.plannedFrom ? dayjs(filters.plannedFrom) : null,
+                        filters.plannedTo ? dayjs(filters.plannedTo) : null,
+                      ]
+                    : undefined
+                }
+                onChange={(values) => {
+                  const [start, end] = values || [];
+                  const next = {
+                    ...filters,
+                    plannedFrom: start ? start.startOf("day").toDate().toISOString() : undefined,
+                    plannedTo: end ? end.endOf("day").toDate().toISOString() : undefined,
+                    page: 1,
+                  };
+                  const enforced = applyFilters(next);
+                  persistFilters(enforced);
+                  loadTodos(enforced, "on-going");
+                }}
+              />
+            </Col>
+            <Col xs={24} md={hideProjectSelector ? 10 : 8}>
+              <Space wrap>
+                <Button size="small" onClick={() => applyPlannedRangeShortcut(getDayRange(0))}>
+                  Today
+                </Button>
+                <Button size="small" onClick={() => applyPlannedRangeShortcut(getRelativeWeekRange(0))}>
+                  This Week
+                </Button>
+                <Button size="small" onClick={() => applyPlannedRangeShortcut(getRelativeWeekRange(1))}>
+                  Next Week
+                </Button>
+              </Space>
+            </Col>
+          </>
+        )}
         {tabKey === "completed" && (
           <>
             <Col xs={24} md={8}>
@@ -759,9 +974,9 @@ export function AllTodosPage() {
                     closedTo: end ? end.endOf("day").toDate().toISOString() : undefined,
                     page: 1,
                   };
-                  setFilters(next);
-                  persistFilters(next);
-                  loadTodos(next, "completed");
+                  const enforced = applyFilters(next);
+                  persistFilters(enforced);
+                  loadTodos(enforced, "completed");
                 }}
               />
             </Col>
@@ -798,6 +1013,8 @@ export function AllTodosPage() {
               assignedTo: record.assignedTo,
               priority: record.priority,
               originalEstimate: (record as any).originalEstimate,
+              plannedStartDate: record.plannedStartDate ? dayjs(record.plannedStartDate) : null,
+              targetDate: record.targetDate ? dayjs(record.targetDate) : null,
               state: record.state,
               description: record.description,
               tags: record.tags,
@@ -823,7 +1040,15 @@ export function AllTodosPage() {
           onChange: handlePageChange,
         }}
         columns={[
-          { title: "Project", dataIndex: "projectName" },
+          {
+            title: "Project",
+            dataIndex: "projectName",
+            render: (projectName?: string) => (
+              <span className="project-badge" style={projectBadgeStyle(projectName)}>
+                {projectName || "-"}
+              </span>
+            ),
+          },
           { title: "ID", dataIndex: "id", width: 80 },
           { title: "Title", dataIndex: "title", ellipsis: true, width: 320 },
           {
@@ -872,31 +1097,10 @@ export function AllTodosPage() {
           { title: "Area", dataIndex: "areaPath", ellipsis: true },
           { title: "Iteration", dataIndex: "iterationPath", ellipsis: true },
           {
-            title: "Tags",
-            dataIndex: "tags",
-            render: (tags?: string[]) =>
-              tags?.length ? (
-                <Space size={[0, 4]} wrap>
-                  {tags.map((tag) => (
-                    <Tag key={tag}>{tag}</Tag>
-                  ))}
-                </Space>
-              ) : (
-                "-"
-              ),
-          },
-          {
-            title: "Last Changed",
-            dataIndex: "changedDate",
-            render: (value: string) => (value ? new Date(value).toLocaleString() : "-"),
-          },
-          {
-            title: tabKey === "completed" ? "Closed" : "Created",
-            dataIndex: tabKey === "completed" ? "closedDate" : "createdDate",
-            render: (_: any, record: any) => {
-              const raw = tabKey === "completed" ? record.closedDate || record.createdDate : record.createdDate;
-              return raw ? new Date(raw).toLocaleString() : "-";
-            },
+            title: "Planned Start Date",
+            dataIndex: "plannedStartDate",
+            width: 150,
+            render: (value?: string) => (value ? dayjs(value).format("YYYY-MM-DD") : "-"),
           },
           {
             title: "Actions",
@@ -913,6 +1117,8 @@ export function AllTodosPage() {
                       assignedTo: record.assignedTo,
                       priority: record.priority,
                       originalEstimate: (record as any).originalEstimate,
+                      plannedStartDate: record.plannedStartDate ? dayjs(record.plannedStartDate) : null,
+                      targetDate: record.targetDate ? dayjs(record.targetDate) : null,
                       state: record.state,
                       description: record.description,
                       tags: record.tags,
@@ -1006,12 +1212,12 @@ export function AllTodosPage() {
         }
       >
         <Form layout="vertical" form={form} initialValues={{ state: "New", assignedTo: "Evan Zhu", workItemType: "User Story" }}>
-          <Form.Item label="Project" name="projectId" rules={[{ required: true }]}>
+          <Form.Item label="Project" name="projectId" rules={[{ required: true }]}> 
             <Select
               placeholder="Select project"
               options={projects}
               showSearch
-              disabled={!!editing}
+              disabled={!!editing || !!forcedProjectId}
               onChange={(val) => {
                 loadTags(val);
                 loadAreas(val);
@@ -1084,6 +1290,18 @@ export function AllTodosPage() {
               </Form.Item>
             </Col>
           </Row>
+          <Row gutter={12}>
+            <Col span={12}>
+              <Form.Item label="Planned Start Date" name="plannedStartDate">
+                <DatePicker style={{ width: "100%" }} allowClear />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Target Date" name="targetDate">
+                <DatePicker style={{ width: "100%" }} allowClear />
+              </Form.Item>
+            </Col>
+          </Row>
           <Form.Item label="Description" name="description">
             <RichTextEditor
               value={form.getFieldValue("description")}
@@ -1138,6 +1356,7 @@ export function AllTodosPage() {
             <>
               <Form.Item label="Add Comment">
                 <RichTextEditor
+                  ref={commentEditorRef}
                   value={newComment}
                   onChange={(html) => setNewComment(html)}
                   placeholder="Add a comment"
@@ -1150,21 +1369,61 @@ export function AllTodosPage() {
                     return res.url;
                   }}
                 />
-                <Button
-                  style={{ marginTop: 8 }}
-                  onClick={async () => {
-                    const content = (newComment || "").trim();
-                    if (!hasRichContent(content)) {
-                      message.warning("Comment is empty");
-                      return;
-                    }
-                    await handleAddComment(content);
-                    setNewComment("");
-                  }}
-                  disabled={!hasRichContent(newComment)}
-                >
-                  Post
-                </Button>
+                <Space style={{ marginTop: 8 }} wrap>
+                  <Dropdown
+                    trigger={["click"]}
+                    open={mentionPickerOpen}
+                    onOpenChange={(open) => {
+                      setMentionPickerOpen(open);
+                      if (!open) {
+                        setMentionSearchValue("");
+                        setMentionOptions([]);
+                      }
+                    }}
+                    dropdownRender={() => (
+                      <div style={{ padding: 12, width: 280 }}>
+                        <AutoComplete
+                          autoFocus
+                          value={mentionSearchValue}
+                          placeholder="Search users"
+                          style={{ width: "100%" }}
+                          options={mentionOptions.map((opt) => ({ label: opt.label, value: opt.value }))}
+                          onChange={(val) => setMentionSearchValue(val)}
+                          onSearch={(val) => {
+                            setMentionSearchValue(val);
+                            fetchMentionOptions(val);
+                          }}
+                          onSelect={(value) => {
+                            const target = mentionOptions.find((opt) => opt.value === value);
+                            if (target) {
+                              insertMention(target.identity);
+                            }
+                          }}
+                          onBlur={() => setMentionPickerOpen(false)}
+                          notFoundContent={mentionLoading ? "Searching..." : "No matches"}
+                        />
+                      </div>
+                    )}
+                  >
+                    <Button icon={<UserAddOutlined />}>@ Mention</Button>
+                  </Dropdown>
+                  <Button
+                    type="primary"
+                    onClick={async () => {
+                      const content = (newComment || "").trim();
+                      if (!hasRichContent(content)) {
+                        message.warning("Comment is empty");
+                        return;
+                      }
+                      await handleAddComment(content);
+                      setNewComment("");
+                    }}
+                    disabled={!hasRichContent(newComment)}
+                    loading={commentLoading}
+                  >
+                    Post
+                  </Button>
+                </Space>
               </Form.Item>
               <Form.Item label="Discussion">
                 <div className="discussion-timeline">

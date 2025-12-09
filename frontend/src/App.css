@@ -159,3 +159,15 @@
 .ant-select-selector {
   border-radius: 999px !important;
 }
+
+.project-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  min-height: 26px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  text-transform: none;
+}

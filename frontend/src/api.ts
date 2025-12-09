@@ -1,4 +1,4 @@
-import type { Project, SessionInfo, TodoItem } from "./types";
+import type { Identity, Project, SessionInfo, TodoItem } from "./types";
 
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL as string) || "http://localhost:5000";
 
@@ -19,6 +19,17 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   return data as T;
 }
 
+type TodoQueryFilters = {
+  state?: string;
+  keyword?: string;
+  assignedTo?: string;
+  type?: string;
+  page?: number;
+  pageSize?: number;
+  plannedFrom?: string;
+  plannedTo?: string;
+};
+
 export const api = {
   login: (organization: string, pat: string) =>
     apiFetch<{ success: boolean; organization: string }>("/api/login", {
@@ -28,10 +39,7 @@ export const api = {
   logout: () => apiFetch<{ success: boolean }>("/api/logout", { method: "POST" }),
   session: () => apiFetch<SessionInfo>("/api/session"),
   listProjects: () => apiFetch<{ projects: Project[] }>("/api/projects"),
-  listTodos: (
-    projectId: string,
-    filters: { state?: string; keyword?: string; assignedTo?: string; type?: string; page?: number; pageSize?: number }
-  ) => {
+  listTodos: (projectId: string, filters: TodoQueryFilters = {}) => {
     const params = new URLSearchParams();
     if (filters.state) params.append("state", filters.state);
     if (filters.keyword) params.append("keyword", filters.keyword);
@@ -39,6 +47,8 @@ export const api = {
     if (filters.type) params.append("type", filters.type);
     if (filters.page) params.append("page", String(filters.page));
     if (filters.pageSize) params.append("pageSize", String(filters.pageSize));
+    if (filters.plannedFrom) params.append("plannedFrom", filters.plannedFrom);
+    if (filters.plannedTo) params.append("plannedTo", filters.plannedTo);
     const query = params.toString() ? `?${params.toString()}` : "";
     return apiFetch<{ todos: TodoItem[]; hasMore?: boolean }>(`/api/projects/${projectId}/todos${query}`);
   },
@@ -60,7 +70,7 @@ export const api = {
     const query = params.toString() ? `?${params.toString()}` : "";
     return apiFetch<{ iterations: string[] }>(`/api/projects/${projectId}/iterations${query}`);
   },
-  listAllTodos: (filters: { state?: string; keyword?: string; assignedTo?: string; type?: string; page?: number; pageSize?: number }) => {
+  listAllTodos: (filters: TodoQueryFilters = {}) => {
     const params = new URLSearchParams();
     if (filters.state) params.append("state", filters.state);
     if (filters.keyword) params.append("keyword", filters.keyword);
@@ -68,6 +78,8 @@ export const api = {
     if (filters.type) params.append("type", filters.type);
     if (filters.page) params.append("page", String(filters.page));
     if (filters.pageSize) params.append("pageSize", String(filters.pageSize));
+    if (filters.plannedFrom) params.append("plannedFrom", filters.plannedFrom);
+    if (filters.plannedTo) params.append("plannedTo", filters.plannedTo);
     const query = params.toString() ? `?${params.toString()}` : "";
     return apiFetch<{ todos: any[]; hasMore?: boolean }>(`/api/todos${query}`);
   },
@@ -94,6 +106,11 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ text }),
     }),
+  searchIdentities: (query: string) => {
+    const params = new URLSearchParams();
+    params.append("q", query);
+    return apiFetch<{ identities: Identity[] }>(`/api/identities?${params.toString()}`);
+  },
   uploadAttachment: async (projectId: string, file: File) => {
     const formData = new FormData();
     formData.append("file", file);
