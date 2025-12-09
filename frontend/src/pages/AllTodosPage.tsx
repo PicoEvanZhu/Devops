@@ -1,7 +1,7 @@
-import { EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, UserAddOutlined } from "@ant-design/icons";
-import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message } from "antd";
+import { BarChartOutlined, ClearOutlined, EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
+import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Empty, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { api, API_BASE } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
@@ -171,6 +171,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const FILTER_STORAGE_KEY = "allTodosFilters";
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const buildDefaultFilters = useCallback((): FiltersState => {
+    const base: FiltersState = { page: 1, pageSize: 20, type: NO_EPIC_SENTINEL };
+    return forcedProjectId ? { ...base, project: forcedProjectId } : base;
+  }, [forcedProjectId]);
   const [filters, setFilters] = useState<FiltersState>(() => {
     if (typeof window !== "undefined") {
       try {
@@ -178,18 +182,22 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         if (raw) {
           const stored = JSON.parse(raw) as Partial<FiltersState>;
           const type = stored.type || NO_EPIC_SENTINEL;
-          const base: FiltersState = { page: 1, pageSize: 20, ...stored, type };
-          return forcedProjectId ? { ...base, project: forcedProjectId } : base;
+          return {
+            ...buildDefaultFilters(),
+            ...stored,
+            type,
+            page: 1,
+            pageSize: 20,
+          };
         }
       } catch {
         // ignore parse errors
       }
     }
-    // 默认：过滤掉 Epic（使用后端约定的哨兵值）
-    const base = { page: 1, pageSize: 20, type: NO_EPIC_SENTINEL } as FiltersState;
-    return forcedProjectId ? { ...base, project: forcedProjectId } : base;
+    return buildDefaultFilters();
   });
   const [pagination, setPagination] = useState({ current: 1, pageSize: 20, total: 0 });
+  const [viewMode, setViewMode] = useState<"table" | "gantt">("table");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
   const [projects, setProjects] = useState<{ label: string; value: string }[]>([]);
@@ -208,6 +216,11 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [mentionOptions, setMentionOptions] = useState<{ label: string; value: string; identity: Identity }[]>([]);
   const [mentionSearchValue, setMentionSearchValue] = useState("");
   const [mentionLoading, setMentionLoading] = useState(false);
+  useEffect(() => {
+    if (tabKey !== "on-going" && viewMode !== "table") {
+      setViewMode("table");
+    }
+  }, [tabKey, viewMode]);
 
   const advanceState = (state?: string) => {
     const normalized = (state || "").toLowerCase();
@@ -399,6 +412,114 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     const enforced = applyFilters(next);
     persistFilters(enforced);
     loadTodos(enforced, "on-going");
+  };
+
+  const clearFilters = () => {
+    const next = buildDefaultFilters();
+    if (typeof window !== "undefined" && !forcedProjectId) {
+      try {
+        window.localStorage.removeItem(FILTER_STORAGE_KEY);
+      } catch {
+        // ignore
+      }
+    }
+    setFilters(next);
+    setPagination((prev) => ({ ...prev, current: 1 }));
+    loadTodos(next, tabKey);
+  };
+
+  const hasActiveFilters = useMemo(() => {
+    const defaults = buildDefaultFilters();
+    return (
+      !!filters.keyword ||
+      !!filters.assignedTo ||
+      !!filters.state ||
+      !!filters.closedFrom ||
+      !!filters.closedTo ||
+      !!filters.plannedFrom ||
+      !!filters.plannedTo ||
+      (!!filters.project && filters.project !== defaults.project) ||
+      (!!filters.type && filters.type !== defaults.type)
+    );
+  }, [filters, buildDefaultFilters]);
+
+  const ganttRows = useMemo(() => {
+    if (tabKey !== "on-going") return [];
+    const todayStart = dayjs().startOf("day");
+    return todos
+      .filter((item) => item.plannedStartDate)
+      .map((item) => {
+        const start = dayjs(item.plannedStartDate);
+        const rawEnd = item.targetDate ? dayjs(item.targetDate) : start.add(1, "day");
+        const end = rawEnd.isAfter(start) ? rawEnd : start.add(1, "day");
+        return { item, start, end };
+      })
+      .filter(({ end }) => end.isAfter(todayStart));
+  }, [todos, tabKey]);
+
+  const renderGanttView = () => {
+    if (!ganttRows.length) {
+      return <Empty description="暂无可展示的计划数据" />;
+    }
+    const todayStart = dayjs().startOf("day");
+    let minStart = todayStart;
+    let maxEnd = ganttRows[0].end.endOf("day");
+    ganttRows.forEach(({ end }) => {
+      if (end.isAfter(maxEnd)) {
+        maxEnd = end.endOf("day");
+      }
+    });
+    if (maxEnd.isBefore(minStart)) {
+      maxEnd = minStart.add(1, "day");
+    }
+    const totalDays = Math.max(maxEnd.diff(minStart, "day"), 1);
+    const tickCount = Math.min(totalDays + 1, 10);
+    const ticks = Array.from({ length: tickCount }, (_, idx) => {
+      if (tickCount === 1) return minStart;
+      const offset = Math.round((idx * totalDays) / (tickCount - 1));
+      return minStart.add(offset, "day");
+    });
+
+    return (
+      <div className="gantt-container">
+        <div className="gantt-scale">
+          {ticks.map((tick, idx) => (
+            <div className="gantt-scale-tick" key={`${tick.toISOString()}-${idx}`}>
+              <span>{tick.format("MM-DD")}</span>
+            </div>
+          ))}
+        </div>
+        <div className="gantt-rows">
+          {ganttRows.map(({ item, start, end }) => {
+            const adjustedStart = start.isBefore(minStart) ? minStart : start.startOf("day");
+            const normalizedEnd = end.endOf("day");
+            const leftPct = Math.max(0, (adjustedStart.diff(minStart, "day") / totalDays) * 100);
+            const spanDays = Math.max(normalizedEnd.diff(adjustedStart, "day"), 0) + 1;
+            let widthPct = Math.max((spanDays / totalDays) * 100, 2);
+            if (leftPct + widthPct > 100) {
+              widthPct = 100 - leftPct;
+            }
+            return (
+              <div className="gantt-row" key={`${item.projectId}-${item.id}`}>
+                <div className="gantt-label">
+                  <div className="gantt-label-title">
+                    <strong>{item.projectName || item.projectId}</strong> #{item.id}
+                  </div>
+                  <div className="gantt-label-desc">{item.title}</div>
+                </div>
+                <div className="gantt-bar-wrapper">
+                  <div className="gantt-bar" style={{ left: `${leftPct}%`, width: `${widthPct}%` }}>
+                    <span>
+                      {adjustedStart.format("MM-DD")} ~ {end.format("MM-DD")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
   };
 
   const totalRemaining = useMemo(
@@ -809,6 +930,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         <Col xs={24} md={6}>
           <Input
             placeholder="Search title"
+            value={filters.keyword || ""}
             allowClear
             onChange={(e) => {
               const next = applyKeywordSearch(e.target.value || undefined);
@@ -1003,12 +1125,31 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           </>
         )}
       </Row>
+      <Row justify="end" style={{ marginBottom: 12 }}>
+        <Space>
+          {tabKey === "on-going" && (
+            <Button
+              icon={viewMode === "gantt" ? <UnorderedListOutlined /> : <BarChartOutlined />}
+              type={viewMode === "gantt" ? "primary" : "default"}
+              onClick={() => setViewMode((prev) => (prev === "table" ? "gantt" : "table"))}
+            >
+              {viewMode === "gantt" ? "列表视图" : "甘特图视图"}
+            </Button>
+          )}
+          <Button icon={<ClearOutlined />} onClick={clearFilters} disabled={!hasActiveFilters}>
+            Clear Filters
+          </Button>
+        </Space>
+      </Row>
 
-      <Table<any>
-        dataSource={todos}
-        loading={loading}
-        rowKey={(row) => `${row.projectId}-${row.id}`}
-       onRow={(record) => ({
+      {viewMode === "gantt" && tabKey === "on-going" ? (
+        renderGanttView()
+      ) : (
+        <Table<any>
+          dataSource={todos}
+          loading={loading}
+          rowKey={(row) => `${row.projectId}-${row.id}`}
+         onRow={(record) => ({
          onDoubleClick: () => {
             setEditing(record);
             form.setFieldsValue({
@@ -1043,7 +1184,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           showSizeChanger: true,
           onChange: handlePageChange,
         }}
-        columns={[
+          columns={[
           {
             title: "Project",
             dataIndex: "projectName",
@@ -1172,7 +1313,8 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             ),
           },
         ]}
-      />
+        />
+      )}
 
       <Drawer
         title={editing ? "Edit To-Do" : "Create To-Do"}
