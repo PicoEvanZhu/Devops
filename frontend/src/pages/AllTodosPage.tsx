@@ -24,6 +24,12 @@ type FiltersState = {
 
 type TabKey = "all" | "no-start" | "on-going" | "completed";
 
+type LatestCommentPreview = {
+  preview: string;
+  createdBy?: string;
+  createdDate?: string;
+};
+
 const typeColors: Record<string, string> = {
   Epic: "magenta",
   Feature: "gold",
@@ -56,12 +62,31 @@ const hashString = (value: string): number => {
   return Math.abs(hash);
 };
 
+const normalizeProjectName = (name?: string) => {
+  if (!name) return undefined;
+  const trimmed = name.trim();
+  if (/^pico\s+services$/i.test(trimmed)) return "Helpdesk";
+  if (/^ies-?x$/i.test(trimmed)) return "Concierge";
+  return trimmed;
+};
+
 const projectBadgeStyle = (projectName?: string) => {
-  if (!projectName) {
+  const normalized = normalizeProjectName(projectName);
+  if (!normalized) {
     return { background: "#f5f5f5", color: "#595959" };
   }
-  const index = hashString(projectName) % projectBadgePalette.length;
+  const index = hashString(normalized) % projectBadgePalette.length;
   return projectBadgePalette[index];
+};
+
+const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+
+const proxyAzureResourceUrl = (url?: string) => {
+  if (!url) return undefined;
+  if (/dev\.azure\.com/i.test(url)) {
+    return `${API_BASE}/api/attachments/proxy?url=${encodeURIComponent(url)}`;
+  }
+  return url;
 };
 
 const rewriteAzureAttachmentHtml = (html: string): string => {
@@ -85,6 +110,26 @@ const rewriteAzureAttachmentHtml = (html: string): string => {
   }
 };
 
+const stripHtml = (html: string): string => {
+  if (!html) return "";
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+};
+
+const summarizeCommentText = (html: string, limit = 140): string => {
+  if (!html) return "";
+  let text = stripHtml(html);
+  if (/<img\b/i.test(html)) {
+    text = text ? `${text} [Image]` : "[Image]";
+  }
+  if (!text) {
+    text = "Rich content";
+  }
+  if (text.length > limit) {
+    return `${text.slice(0, limit)}…`;
+  }
+  return text;
+};
+
 const hasRichContent = (html: string): boolean => {
   if (!html) return false;
   const text = html.replace(/<[^>]*>/g, "").trim();
@@ -92,23 +137,6 @@ const hasRichContent = (html: string): boolean => {
   return /<(img|video|audio|iframe|embed|object)\b/i.test(html);
 };
 
-const priorityTokenStyle = (value: number | string | undefined) => {
-  const n = Number(value);
-  if (!Number.isFinite(n)) {
-    return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
-  }
-  if (n === 1) {
-    return { background: "#ffe7e6", color: "#cf1322", border: "none" };
-  }
-  if (n === 2) {
-    return { background: "#fff7e6", color: "#d48806", border: "none" };
-  }
-  if (n === 3) {
-    return { background: "#e6f4ff", color: "#1677ff", border: "none" };
-  }
-  // 4 or others: neutral
-  return { background: "#f5f5f5", color: "#595959", border: "1px solid #d9d9d9" };
-};
 
 const serializeDateValue = (value: any): string | null | undefined => {
   if (value === null) return null;
@@ -216,6 +244,8 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [mentionOptions, setMentionOptions] = useState<{ label: string; value: string; identity: Identity }[]>([]);
   const [mentionSearchValue, setMentionSearchValue] = useState("");
   const [mentionLoading, setMentionLoading] = useState(false);
+  const [latestCommentMap, setLatestCommentMap] = useState<Record<string, LatestCommentPreview>>({});
+  const latestCommentRequestRef = useRef(0);
   useEffect(() => {
     if (tabKey !== "on-going" && viewMode !== "table") {
       setViewMode("table");
@@ -244,9 +274,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
       stateFilter = "Closed,Resolved";
       allowedStates = ["closed", "resolved"];
     }
+    const { plannedFrom, plannedTo, ...apiFilters } = effectiveFilters;
     setLoading(true);
     try {
-        const res = await api.listAllTodos({ ...effectiveFilters, state: stateFilter });
+        const res = await api.listAllTodos({ ...apiFilters, state: stateFilter });
       const raw = res.todos || [];
       const filteredByState =
         allowedStates.length === 0
@@ -274,25 +305,46 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           return true;
         });
       }
-      if (nextFilters.plannedFrom || nextFilters.plannedTo) {
-        const from = nextFilters.plannedFrom ? new Date(nextFilters.plannedFrom) : undefined;
-        const to = nextFilters.plannedTo ? new Date(nextFilters.plannedTo) : undefined;
+      if (plannedFrom || plannedTo) {
+        const from = plannedFrom ? new Date(plannedFrom) : undefined;
+        const to = plannedTo ? new Date(plannedTo) : undefined;
         filtered = filtered.filter((t) => {
-          const raw = (t as any).plannedStartDate;
-          if (!raw) return false;
-          const d = new Date(raw);
-          if (Number.isNaN(d.getTime())) return false;
-          if (from && d < from) return false;
-          if (to && d > to) return false;
+          const startRaw = (t as any).plannedStartDate;
+          if (!startRaw) return false;
+          const startDate = new Date(startRaw);
+          if (Number.isNaN(startDate.getTime())) return false;
+          const finishRaw = (t as any).targetDate || startRaw;
+          const finishDate = new Date(finishRaw);
+          if (Number.isNaN(finishDate.getTime())) return false;
+          if (from && finishDate < from) return false;
+          if (to && startDate > to) return false;
           return true;
         });
       }
 
-      setTodos(filtered);
+      const sorted = [...filtered].sort((a, b) => {
+        const assignedA = ((a.assignedTo || "").trim().toLowerCase()) || "\uffff";
+        const assignedB = ((b.assignedTo || "").trim().toLowerCase()) || "\uffff";
+        if (assignedA !== assignedB) {
+          return assignedA.localeCompare(assignedB);
+        }
+        const keyA = getProjectSortKey(a).toLowerCase();
+        const keyB = getProjectSortKey(b).toLowerCase();
+        if (keyA !== keyB) {
+          return keyA.localeCompare(keyB);
+        }
+        const parentA = a.parentId ?? Number.MAX_SAFE_INTEGER;
+        const parentB = b.parentId ?? Number.MAX_SAFE_INTEGER;
+        if (parentA !== parentB) {
+          return parentA - parentB;
+        }
+        return (a.id || 0) - (b.id || 0);
+      });
+      setTodos(sorted);
       const page = effectiveFilters.page || 1;
       const pageSize = effectiveFilters.pageSize || 20;
       const hasMore = res.hasMore;
-      const total = hasMore ? page * pageSize + 1 : (page - 1) * pageSize + (filtered.length || 0);
+      const total = hasMore ? page * pageSize + 1 : (page - 1) * pageSize + (sorted.length || 0);
       setPagination({ current: page, pageSize, total });
     } catch (err: any) {
       message.error(err.message || "Failed to load to-dos");
@@ -349,6 +401,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
       setFilters((prev) => ({ ...prev, project: forcedProjectId }));
     }
   }, [forcedProjectId, filters.project]);
+
 
   const applyKeywordSearch = (raw: string | undefined): FiltersState => {
     const text = raw?.trim();
@@ -499,16 +552,41 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             if (leftPct + widthPct > 100) {
               widthPct = 100 - leftPct;
             }
+            const avatarSrc = proxyAzureResourceUrl(item.assignedToAvatar);
+            const initials = (item.assignedTo || "?")
+              .split(" ")
+              .map((part: string) => part.charAt(0).toUpperCase())
+              .join("")
+              .slice(0, 2);
             return (
               <div className="gantt-row" key={`${item.projectId}-${item.id}`}>
                 <div className="gantt-label">
-                  <div className="gantt-label-title">
-                    <strong>{item.projectName || item.projectId}</strong> #{item.id}
+                  <div className="gantt-avatar">
+                    {avatarSrc ? <img src={avatarSrc} alt={item.assignedTo || "User"} /> : initials || "-"}
                   </div>
-                  <div className="gantt-label-desc">{item.title}</div>
+                  <div className="gantt-label-body">
+                    <div className="gantt-label-title">
+                      <span className="gantt-project-pill" style={projectBadgeStyle(item.projectName || item.projectId)}>
+                        {normalizeProjectName(item.projectName || item.projectId) || item.projectId}
+                      </span>
+                    </div>
+                    <div className="gantt-label-desc">{item.title}</div>
+                  </div>
                 </div>
                 <div className="gantt-bar-wrapper">
-                  <div className="gantt-bar" style={{ left: `${leftPct}%`, width: `${widthPct}%` }}>
+                  <div
+                    className="gantt-bar"
+                    style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
+                    onClick={() => openEditForm(item)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(evt) => {
+                      if (evt.key === "Enter" || evt.key === " ") {
+                        evt.preventDefault();
+                        openEditForm(item);
+                      }
+                    }}
+                  >
                     <span>
                       {adjustedStart.format("MM-DD")} ~ {end.format("MM-DD")}
                     </span>
@@ -532,10 +610,68 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     [todos]
   );
 
+  const [parentDetails, setParentDetails] = useState<Record<number, any>>({});
+
+  const todoById = useMemo(() => {
+    const map: Record<number, any> = {};
+    todos.forEach((item) => {
+      if (typeof item?.id === "number") {
+        map[item.id] = item;
+      }
+    });
+    return map;
+  }, [todos]);
+
+  useEffect(() => {
+    const lookup = new Map<number, string>();
+    todos.forEach((item) => {
+      if (item.parentId && item.projectId) {
+        if (!parentDetails[item.parentId] && !todoById[item.parentId]) {
+          if (!lookup.has(item.parentId)) {
+            lookup.set(item.parentId, item.projectId);
+          }
+        }
+      }
+    });
+    if (lookup.size === 0) return;
+    let cancelled = false;
+    (async () => {
+      const entries = Array.from(lookup.entries());
+      const results = await Promise.all(
+        entries.map(async ([parentId, projectId]) => {
+          try {
+            const res = await api.getTodo(projectId, parentId);
+            return { parentId, projectId, todo: res.todo };
+          } catch {
+            return null;
+          }
+        })
+      );
+      if (cancelled) return;
+      setParentDetails((prev) => {
+        const next = { ...prev };
+        results.forEach((entry) => {
+          if (entry?.todo) {
+            const enriched = {
+              ...entry.todo,
+              projectId: entry.todo.projectId || entry.projectId,
+              projectName: entry.todo.projectName,
+            };
+            next[entry.parentId] = enriched;
+          }
+        });
+        return next;
+      });
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [todos, parentDetails, todoById]);
+
   const remainingByProject = useMemo(() => {
     const map: Record<string, number> = {};
     todos.forEach((item) => {
-      const key = (item.projectName || item.project || "Unknown").toString();
+      const key = (normalizeProjectName(item.projectName || item.project) || item.project || "Unknown").toString();
       const v = (item as any).originalEstimate;
       const n = typeof v === "number" ? v : v ? Number(v) : 0;
       if (!isNaN(n)) {
@@ -576,6 +712,53 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     loadParents(record.projectId);
     setComments([]);
     setDrawerOpen(true);
+  };
+
+  const openEditForm = (record: any) => {
+    if (!record) return;
+    setEditing(record);
+    form.setFieldsValue({
+      projectId: record.projectId,
+      title: record.title,
+      assignedTo: record.assignedTo,
+      priority: record.priority,
+      originalEstimate: (record as any).originalEstimate,
+      plannedStartDate: record.plannedStartDate ? dayjs(record.plannedStartDate) : null,
+      targetDate: record.targetDate ? dayjs(record.targetDate) : null,
+      state: record.state,
+      description: record.description,
+      tags: record.tags,
+      workItemType: record.workItemType,
+      areaPath: record.areaPath,
+      iterationPath: record.iterationPath,
+      parentId: record.parentId,
+    });
+    loadTags(record.projectId);
+    loadAreas(record.projectId);
+    loadIterations(record.projectId);
+    loadParents(record.projectId);
+    loadComments(record.projectId, record.id);
+    setDrawerOpen(true);
+  };
+
+  const openParentRecord = async (record: any) => {
+    if (!record?.parentId || !record.projectId) return;
+    const cached = todoById[record.parentId] || parentDetails[record.parentId];
+    if (cached) {
+      openEditForm({ ...cached, projectId: cached.projectId || record.projectId, projectName: cached.projectName || record.projectName });
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await api.getTodo(record.projectId, record.parentId);
+      const todo = { ...res.todo, projectId: record.projectId, projectName: record.projectName };
+      setParentDetails((prev) => ({ ...prev, [record.parentId]: todo }));
+      openEditForm(todo);
+    } catch (err: any) {
+      message.error(err.message || "Failed to open parent");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePageChange = (page: number, pageSize?: number) => {
@@ -628,6 +811,64 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
       setCommentLoading(false);
     }
   };
+
+  const prefetchLatestComments = useCallback(
+    async (items: any[]) => {
+      if (!items || items.length === 0) {
+        latestCommentRequestRef.current = Date.now();
+        setLatestCommentMap({});
+        return;
+      }
+      const requestId = Date.now();
+      latestCommentRequestRef.current = requestId;
+      const subset = items.slice(0, 40);
+      const results = await Promise.all(
+        subset.map(async (item) => {
+          if (!item?.projectId || !item?.id) return null;
+          try {
+            const res = await api.listComments(item.projectId, item.id);
+            const comments = res.comments || [];
+            if (!comments.length) return null;
+            const latest = comments.reduce((prev, curr) => {
+              if (!prev) return curr;
+              const prevTime = new Date(prev.createdDate || 0).getTime();
+              const currTime = new Date(curr.createdDate || 0).getTime();
+              return currTime > prevTime ? curr : prev;
+            }, comments[0]);
+            return { key: `${item.projectId}-${item.id}`, comment: latest };
+          } catch {
+            return null;
+          }
+        })
+      );
+      if (latestCommentRequestRef.current !== requestId) {
+        return;
+      }
+      const fetched: Record<string, LatestCommentPreview> = {};
+      results.forEach((entry) => {
+        if (entry?.comment) {
+          fetched[entry.key] = {
+            preview: summarizeCommentText(entry.comment.text || ""),
+            createdBy: entry.comment.createdBy,
+            createdDate: entry.comment.createdDate,
+          };
+        }
+      });
+      setLatestCommentMap((prev) => {
+        const next: Record<string, LatestCommentPreview> = {};
+        items.forEach((item) => {
+          const key = `${item.projectId}-${item.id}`;
+          next[key] = fetched[key] || prev[key];
+        });
+        return next;
+      });
+    },
+    []
+  );
+
+  useEffect(() => {
+    prefetchLatestComments(todos);
+  }, [todos, prefetchLatestComments]);
 
   const loadTags = async (projectId?: string, search?: string) => {
     if (!projectId) {
@@ -794,8 +1035,8 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     }
   };
 
-  const handleCreate = async () => {
-    const values = await form.validateFields();
+  const handleCreate = async (options?: { temporary?: boolean }) => {
+    const values = options?.temporary ? await form.validateFields({ validateOnly: true }).then(() => form.getFieldsValue()) : await form.validateFields();
     const cleanArea = typeof values.areaPath === "string" ? values.areaPath.replace(/^[/\\]+/, "") : values.areaPath;
     const cleanIteration =
       typeof values.iterationPath === "string" ? values.iterationPath.replace(/^[/\\]+/, "") : values.iterationPath;
@@ -838,7 +1079,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           updatePayload.remaining = remainingValue;
         }
         await api.updateTodo(values.projectId, editing.id, updatePayload);
-        message.success("Updated");
+        message.success(options?.temporary ? "Temporarily saved" : "Updated");
       } else {
         const initialState = isClosed ? "Active" : desiredState;
         const created = await api.createTodo(values.projectId, {
@@ -866,9 +1107,11 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         { ...filters, page: pagination.current, pageSize: pagination.pageSize },
         tabKey
       );
-      setDrawerOpen(false);
-      setEditing(null);
-      form.resetFields();
+      if (!options?.temporary) {
+        setDrawerOpen(false);
+        setEditing(null);
+        form.resetFields();
+      }
     } catch (err: any) {
       message.error(err.message || "Save failed");
     } finally {
@@ -1149,31 +1392,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           dataSource={todos}
           loading={loading}
           rowKey={(row) => `${row.projectId}-${row.id}`}
+          scroll={{ x: 1400 }}
          onRow={(record) => ({
          onDoubleClick: () => {
-            setEditing(record);
-            form.setFieldsValue({
-              projectId: record.projectId,
-              title: record.title,
-              assignedTo: record.assignedTo,
-              priority: record.priority,
-              originalEstimate: (record as any).originalEstimate,
-              plannedStartDate: record.plannedStartDate ? dayjs(record.plannedStartDate) : null,
-              targetDate: record.targetDate ? dayjs(record.targetDate) : null,
-              state: record.state,
-              description: record.description,
-              tags: record.tags,
-              workItemType: record.workItemType,
-              areaPath: record.areaPath,
-              iterationPath: record.iterationPath,
-              parentId: record.parentId,
-            });
-            loadTags(record.projectId);
-            loadAreas(record.projectId);
-            loadIterations(record.projectId);
-            loadParents(record.projectId);
-            loadComments(record.projectId, record.id);
-           setDrawerOpen(true);
+            openEditForm(record);
          },
           style: { cursor: "pointer" },
         })}
@@ -1185,100 +1407,84 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           onChange: handlePageChange,
         }}
           columns={[
+          { title: "Assigned To", dataIndex: "assignedTo", width: 150 },
           {
             title: "Project",
             dataIndex: "projectName",
+            width: 140,
             render: (projectName?: string) => (
               <span className="project-badge" style={projectBadgeStyle(projectName)}>
-                {projectName || "-"}
+                {normalizeProjectName(projectName) || "-"}
               </span>
             ),
           },
-          { title: "ID", dataIndex: "id", width: 80 },
-          { title: "Title", dataIndex: "title", ellipsis: true, width: 320 },
+          {
+            title: "Parent",
+            dataIndex: "parentId",
+            width: 220,
+            render: (_, record) => {
+              if (!record.parentId) return <span className="parent-cell">-</span>;
+              const parentRecord = todoById[record.parentId] || parentDetails[record.parentId];
+              const label = parentRecord?.title || `#${record.parentId}`;
+              return (
+                <button
+                  type="button"
+                  className="parent-link"
+                  onClick={() => openParentRecord(record)}
+                >
+                  {label}
+                </button>
+              );
+            },
+          },
+          { title: "Title", dataIndex: "title", ellipsis: true, width: 280 },
           {
             title: "Type",
             dataIndex: "workItemType",
+            width: 120,
             render: (value?: string) => (value ? <Tag color={typeColors[value] || "default"}>{value}</Tag> : "-"),
           },
-          { title: "State", dataIndex: "state" },
           {
-            title: "Priority",
-            dataIndex: "priority",
-            width: 90,
-            render: (value: number) => {
-              const display = value != null && value !== undefined ? value : "-";
-              const style = priorityTokenStyle(value);
+            title: "Discussion",
+            dataIndex: "latestDiscussion",
+            width: 360,
+            render: (_, record) => {
+              const key = `${record.projectId}-${record.id}`;
+              const preview = latestCommentMap[key];
+              if (!preview) {
+                return <span className="discussion-preview-empty">No discussion</span>;
+              }
               return (
-                <span
-                  style={{
-                    display: "inline-block",
-                    minWidth: 28,
-                    padding: "0 8px",
-                    textAlign: "center",
-                    borderRadius: 12,
-                    fontSize: 12,
-                    lineHeight: "20px",
-                    backgroundColor: style.background,
-                    color: style.color,
-                    border: style.border,
-                  }}
-                >
-                  {display}
-                </span>
+                <div className="discussion-preview-cell">
+                  <div className="discussion-preview-meta">
+                    <span className="author" title={preview.createdBy || ""}>{preview.createdBy || "Unknown"}</span>
+                    <span className="time">
+                      {preview.createdDate ? dayjs(preview.createdDate).format("MM-DD HH:mm") : ""}
+                    </span>
+                  </div>
+                  <div className="discussion-preview-text" title={preview.preview}>
+                    {preview.preview}
+                  </div>
+                </div>
               );
             },
           },
           {
-            title: "Original Estimate",
-            dataIndex: "originalEstimate",
-            width: 130,
-            render: (_: any, record: any) => {
-              const v = record.originalEstimate;
-              return v != null && v !== undefined && v !== "" ? v : "-";
-            },
-          },
-          { title: "Assigned To", dataIndex: "assignedTo" },
-          { title: "Area", dataIndex: "areaPath", ellipsis: true },
-          { title: "Iteration", dataIndex: "iterationPath", ellipsis: true },
-          {
-            title: "Planned Start Date",
-            dataIndex: "plannedStartDate",
+            title: "Target Date",
+            dataIndex: "targetDate",
             width: 150,
             render: (value?: string) => (value ? dayjs(value).format("YYYY-MM-DD") : "-"),
           },
           {
             title: "Actions",
+            fixed: "right" as const,
+            width: 120,
             render: (_, record) => (
               <Space>
                 <Button
                   size="small"
                   icon={<EditOutlined />}
-                  onClick={() => {
-                    setEditing(record);
-                    form.setFieldsValue({
-                      projectId: record.projectId,
-                      title: record.title,
-                      assignedTo: record.assignedTo,
-                      priority: record.priority,
-                      originalEstimate: (record as any).originalEstimate,
-                      plannedStartDate: record.plannedStartDate ? dayjs(record.plannedStartDate) : null,
-                      targetDate: record.targetDate ? dayjs(record.targetDate) : null,
-                      state: record.state,
-                      description: record.description,
-                      tags: record.tags,
-                      workItemType: record.workItemType,
-                      areaPath: record.areaPath,
-                      iterationPath: record.iterationPath,
-                      parentId: record.parentId,
-                    });
-                    loadTags(record.projectId);
-                    loadAreas(record.projectId);
-                    loadIterations(record.projectId);
-                    loadParents(record.projectId);
-                    loadComments(record.projectId, record.id);
-                    setDrawerOpen(true);
-                  }}
+                  onClick={() => openEditForm(record)}
                 />
                 {record.workItemType === "User Story" && (
                   <Button
@@ -1293,6 +1499,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           },
           {
             title: "Advance",
+            fixed: "right" as const,
             width: 80,
             render: (_, record) => (
               <Checkbox
@@ -1351,7 +1558,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             >
               Cancel
             </Button>
-            <Button type="primary" loading={loading} onClick={handleCreate}>
+            <Button loading={loading} onClick={() => handleCreate({ temporary: true })}>
+              Temporary Save
+            </Button>
+            <Button type="primary" loading={loading} onClick={() => handleCreate()}>
               {editing ? "Save" : "Create"}
             </Button>
           </Space>

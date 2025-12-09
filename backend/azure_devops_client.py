@@ -505,6 +505,7 @@ class AzureDevOpsClient:
             "areaPath": area,
             "iterationPath": iteration,
             "assignedTo": assigned.get("displayName") if isinstance(assigned, dict) else assigned,
+            "assignedToAvatar": assigned.get("imageUrl") if isinstance(assigned, dict) else None,
             "priority": fields.get("Microsoft.VSTS.Common.Priority"),
             "originalEstimate": fields.get("Microsoft.VSTS.Scheduling.OriginalEstimate"),
             "remaining": fields.get("Microsoft.VSTS.Scheduling.RemainingWork"),
