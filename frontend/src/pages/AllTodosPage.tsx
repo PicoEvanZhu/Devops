@@ -666,7 +666,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     return () => {
       cancelled = true;
     };
-  }, [todos, parentDetails, todoById]);
+  }, [todos, todoById]);
 
   const remainingByProject = useMemo(() => {
     const map: Record<string, number> = {};
@@ -1425,7 +1425,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             render: (_, record) => {
               if (!record.parentId) return <span className="parent-cell">-</span>;
               const parentRecord = todoById[record.parentId] || parentDetails[record.parentId];
-              const label = parentRecord?.title || `#${record.parentId}`;
+              const label = record.parentTitle || parentRecord?.title || `#${record.parentId}`;
               return (
                 <button
                   type="button"

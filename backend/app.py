@@ -1,6 +1,6 @@
 import os
 import logging
-from typing import Dict, Optional, List
+from typing import Any, Dict, Optional, List, Tuple
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request, session, make_response
@@ -34,6 +34,47 @@ def _require_client() -> AzureDevOpsClient:
     if not organization or not pat:
         raise AzureDevOpsAuthError("Not authenticated", status_code=401)
     return AzureDevOpsClient(organization, pat)
+
+
+def _attach_parent_titles(client: AzureDevOpsClient, items: List[Dict[str, Any]]) -> None:
+    parent_requests: Dict[Tuple[str, int], Optional[str]] = {}
+    for item in items:
+        parent_id = item.get("parentId")
+        project_id = item.get("projectId")
+        if parent_id and project_id:
+            parent_requests.setdefault((project_id, parent_id), None)
+
+    if not parent_requests:
+        return
+
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    def fetch_parent(project_id: str, parent_id: int):
+        try:
+            todo = client.get_todo(project_id, parent_id)
+            return (project_id, parent_id, todo.get("title"))
+        except AzureDevOpsError as exc:
+            app.logger.warning("Failed to fetch parent %s/%s: %s", project_id, parent_id, exc)
+        except Exception as exc:  # pragma: no cover - defensive
+            app.logger.warning("Unexpected error fetching parent %s/%s: %s", project_id, parent_id, exc)
+        return None
+
+    max_workers = min(8, len(parent_requests))
+    keys = list(parent_requests.keys())
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [executor.submit(fetch_parent, project_id, parent_id) for (project_id, parent_id) in keys]
+        for future in as_completed(futures):
+            result = future.result()
+            if result:
+                project_id, parent_id, title = result
+                if title:
+                    parent_requests[(project_id, parent_id)] = title
+
+    for item in items:
+        key = (item.get("projectId"), item.get("parentId"))
+        title = parent_requests.get(key)
+        if title:
+            item["parentTitle"] = title
 
 
 @app.route("/api/login", methods=["POST"])
@@ -108,6 +149,9 @@ def list_todos(project_id: str) -> tuple:
             page_size=page_size,
         )
         has_more = len(todos) == page_size
+        for item in todos:
+            item.setdefault("projectId", project_id)
+        _attach_parent_titles(client, todos)
         return jsonify({"todos": todos, "hasMore": has_more})
     except AzureDevOpsError as exc:
         return jsonify({"error": str(exc)}), exc.status_code or 500
@@ -167,6 +211,7 @@ def list_all_todos() -> tuple:
             for future in as_completed(futures):
                 aggregated.extend(future.result())
 
+        _attach_parent_titles(client, aggregated)
         aggregated.sort(key=lambda x: x.get("changedDate") or "", reverse=True)
         start = (page - 1) * page_size
         end = start + page_size

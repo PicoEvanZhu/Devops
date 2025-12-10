@@ -200,13 +200,6 @@ class AzureDevOpsClient:
             params={
                 "api-version": self.API_VERSION,
                 "$expand": "relations",
-                "fields": (
-                    "System.Id,System.Title,System.State,System.AssignedTo,System.Tags,"
-                    "Microsoft.VSTS.Common.Priority,System.ChangedDate,System.Description,"
-                    "System.WorkItemType,System.CreatedDate,System.AreaPath,System.IterationPath,"
-                    "System.TeamProject,Microsoft.VSTS.Scheduling.OriginalEstimate,Microsoft.VSTS.Scheduling.RemainingWork,"
-                    "Microsoft.VSTS.Scheduling.StartDate,Microsoft.VSTS.Scheduling.FinishDate"
-                ),
             },
         ).json()
         return self._map_work_item(resp)
