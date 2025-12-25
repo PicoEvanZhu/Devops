@@ -1,4 +1,4 @@
-import { LogoutOutlined } from "@ant-design/icons";
+import { GlobalOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Button, Layout, Spin, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
@@ -8,15 +8,18 @@ import { LoginPage } from "./pages/LoginPage";
 import { AllTodosPage } from "./pages/AllTodosPage";
 import { ProjectsPage } from "./pages/ProjectsPage";
 import { TodosPage } from "./pages/TodosPage";
+import { I18nProvider, useI18n } from "./i18n";
 import type { SessionInfo } from "./types";
 
 const { Header, Content } = Layout;
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Shell />
-    </BrowserRouter>
+    <I18nProvider>
+      <BrowserRouter>
+        <Shell />
+      </BrowserRouter>
+    </I18nProvider>
   );
 }
 
@@ -25,6 +28,7 @@ function Shell() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, toggleLanguage } = useI18n();
 
   useEffect(() => {
     api
@@ -60,24 +64,31 @@ function Shell() {
   return (
     <Layout className="app-layout">
       <Header className="app-header">
-        <div className="brand">Pico Project IT Project Manage</div>
+        <div className="brand">{t("app.brand", "Pico Project IT Project Manage")}</div>
         <div className="header-actions">
+          <Button
+            style={{ marginRight: 12 }}
+            icon={<GlobalOutlined />}
+            aria-label={t("app.languageButton", "中/EN")}
+            title={t("app.languageButton", "中/EN")}
+            onClick={toggleLanguage}
+          />
           {session.authenticated && (
             <Button style={{ marginRight: 12 }} onClick={() => navigate("/projects")}>
-              Back to Projects
+              {t("app.backToProjects", "Back to Projects")}
             </Button>
           )}
           {session.authenticated ? (
             <>
               <Typography.Text style={{ color: "#fff" }}>
-                Org: {session.organization || "Unknown"}
+                {t("app.orgLabel", "Org")}: {session.organization || "Unknown"}
               </Typography.Text>
               <Button icon={<LogoutOutlined />} onClick={handleLogout}>
-                Logout
+                {t("app.logout", "Logout")}
               </Button>
             </>
           ) : (
-            <Typography.Text style={{ color: "#fff" }}>Please sign in</Typography.Text>
+            <Typography.Text style={{ color: "#fff" }}>{t("app.pleaseSignIn", "Please sign in")}</Typography.Text>
           )}
         </div>
       </Header>

@@ -7,6 +7,7 @@ import { api, API_BASE } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
 import type { RichTextEditorHandle } from "../components/RichTextEditor";
 import type { Identity } from "../types";
+import { useI18n } from "../i18n";
 
 type FiltersState = {
   state?: string;
@@ -198,6 +199,7 @@ type AllTodosPageProps = {
 
 export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: AllTodosPageProps = {}) {
   const FILTER_STORAGE_KEY = "allTodosFilters";
+  const { t } = useI18n();
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const buildDefaultFilters = useCallback((): FiltersState => {
@@ -692,10 +694,13 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   }, [todos]);
 
   const cardTitle = useMemo(() => {
-    if (!forcedProjectId) return "All Projects - To-Dos";
+    if (!forcedProjectId) return t("allTodos.title", "All Projects - To-Dos");
     const match = projects.find((p) => p.value === forcedProjectId);
-    return match ? `${match.label} - To-Dos` : "Project To-Dos";
-  }, [forcedProjectId, projects]);
+    if (match) {
+      return `${match.label} - ${t("allTodos.todoSuffix", "To-Dos")}`;
+    }
+    return t("allTodos.projectFallback", "Project To-Dos");
+  }, [forcedProjectId, projects, t]);
 
   const openChildTask = (record: any) => {
     setEditing(null);
@@ -1136,7 +1141,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         <Space align="center" size={24}>
           <Space direction="vertical" size={0}>
             <Typography.Text type="secondary">
-              总工时: <span style={{ fontWeight: 600 }}>{totalRemaining}</span>
+              {t("metrics.totalEffort", "Total Effort")}: <span style={{ fontWeight: 600 }}>{totalRemaining}</span>
             </Typography.Text>
             <Typography.Text type="secondary" style={{ fontSize: 12 }}>
               {Object.entries(remainingByProject)
@@ -1145,7 +1150,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             </Typography.Text>
           </Space>
           <Button icon={<ReloadOutlined />} onClick={() => loadTodos()}>
-            Refresh
+            {t("buttons.refresh", "Refresh")}
           </Button>
           <Button
             type="primary"
@@ -1163,7 +1168,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               setDrawerOpen(true);
             }}
           >
-            New To-Do
+            {t("buttons.newTodo", "New To-Do")}
           </Button>
         </Space>
       }
@@ -1172,17 +1177,17 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         activeKey={tabKey}
         onChange={handleTabChange}
         items={[
-          { key: "all", label: "All" },
-          { key: "no-start", label: "No-Start" },
-          { key: "on-going", label: "On-Going" },
-          { key: "completed", label: "Completed" },
+          { key: "all", label: t("tabs.all", "All") },
+          { key: "no-start", label: t("tabs.noStart", "No-Start") },
+          { key: "on-going", label: t("tabs.onGoing", "On-Going") },
+          { key: "completed", label: t("tabs.completed", "Completed") },
         ]}
         style={{ marginBottom: 12 }}
       />
       <Row gutter={12} style={{ marginBottom: 12 }}>
         <Col xs={24} md={6}>
           <Input
-            placeholder="Search title"
+            placeholder={t("filters.searchTitle", "Search title")}
             value={filters.keyword || ""}
             allowClear
             onChange={(e) => {
@@ -1193,7 +1198,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         </Col>
         <Col xs={24} md={6}>
           <Input
-            placeholder="Assigned to"
+            placeholder={t("filters.assigned", "Assigned to")}
             allowClear
             value={filters.assignedTo}
             onChange={(e) => {
@@ -1207,7 +1212,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         <Col xs={24} md={6}>
           <Select
             allowClear
-            placeholder="State"
+            placeholder={t("filters.state", "State")}
             style={{ width: "100%" }}
             disabled={tabKey !== "all"}
             onChange={(value) => {
@@ -1226,7 +1231,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           <Select
             mode="multiple"
             allowClear
-            placeholder="Work item type"
+            placeholder={t("filters.workItemType", "Work item type")}
             style={{ width: "100%" }}
             value={
               filters.type === NO_EPIC_SENTINEL
@@ -1276,7 +1281,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             <Select
               allowClear
               showSearch
-              placeholder="Project"
+              placeholder={t("filters.project", "Project")}
               style={{ width: "100%" }}
               value={filters.project}
               options={projects}
@@ -1296,7 +1301,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               <DatePicker.RangePicker
                 style={{ width: "100%" }}
                 allowClear
-                placeholder={["Planned start from", "Planned start to"]}
+                placeholder={[t("filters.plannedFrom", "Planned start from"), t("filters.plannedTo", "Planned start to")]}
                 value={
                   filters.plannedFrom || filters.plannedTo
                     ? [
@@ -1322,13 +1327,13 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             <Col xs={24} md={hideProjectSelector ? 10 : 8}>
               <Space wrap>
                 <Button size="small" onClick={() => applyPlannedRangeShortcut(getDayRange(0))}>
-                  Today
+                  {t("filters.today", "Today")}
                 </Button>
                 <Button size="small" onClick={() => applyPlannedRangeShortcut(getRelativeWeekRange(0))}>
-                  This Week
+                  {t("filters.thisWeek", "This Week")}
                 </Button>
                 <Button size="small" onClick={() => applyPlannedRangeShortcut(getRelativeWeekRange(1))}>
-                  Next Week
+                  {t("filters.nextWeek", "Next Week")}
                 </Button>
               </Space>
             </Col>
@@ -1339,7 +1344,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             <Col xs={24} md={8}>
               <DatePicker.RangePicker
                 style={{ width: "100%" }}
-                placeholder={["Closed from", "Closed to"]}
+                placeholder={[t("filters.closedFrom", "Closed from"), t("filters.closedTo", "Closed to")]}
                 value={
                   filters.closedFrom && filters.closedTo
                     ? [dayjs(filters.closedFrom), dayjs(filters.closedTo)]
@@ -1362,16 +1367,16 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             <Col xs={24} md={10}>
               <Space wrap>
                 <Button size="small" onClick={() => applyClosedRangeShortcut(getRelativeWeekRange(0))}>
-                  本周
+                  {t("filters.thisWeek", "This Week")}
                 </Button>
                 <Button size="small" onClick={() => applyClosedRangeShortcut(getRelativeWeekRange(-1))}>
-                  上周
+                  {t("filters.lastWeek", "Last Week")}
                 </Button>
                 <Button size="small" onClick={() => applyClosedRangeShortcut(getRelativeWeekRange(-2))}>
-                  上上周
+                  {t("filters.twoWeeksAgo", "Two Weeks Ago")}
                 </Button>
                 <Button size="small" onClick={() => applyClosedRangeShortcut(getCurrentMonthRange())}>
-                  本月
+                  {t("filters.thisMonth", "This Month")}
                 </Button>
               </Space>
             </Col>
@@ -1386,11 +1391,11 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               type={viewMode === "gantt" ? "primary" : "default"}
               onClick={() => setViewMode((prev) => (prev === "table" ? "gantt" : "table"))}
             >
-              {viewMode === "gantt" ? "列表视图" : "甘特图视图"}
+              {viewMode === "gantt" ? t("views.list", "List View") : t("views.gantt", "Gantt View")}
             </Button>
           )}
           <Button icon={<ClearOutlined />} onClick={clearFilters} disabled={!hasActiveFilters}>
-            Clear Filters
+            {t("filters.clear", "Clear Filters")}
           </Button>
         </Space>
       </Row>
@@ -1420,13 +1425,26 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         }}
           columns={[
           {
-            title: "Assigned To",
+            title: t("table.assignedTo", "Assigned To"),
             dataIndex: "assignedTo",
-            width: 150,
+            width: 80,
             sorter: stringSorter((item) => (item.assignedTo || "").toLowerCase()),
+            render: (_: any, record) => {
+              const avatarSrc = proxyAzureResourceUrl(record.assignedToAvatar);
+              const initials = (record.assignedTo || "?")
+                .split(" ")
+                .map((part: string) => part.charAt(0).toUpperCase())
+                .join("")
+                .slice(0, 2);
+              return (
+                <div className="assignee-avatar" title={record.assignedTo || ""}>
+                  {avatarSrc ? <img src={avatarSrc} alt={record.assignedTo || "User"} /> : initials || "-"}
+                </div>
+              );
+            },
           },
           {
-            title: "Project",
+            title: t("table.project", "Project"),
             dataIndex: "projectName",
             width: 140,
             sorter: stringSorter((item) => getProjectSortKey(item).toLowerCase()),
@@ -1437,7 +1455,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             ),
           },
           {
-            title: "Parent",
+            title: t("table.parent", "Parent"),
             dataIndex: "parentId",
             width: 220,
             sorter: stringSorter((item) => {
@@ -1460,28 +1478,28 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             },
           },
           {
-            title: "Title",
+            title: t("table.title", "Title"),
             dataIndex: "title",
             ellipsis: true,
             width: 280,
             sorter: stringSorter((item) => (item.title || "").toLowerCase()),
           },
           {
-            title: "Type",
+            title: t("table.type", "Type"),
             dataIndex: "workItemType",
             width: 120,
             sorter: stringSorter((item) => (item.workItemType || "").toLowerCase()),
             render: (value?: string) => (value ? <Tag color={typeColors[value] || "default"}>{value}</Tag> : "-"),
           },
           {
-            title: "Discussion",
+            title: t("table.discussion", "Discussion"),
             dataIndex: "latestDiscussion",
             width: 360,
             render: (_, record) => {
               const key = `${record.projectId}-${record.id}`;
               const preview = latestCommentMap[key];
               if (!preview) {
-                return <span className="discussion-preview-empty">No discussion</span>;
+                return <span className="discussion-preview-empty">{t("table.noDiscussion", "No discussion")}</span>;
               }
               return (
                 <div className="discussion-preview-cell">
@@ -1499,7 +1517,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             },
           },
           {
-            title: "Target Date",
+            title: t("table.targetDate", "Target Date"),
             dataIndex: "targetDate",
             width: 150,
             sorter: (a, b) => {
@@ -1510,7 +1528,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             render: (value?: string) => (value ? dayjs(value).format("YYYY-MM-DD") : "-"),
           },
           {
-            title: "Last Updated",
+            title: t("table.lastUpdated", "Last Updated"),
             dataIndex: "changedDate",
             width: 180,
             sorter: (a, b) => {
@@ -1524,7 +1542,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             },
           },
           {
-            title: "Actions",
+            title: t("table.actions", "Actions"),
             fixed: "right" as const,
             width: 120,
             render: (_, record) => (
@@ -1546,7 +1564,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             ),
           },
           {
-            title: "Advance",
+            title: t("table.advance", "Advance"),
             fixed: "right" as const,
             width: 80,
             render: (_, record) => (

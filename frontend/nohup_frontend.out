@@ -623,3 +623,24 @@
 5:04:14 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
 5:04:36 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
 5:04:56 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:19:00 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:19:29 AM [vite] (client) hmr update /src/App.css
+10:34:15 AM [vite] (client) hmr update /src/App.tsx
+10:35:31 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:35:58 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:36:42 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:37:10 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:37:37 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:38:08 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:38:36 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:39:02 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:39:29 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:39:57 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:40:27 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:40:56 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:41:25 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:41:57 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:42:32 AM [vite] (client) hmr update /src/i18n.tsx
+10:42:32 AM [vite] (client) hmr invalidate /src/i18n.tsx Could not Fast Refresh ("useI18n" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+10:42:32 AM [vite] (client) hmr update /src/App.tsx, /src/pages/AllTodosPage.tsx
+10:47:34 AM [vite] (client) hmr update /src/App.tsx
