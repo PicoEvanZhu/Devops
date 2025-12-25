@@ -80,6 +80,7 @@ const projectBadgeStyle = (projectName?: string) => {
 };
 
 const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
 
 const proxyAzureResourceUrl = (url?: string) => {
   if (!url) return undefined;
@@ -200,7 +201,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const buildDefaultFilters = useCallback((): FiltersState => {
-    const base: FiltersState = { page: 1, pageSize: 20, type: NO_EPIC_SENTINEL };
+    const base: FiltersState = { page: 1, pageSize: 100, type: NO_EPIC_SENTINEL };
     return forcedProjectId ? { ...base, project: forcedProjectId } : base;
   }, [forcedProjectId]);
   const [filters, setFilters] = useState<FiltersState>(() => {
@@ -215,7 +216,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             ...stored,
             type,
             page: 1,
-            pageSize: 20,
+            pageSize: 100,
           };
         }
       } catch {
@@ -224,7 +225,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     }
     return buildDefaultFilters();
   });
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 20, total: 0 });
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 100, total: 0 });
   const [viewMode, setViewMode] = useState<"table" | "gantt">("table");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
@@ -322,24 +323,33 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         });
       }
 
-      const sorted = [...filtered].sort((a, b) => {
-        const assignedA = ((a.assignedTo || "").trim().toLowerCase()) || "\uffff";
-        const assignedB = ((b.assignedTo || "").trim().toLowerCase()) || "\uffff";
-        if (assignedA !== assignedB) {
-          return assignedA.localeCompare(assignedB);
-        }
-        const keyA = getProjectSortKey(a).toLowerCase();
-        const keyB = getProjectSortKey(b).toLowerCase();
-        if (keyA !== keyB) {
-          return keyA.localeCompare(keyB);
-        }
-        const parentA = a.parentId ?? Number.MAX_SAFE_INTEGER;
-        const parentB = b.parentId ?? Number.MAX_SAFE_INTEGER;
-        if (parentA !== parentB) {
-          return parentA - parentB;
-        }
-        return (a.id || 0) - (b.id || 0);
-      });
+      const sorted = [...filtered];
+      if (currentTab === "no-start") {
+        sorted.sort((a, b) => {
+          const dateA = new Date(a.changedDate || a.createdDate || 0).getTime();
+          const dateB = new Date(b.changedDate || b.createdDate || 0).getTime();
+          return dateB - dateA;
+        });
+      } else {
+        sorted.sort((a, b) => {
+          const assignedA = ((a.assignedTo || "").trim().toLowerCase()) || "\uffff";
+          const assignedB = ((b.assignedTo || "").trim().toLowerCase()) || "\uffff";
+          if (assignedA !== assignedB) {
+            return assignedA.localeCompare(assignedB);
+          }
+          const keyA = getProjectSortKey(a).toLowerCase();
+          const keyB = getProjectSortKey(b).toLowerCase();
+          if (keyA !== keyB) {
+            return keyA.localeCompare(keyB);
+          }
+          const parentA = a.parentId ?? Number.MAX_SAFE_INTEGER;
+          const parentB = b.parentId ?? Number.MAX_SAFE_INTEGER;
+          if (parentA !== parentB) {
+            return parentA - parentB;
+          }
+          return (a.id || 0) - (b.id || 0);
+        });
+      }
       setTodos(sorted);
       const page = effectiveFilters.page || 1;
       const pageSize = effectiveFilters.pageSize || 20;
@@ -1404,14 +1414,22 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           pageSize: pagination.pageSize,
           total: pagination.total,
           showSizeChanger: true,
+          pageSizeOptions: ["20", "50", "100", "200"],
           onChange: handlePageChange,
+          defaultPageSize: 100,
         }}
           columns={[
-          { title: "Assigned To", dataIndex: "assignedTo", width: 150 },
+          {
+            title: "Assigned To",
+            dataIndex: "assignedTo",
+            width: 150,
+            sorter: stringSorter((item) => (item.assignedTo || "").toLowerCase()),
+          },
           {
             title: "Project",
             dataIndex: "projectName",
             width: 140,
+            sorter: stringSorter((item) => getProjectSortKey(item).toLowerCase()),
             render: (projectName?: string) => (
               <span className="project-badge" style={projectBadgeStyle(projectName)}>
                 {normalizeProjectName(projectName) || "-"}
@@ -1422,6 +1440,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             title: "Parent",
             dataIndex: "parentId",
             width: 220,
+            sorter: stringSorter((item) => {
+              const parentRecord = todoById[item.parentId] || parentDetails[item.parentId];
+              return (item.parentTitle || parentRecord?.title || `#${item.parentId || ""}`).toLowerCase();
+            }),
             render: (_, record) => {
               if (!record.parentId) return <span className="parent-cell">-</span>;
               const parentRecord = todoById[record.parentId] || parentDetails[record.parentId];
@@ -1437,11 +1459,18 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               );
             },
           },
-          { title: "Title", dataIndex: "title", ellipsis: true, width: 280 },
+          {
+            title: "Title",
+            dataIndex: "title",
+            ellipsis: true,
+            width: 280,
+            sorter: stringSorter((item) => (item.title || "").toLowerCase()),
+          },
           {
             title: "Type",
             dataIndex: "workItemType",
             width: 120,
+            sorter: stringSorter((item) => (item.workItemType || "").toLowerCase()),
             render: (value?: string) => (value ? <Tag color={typeColors[value] || "default"}>{value}</Tag> : "-"),
           },
           {
@@ -1473,7 +1502,26 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             title: "Target Date",
             dataIndex: "targetDate",
             width: 150,
+            sorter: (a, b) => {
+              const dateA = a.targetDate ? new Date(a.targetDate).getTime() : 0;
+              const dateB = b.targetDate ? new Date(b.targetDate).getTime() : 0;
+              return dateA - dateB;
+            },
             render: (value?: string) => (value ? dayjs(value).format("YYYY-MM-DD") : "-"),
+          },
+          {
+            title: "Last Updated",
+            dataIndex: "changedDate",
+            width: 180,
+            sorter: (a, b) => {
+              const dateA = new Date(a.changedDate || a.createdDate || 0).getTime();
+              const dateB = new Date(b.changedDate || b.createdDate || 0).getTime();
+              return dateA - dateB;
+            },
+            render: (_: any, record) => {
+              const value = record.changedDate || record.createdDate;
+              return value ? dayjs(value).format("YYYY-MM-DD HH:mm") : "-";
+            },
           },
           {
             title: "Actions",

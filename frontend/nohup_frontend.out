@@ -3,7 +3,623 @@
 > vite
 
 
-  VITE v7.2.6  ready in 183 ms
+  VITE v7.2.6  ready in 321 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
+4:48:07 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:54:18 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:55:35 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:55:35 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+4:56:01 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:56:01 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+4:56:05 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:56:05 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:56:05 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+4:56:07 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+4:56:28 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:56:48 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:57:18 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:57:50 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:58:12 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:58:12 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:58:12 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+4:59:20 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:59:20 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:59:20 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:59:21 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+4:59:42 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:59:42 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:59:42 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+4:59:42 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+5:00:48 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+5:01:27 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+5:01:27 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stringSorter' has already been declared. (84:8)
+
+  82 |   const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
+  83 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+> 84 |   const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |         ^
+  85 |
+  86 | const proxyAzureResourceUrl = (url?: string) => {
+  87 |   if (!url) return undefined;
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:84:8
+  82 |    const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId...
+  83 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+  84 |    const stringSorter = (getter: (item: any) => string) => (a: any, b: any) => getter(a).localeCompare(getter(b));
+     |          ^
+  85 |  
+  86 |  const proxyAzureResourceUrl = (url?: string) => {
+      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
+      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
+      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
+      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+5:02:52 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+5:04:14 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+5:04:36 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+5:04:56 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
