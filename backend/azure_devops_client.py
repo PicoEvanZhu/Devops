@@ -345,6 +345,42 @@ class AzureDevOpsClient:
                 )
         return identities
 
+    def get_current_profile(self) -> Dict[str, Any]:
+        profile: Dict[str, Any] = {}
+        try:
+            url = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me"
+            resp = self._request("GET", url, params={"api-version": "7.1-preview.3"}).json()
+            profile = {
+                "displayName": resp.get("displayName"),
+                "email": resp.get("emailAddress"),
+                "uniqueName": resp.get("emailAddress"),
+            }
+        except AzureDevOpsError:
+            profile = {}
+
+        if profile.get("displayName"):
+            return profile
+
+        try:
+            resp = self._request(
+                "GET",
+                f"{self.base_url}/_apis/connectionData",
+                params={
+                    "connectOptions": "IncludeServices",
+                    "lastChangeId": -1,
+                    "lastChangeId64": -1,
+                    "api-version": "7.1-preview.1",
+                },
+            ).json()
+            user = resp.get("authenticatedUser") or {}
+            return {
+                "displayName": user.get("displayName"),
+                "email": user.get("mailAddress") or user.get("uniqueName"),
+                "uniqueName": user.get("uniqueName"),
+            }
+        except AzureDevOpsError:
+            return profile
+
     def _build_patch_body(
         self,
         data: Dict[str, Any],
@@ -537,6 +573,40 @@ class AzureDevOpsClient:
                 }
             )
         return comments
+
+    def list_descendants(self, project: str, epic_id: int) -> List[Dict[str, Any]]:
+        wiql = (
+            "SELECT [System.Id] FROM WorkItemLinks WHERE "
+            f"([Source].[System.Id] = {epic_id}) "
+            "AND ([System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward') "
+            "AND ([Target].[System.State] <> 'Removed') "
+            "MODE (Recursive)"
+        )
+        resp = self._request(
+            "POST",
+            f"{self.base_url}/{project}/_apis/wit/wiql",
+            params={"api-version": self.API_VERSION},
+            json={"query": wiql},
+        ).json()
+        relations = resp.get("workItemRelations", [])
+        ids = [str(rel.get("target", {}).get("id")) for rel in relations if rel.get("target")]
+        ids = [i for i in ids if i]
+        if not ids:
+            return []
+        results: List[Dict[str, Any]] = []
+        for chunk_ids in self._chunk(ids, 200):
+            items_resp = self._request(
+                "GET",
+                f"{self.base_url}/{project}/_apis/wit/workitems",
+                params={
+                    "ids": ",".join(chunk_ids),
+                    "api-version": self.API_VERSION,
+                    "$expand": "relations",
+                },
+            ).json()
+            for item in items_resp.get("value", []):
+                results.append(self._map_work_item(item))
+        return results
 
     def add_comment(self, project: str, work_item_id: int, text: str) -> Dict[str, Any]:
         url = f"{self.base_url}/{project}/_apis/wit/workItems/{work_item_id}/comments"

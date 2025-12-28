@@ -109,9 +109,16 @@ def logout() -> tuple:
 @app.route("/api/session", methods=["GET"])
 def session_info() -> tuple:
     organization = session.get("organization")
-    if not organization:
+    pat = session.get("pat")
+    if not organization or not pat:
         return jsonify({"authenticated": False})
-    return jsonify({"authenticated": True, "organization": organization})
+    profile: Dict[str, Any] = {}
+    try:
+        client = AzureDevOpsClient(organization, pat)
+        profile = client.get_current_profile()
+    except Exception as exc:  # pragma: no cover - best effort profile fetch
+        app.logger.warning("Failed to fetch current profile: %s", exc)
+    return jsonify({"authenticated": True, "organization": organization, "user": profile or None})
 
 
 @app.route("/api/projects", methods=["GET"])
@@ -157,6 +164,16 @@ def list_todos(project_id: str) -> tuple:
         return jsonify({"error": str(exc)}), exc.status_code or 500
 
 
+@app.route("/api/projects/<project_id>/todos/descendants/<int:epic_id>", methods=["GET"])
+def list_descendant_todos(project_id: str, epic_id: int) -> tuple:
+    client = _require_client()
+    try:
+        todos = client.list_descendants(project_id, epic_id)
+        return jsonify({"todos": todos})
+    except AzureDevOpsError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code or 500
+
+
 @app.route("/api/todos", methods=["GET"])
 def list_all_todos() -> tuple:
     client = _require_client()
@@ -170,6 +187,9 @@ def list_all_todos() -> tuple:
     page_size = int(request.args.get("pageSize", 20))
 
     try:
+        if not assigned_to:
+            profile = client.get_current_profile()
+            assigned_to = profile.get("displayName") or profile.get("email") or profile.get("uniqueName")
         projects = client.list_projects()
         app.logger.info("list_all_todos: %s projects", len(projects))
         aggregated = []

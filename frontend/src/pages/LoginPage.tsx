@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { api } from "../api";
+import type { SessionInfo } from "../types";
 
 type Props = {
-  onLogin: (organization: string) => void;
+  onLogin: (session: SessionInfo) => void;
 };
 
 const defaultOrg = "Pico-Group";
@@ -20,7 +21,7 @@ export function LoginPage({ onLogin }: Props) {
       .session()
       .then((res) => {
         if (res.authenticated && res.organization) {
-          onLogin(res.organization);
+          onLogin(res);
           message.success("Already signed in");
         }
       })
@@ -37,7 +38,8 @@ export function LoginPage({ onLogin }: Props) {
     try {
       await api.login(organization, pat);
       message.success("Signed in");
-      onLogin(organization);
+      const sessionInfo = await api.session();
+      onLogin(sessionInfo);
       navigate("/projects");
     } catch (err: any) {
       message.error(err.message || "Login failed");

@@ -48,3 +48,12 @@ docker-compose up --build
 ## Notes
 - PAT 仅存储在服务端内存会话，不落盘、不记录。
 - 401/403 会返回清晰错误；项目列表示例处理了续页；Work Items 获取分批避免 API 限制。
+
+## Deployment SSH key
+- Private key: `~/.ssh/devops_deploy_ed25519`
+- Public key: `~/.ssh/devops_deploy_ed25519.pub`
+- Public key content:
+  ```text
+  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAp3/uh0U9XwXGUAcCUzV9PcHzEUm5Nbj86F/qCYZiQ devops-deploy
+  ```
+  deployer:jqYS5G5lVKj53IKDQCFrTCnT%

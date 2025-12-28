@@ -31,6 +31,11 @@ export type TodoItem = {
 export type SessionInfo = {
   authenticated: boolean;
   organization?: string;
+  user?: {
+    displayName?: string;
+    email?: string;
+    uniqueName?: string;
+  } | null;
 };
 
 export type Identity = {

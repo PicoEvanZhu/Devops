@@ -132,14 +132,19 @@ mkdir -p "$CM_DIR"
 CM_PATH="$CM_DIR/$(echo "$TARGET" | sed 's/[^a-zA-Z0-9._-]/_/g')"
 
 SSH_COMMON_OPTS="-o ControlPath=$CM_PATH -o ControlMaster=auto -o ControlPersist=600"
+SSH_BASE_CMD="ssh"
+if [ -n "${SSHPASS-}" ] && command -v sshpass >/dev/null 2>&1; then
+  SSH_BASE_CMD="sshpass -e ssh"
+  echo "SSHPASS detected; using sshpass for non-interactive SSH."
+fi
 
 echo "Opening SSH master connection to ${TARGET} (you may be prompted for password once)..."
-if ssh $SSH_COMMON_OPTS -fN "$TARGET" 2>/dev/null; then
+if $SSH_BASE_CMD $SSH_COMMON_OPTS -fN "$TARGET" 2>/dev/null; then
   echo "SSH master started (ControlPath=$CM_PATH)"
-  RSYNC_SSH_CMD="ssh $SSH_COMMON_OPTS"
+  RSYNC_SSH_CMD="$SSH_BASE_CMD $SSH_COMMON_OPTS"
 else
   echo "Warning: failed to start SSH master - falling back to per-command auth (you may be prompted multiple times)."
-  RSYNC_SSH_CMD="ssh"
+  RSYNC_SSH_CMD="$SSH_BASE_CMD"
 fi
 
 rsync -az -e "$RSYNC_SSH_CMD" --delete "${RSYNC_EXCLUDES[@]}" "$SOURCE_DIR"/ "${TARGET}:${REMOTE_DIR}/"
@@ -152,14 +157,14 @@ REMOTE_DOCKER_CMD="docker compose"
 if [ "$DETECT_SUDO" -eq 1 ]; then
   echo "Detecting whether remote requires sudo to access the Docker daemon..."
   # If docker info works without sudo, no need for sudo.
-  if ssh $SSH_COMMON_OPTS "$TARGET" "docker info >/dev/null 2>&1"; then
+  if $SSH_BASE_CMD $SSH_COMMON_OPTS "$TARGET" "docker info >/dev/null 2>&1"; then
     echo "Remote's Docker daemon is accessible to the user (no sudo required)."
-  elif ssh $SSH_COMMON_OPTS "$TARGET" "sudo docker info >/dev/null 2>&1"; then
+  elif $SSH_BASE_CMD $SSH_COMMON_OPTS "$TARGET" "sudo docker info >/dev/null 2>&1"; then
     echo "Remote requires sudo to access Docker - will prefix remote compose commands with sudo."
     REMOTE_DOCKER_CMD="sudo ${REMOTE_DOCKER_CMD}"
   else
     # Fall back: check if 'docker compose' binary exists at all (best-effort).
-    if ssh $SSH_COMMON_OPTS "$TARGET" "command -v docker >/dev/null 2>&1 || command -v docker-compose >/dev/null 2>&1"; then
+    if $SSH_BASE_CMD $SSH_COMMON_OPTS "$TARGET" "command -v docker >/dev/null 2>&1 || command -v docker-compose >/dev/null 2>&1"; then
       echo "Warning: Docker appears installed but access may be restricted. Will attempt compose; it may fail due to permissions."
     else
       echo "Warning: remote does not seem to have Docker or docker-compose available (even with sudo). Continuing, but compose will likely fail on remote."
@@ -171,14 +176,14 @@ fi
 
 echo "Running remote docker compose with .env.production..."
 # Print first lines of remote .env.production for confirmation (do not expose secrets elsewhere).
-ssh $SSH_COMMON_OPTS "$TARGET" "if [ -f '${REMOTE_DIR}/.env.production' ]; then echo '--- remote .env.production (first 20 lines) ---'; head -n 20 '${REMOTE_DIR}/.env.production'; echo '--- end ---'; else echo 'Remote .env.production not found in ${REMOTE_DIR}'; fi" || true
+$SSH_BASE_CMD $SSH_COMMON_OPTS "$TARGET" "if [ -f '${REMOTE_DIR}/.env.production' ]; then echo '--- remote .env.production (first 20 lines) ---'; head -n 20 '${REMOTE_DIR}/.env.production'; echo '--- end ---'; else echo 'Remote .env.production not found in ${REMOTE_DIR}'; fi" || true
 
-ssh $SSH_COMMON_OPTS "$TARGET" "mkdir -p ${REMOTE_DIR} && cd ${REMOTE_DIR} && ${REMOTE_DOCKER_CMD} pull || true && ${REMOTE_DOCKER_CMD} --env-file .env.production up -d --build"
+$SSH_BASE_CMD $SSH_COMMON_OPTS "$TARGET" "mkdir -p ${REMOTE_DIR} && cd ${REMOTE_DIR} && set -a && . ./.env.production && set +a && ${REMOTE_DOCKER_CMD} pull || true && ${REMOTE_DOCKER_CMD} --env-file .env.production up -d --build"
 
 # Close the master connection if we started one
 if [ -n "$CM_PATH" ]; then
   echo "Closing SSH master connection..."
-  ssh -O exit -o ControlPath=$CM_PATH "$TARGET" 2>/dev/null || true
+  $SSH_BASE_CMD -O exit -o ControlPath=$CM_PATH "$TARGET" 2>/dev/null || true
 fi
 
 echo "Deployment finished."

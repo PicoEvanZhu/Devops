@@ -38,8 +38,8 @@ function Shell() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleLogin = (organization: string) => {
-    setSession({ authenticated: true, organization });
+  const handleLogin = (sessionInfo: SessionInfo) => {
+    setSession(sessionInfo);
   };
 
   const handleLogout = async () => {
@@ -73,7 +73,7 @@ function Shell() {
             title={t("app.languageButton", "中/EN")}
             onClick={toggleLanguage}
           />
-          {session.authenticated && (
+          {session.authenticated && location.pathname !== "/projects" && (
             <Button style={{ marginRight: 12 }} onClick={() => navigate("/projects")}>
               {t("app.backToProjects", "Back to Projects")}
             </Button>
@@ -108,7 +108,7 @@ function Shell() {
             path="/projects"
             element={
               <RequireAuth authenticated={session.authenticated}>
-                <ProjectsPage />
+                <ProjectsPage session={session} />
               </RequireAuth>
             }
           />

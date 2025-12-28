@@ -1,7 +1,8 @@
-import { BarChartOutlined, ClearOutlined, EditOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
+import { BarChartOutlined, ClearOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, LeftOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
 import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Empty, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message } from "antd";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { api, API_BASE } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
@@ -40,7 +41,23 @@ const typeColors: Record<string, string> = {
   Bug: "red",
 };
 
-const ALL_WORK_ITEM_TYPES = ["Epic", "Feature", "User Story", "Product Backlog Item", "Task", "Bug"];
+const priorityColors: Record<number, string> = {
+  1: "red",
+  2: "orange",
+  3: "gold",
+  4: "green",
+};
+
+const stateColors: Record<string, string> = {
+  new: "blue",
+  active: "gold",
+  doing: "gold",
+  resolved: "green",
+  closed: "green",
+  removed: "default",
+};
+
+const ALL_WORK_ITEM_TYPES = ["Epic", "Feature", "User Story", "Product Backlog Item", "Task", "Bug", "Issue"];
 const DEFAULT_WORK_ITEM_TYPES = ALL_WORK_ITEM_TYPES.filter((t) => t !== "Epic");
 const NO_EPIC_SENTINEL = "__NO_EPIC__";
 
@@ -70,6 +87,12 @@ const normalizeProjectName = (name?: string) => {
   if (/^ies-?x$/i.test(trimmed)) return "Concierge";
   return trimmed;
 };
+
+const normalizeAlignmentItem = (item: any, projectId?: string) => ({
+  ...item,
+  projectId: item.projectId || projectId,
+  projectName: item.projectName || item.project,
+});
 
 const projectBadgeStyle = (projectName?: string) => {
   const normalized = normalizeProjectName(projectName);
@@ -199,6 +222,7 @@ type AllTodosPageProps = {
 
 export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: AllTodosPageProps = {}) {
   const FILTER_STORAGE_KEY = "allTodosFilters";
+  const OWNER_FILTER_STORAGE_KEY = "dashboardOwnerFilter";
   const { t } = useI18n();
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -209,6 +233,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [filters, setFilters] = useState<FiltersState>(() => {
     if (typeof window !== "undefined") {
       try {
+        const owner = window.localStorage.getItem(OWNER_FILTER_STORAGE_KEY);
         const raw = window.localStorage.getItem(FILTER_STORAGE_KEY);
         if (raw) {
           const stored = JSON.parse(raw) as Partial<FiltersState>;
@@ -216,9 +241,16 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           return {
             ...buildDefaultFilters(),
             ...stored,
+            assignedTo: owner || stored.assignedTo,
             type,
             page: 1,
             pageSize: 100,
+          };
+        }
+        if (owner) {
+          return {
+            ...buildDefaultFilters(),
+            assignedTo: owner,
           };
         }
       } catch {
@@ -231,6 +263,8 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [viewMode, setViewMode] = useState<"table" | "gantt">("table");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
+  const [keywordInput, setKeywordInput] = useState(filters.keyword || "");
+  const [assignedInput, setAssignedInput] = useState(filters.assignedTo || "");
   const [projects, setProjects] = useState<{ label: string; value: string }[]>([]);
   const [tagOptions, setTagOptions] = useState<{ label: string; value: string }[]>([]);
   const [areaOptions, setAreaOptions] = useState<{ label: string; value: string }[]>([]);
@@ -242,6 +276,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [commentLoading, setCommentLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [organization, setOrganization] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
   const commentEditorRef = useRef<RichTextEditorHandle>(null);
   const [mentionPickerOpen, setMentionPickerOpen] = useState(false);
   const [mentionOptions, setMentionOptions] = useState<{ label: string; value: string; identity: Identity }[]>([]);
@@ -249,6 +284,60 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [mentionLoading, setMentionLoading] = useState(false);
   const [latestCommentMap, setLatestCommentMap] = useState<Record<string, LatestCommentPreview>>({});
   const latestCommentRequestRef = useRef(0);
+  const filterDebounceTimeout = useRef<number | null>(null);
+  const tagSearchTimeout = useRef<number | null>(null);
+  const areaSearchTimeout = useRef<number | null>(null);
+  const iterationSearchTimeout = useRef<number | null>(null);
+  const parentSearchTimeout = useRef<number | null>(null);
+  const mentionSearchTimeout = useRef<number | null>(null);
+  const [alignmentEpic, setAlignmentEpic] = useState<any | null>(null);
+  const [alignmentItems, setAlignmentItems] = useState<any[]>([]);
+  const [alignmentLoading, setAlignmentLoading] = useState(false);
+  const [hideNotStarted, setHideNotStarted] = useState(false);
+  const [hideCompleted, setHideCompleted] = useState(false);
+  const [alignmentZoom, setAlignmentZoom] = useState(1);
+  const alignmentViewportRef = useRef<HTMLDivElement | null>(null);
+  const alignmentRequestRef = useRef(0);
+  const alignmentInitRef = useRef(false);
+  const alignmentAutoOpenRef = useRef(false);
+  const alignmentDragRef = useRef<{
+    active: boolean;
+    startX: number;
+    startY: number;
+    scrollLeft: number;
+    scrollTop: number;
+  }>({
+    active: false,
+    startX: 0,
+    startY: 0,
+    scrollLeft: 0,
+    scrollTop: 0,
+  });
+  const location = useLocation();
+
+  const debounce = (ref: React.MutableRefObject<number | null>, fn: () => void, delay = 400) => {
+    if (ref.current) {
+      window.clearTimeout(ref.current);
+    }
+    ref.current = window.setTimeout(fn, delay) as unknown as number;
+  };
+
+  useEffect(() => {
+    return () => {
+      [
+        filterDebounceTimeout,
+        tagSearchTimeout,
+        areaSearchTimeout,
+        iterationSearchTimeout,
+        parentSearchTimeout,
+        mentionSearchTimeout,
+      ].forEach((ref) => {
+        if (ref.current) {
+          window.clearTimeout(ref.current);
+        }
+      });
+    };
+  }, []);
   useEffect(() => {
     if (tabKey !== "on-going" && viewMode !== "table") {
       setViewMode("table");
@@ -260,6 +349,187 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     if (normalized === "new") return "Active";
     if (normalized === "active" || normalized === "validate") return "Closed";
     return "Closed";
+  };
+
+  const isNotStarted = (state?: string) => {
+    const normalized = (state || "").toLowerCase();
+    return normalized === "new";
+  };
+
+  const isCompleted = (state?: string) => {
+    const normalized = (state || "").toLowerCase();
+    return normalized === "closed" || normalized === "resolved";
+  };
+
+  const openAlignmentView = async (epic: any) => {
+    setAlignmentEpic(epic);
+    setAlignmentLoading(true);
+    setHideCompleted(false);
+    setHideNotStarted(false);
+    const requestId = alignmentRequestRef.current + 1;
+    alignmentRequestRef.current = requestId;
+      const loadByPaging = async (projectId: string, requestId: number) => {
+        let page = 1;
+        let hasMore = true;
+        while (hasMore) {
+          const res = await api.listTodos(projectId, { page, pageSize: 200 });
+          if (alignmentRequestRef.current !== requestId) return;
+          const batch = (res.todos || []).map((item: any) => ({
+            ...item,
+            projectId: item.projectId || projectId,
+            projectName: item.projectName || item.project,
+          }));
+          setAlignmentItems((prev) => {
+            const map = new Map<number, any>();
+            prev.forEach((item) => {
+              if (typeof item?.id === "number") {
+              map.set(item.id, item);
+            }
+          });
+          batch.forEach((item: any) => {
+            if (typeof item?.id === "number") {
+              map.set(item.id, item);
+            }
+          });
+          return Array.from(map.values());
+        });
+        if (page === 1) {
+          setAlignmentLoading(false);
+        }
+        hasMore = Boolean(res.hasMore);
+        page += 1;
+      }
+    };
+
+    try {
+      const projectId = epic.projectId;
+      if (!projectId || !epic.id) {
+        setAlignmentItems([]);
+        return;
+      }
+      setAlignmentItems([]);
+      const res = await api.listDescendants(projectId, epic.id);
+      if (alignmentRequestRef.current !== requestId) return;
+      const enriched = (res.todos || []).map((item: any) => ({
+        ...item,
+        projectId: item.projectId || projectId,
+        projectName: item.projectName || item.project,
+      }));
+      setAlignmentItems(enriched);
+    } catch (err: any) {
+      const projectId = epic.projectId;
+      if (projectId) {
+        await loadByPaging(projectId, requestId);
+      } else {
+        message.error(err.message || "Failed to load alignment view");
+      }
+    } finally {
+      if (alignmentRequestRef.current === requestId) {
+        setAlignmentLoading(false);
+      }
+    }
+  };
+
+  const mergeAlignmentItems = useCallback((items: any[], projectId?: string) => {
+    if (!items.length) return;
+    setAlignmentItems((prev) => {
+      const map = new Map<number, any>();
+      prev.forEach((item) => {
+        if (typeof item?.id === "number") {
+          map.set(item.id, item);
+        }
+      });
+      items.forEach((item) => {
+        if (typeof item?.id === "number") {
+          map.set(item.id, normalizeAlignmentItem(item, projectId));
+        }
+      });
+      return Array.from(map.values());
+    });
+  }, []);
+
+  const refreshAlignmentNodes = useCallback(
+    async ({
+      projectId,
+      itemId,
+      parentId,
+      updatedItem,
+    }: {
+      projectId: string;
+      itemId?: number;
+      parentId?: number;
+      updatedItem?: any;
+    }) => {
+      if (!alignmentEpic || !projectId) return;
+      const items: any[] = [];
+      if (updatedItem) {
+        items.push(updatedItem);
+      } else if (itemId) {
+        try {
+          const res = await api.getTodo(projectId, itemId);
+          if (res?.todo) items.push(res.todo);
+        } catch (err) {
+          // ignore refresh failure for a single node
+        }
+      }
+      if (parentId) {
+        try {
+          const res = await api.getTodo(projectId, parentId);
+          if (res?.todo) items.push(res.todo);
+        } catch (err) {
+          // ignore parent refresh failure
+        }
+      }
+      if (items.length) {
+        mergeAlignmentItems(items, projectId);
+        items.forEach((item) => {
+          if (alignmentEpic?.id && item?.id === alignmentEpic.id) {
+            setAlignmentEpic(normalizeAlignmentItem(item, projectId));
+          }
+        });
+      }
+    },
+    [alignmentEpic, mergeAlignmentItems]
+  );
+
+  const handleAlignmentPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = alignmentViewportRef.current;
+    if (!viewport) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest(".alignment-node-card")) {
+      return;
+    }
+    if (event.button !== 0) {
+      return;
+    }
+    alignmentDragRef.current = {
+      active: true,
+      startX: event.clientX,
+      startY: event.clientY,
+      scrollLeft: viewport.scrollLeft,
+      scrollTop: viewport.scrollTop,
+    };
+    alignmentDragRef.current.active = true;
+    viewport.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  };
+
+  const handleAlignmentPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = alignmentViewportRef.current;
+    if (!viewport || !alignmentDragRef.current.active) return;
+    const deltaX = event.clientX - alignmentDragRef.current.startX;
+    const deltaY = event.clientY - alignmentDragRef.current.startY;
+    viewport.scrollLeft = alignmentDragRef.current.scrollLeft - deltaX;
+    viewport.scrollTop = alignmentDragRef.current.scrollTop - deltaY;
+    event.preventDefault();
+  };
+
+  const handleAlignmentPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = alignmentViewportRef.current;
+    if (!viewport) return;
+    alignmentDragRef.current.active = false;
+    viewport.releasePointerCapture(event.pointerId);
+    event.preventDefault();
   };
 
   const loadTodos = async (nextFilters = filters, tabOverride?: string) => {
@@ -299,7 +569,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         const from = nextFilters.closedFrom ? new Date(nextFilters.closedFrom) : undefined;
         const to = nextFilters.closedTo ? new Date(nextFilters.closedTo) : undefined;
         filtered = filtered.filter((t) => {
-          const raw = (t as any).closedDate || (t as any).createdDate;
+          const raw = (t as any).closedDate || (t as any).changedDate || (t as any).createdDate;
           if (!raw) return false;
           const d = new Date(raw);
           if (Number.isNaN(d.getTime())) return false;
@@ -365,13 +635,49 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     }
   };
 
+  const alignmentMode = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return params.get("alignment") === "1";
+  }, [location.search]);
+
+  useEffect(() => {
+    if (!alignmentMode || alignmentInitRef.current) return;
+    alignmentInitRef.current = true;
+    setTabKey("all");
+    const next = { ...filters, type: "Epic", state: undefined, page: 1 };
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    loadTodos(enforced, "all");
+  }, [alignmentMode]);
+
+  useEffect(() => {
+    if (!alignmentMode || alignmentAutoOpenRef.current || alignmentEpic) return;
+    if (!forcedProjectId) return;
+    alignmentAutoOpenRef.current = true;
+    api
+      .listTodos(forcedProjectId, { page: 1, pageSize: 1, type: "Epic" })
+      .then((res) => {
+        const firstEpic = (res.todos || [])[0];
+        if (firstEpic) {
+          openAlignmentView(firstEpic);
+        }
+      })
+      .catch((err: any) => {
+        message.error(err.message || "Failed to load Epic");
+      });
+  }, [alignmentMode, alignmentEpic, forcedProjectId]);
+
   useEffect(() => {
     // 初次加载时根据当前 tabKey 应用状态筛选；
     // 这里默认 tabKey 为 "on-going"，所以默认查看 On-Going。
     loadTodos(filters, tabKey);
     api
       .session()
-      .then((res) => setOrganization(res.organization || ""))
+      .then((res) => {
+        setOrganization(res.organization || "");
+        const name = res.user?.displayName || res.user?.email || "";
+        setCurrentUser(name);
+      })
       .catch(() => void 0);
     api
       .listProjects()
@@ -409,19 +715,51 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   }, [forcedProjectId, form]);
 
   useEffect(() => {
+    if (!drawerOpen || editing) return;
+    if (!currentUser) return;
+    const currentAssigned = form.getFieldValue("assignedTo");
+    if (!currentAssigned) {
+      form.setFieldsValue({ assignedTo: currentUser });
+    }
+  }, [currentUser, drawerOpen, editing, form]);
+
+  useEffect(() => {
     if (forcedProjectId && filters.project !== forcedProjectId) {
       setFilters((prev) => ({ ...prev, project: forcedProjectId }));
     }
   }, [forcedProjectId, filters.project]);
 
+  useEffect(() => {
+    if ((filters.keyword || "") !== keywordInput) {
+      setKeywordInput(filters.keyword || "");
+    }
+    if ((filters.assignedTo || "") !== assignedInput) {
+      setAssignedInput(filters.assignedTo || "");
+    }
+  }, [filters.keyword, filters.assignedTo]);
 
-  const applyKeywordSearch = (raw: string | undefined): FiltersState => {
-    const text = raw?.trim();
-    if (!text) {
-      const next = { ...filters, keyword: undefined, page: 1 };
+  useEffect(() => {
+    debounce(filterDebounceTimeout, () => {
+      const nextFromKeyword = buildKeywordFilters(keywordInput || undefined, filters);
+      const next = { ...nextFromKeyword, assignedTo: assignedInput || undefined, page: 1 };
       const enforced = applyFilters(next);
       persistFilters(enforced);
-      return enforced;
+      if (typeof window !== "undefined") {
+        if (assignedInput) {
+          window.localStorage.setItem(OWNER_FILTER_STORAGE_KEY, assignedInput);
+        } else {
+          window.localStorage.removeItem(OWNER_FILTER_STORAGE_KEY);
+        }
+      }
+      loadTodos(enforced);
+    });
+  }, [keywordInput, assignedInput]);
+
+
+  const buildKeywordFilters = (raw: string | undefined, base: FiltersState): FiltersState => {
+    const text = raw?.trim();
+    if (!text) {
+      return { ...base, keyword: undefined, page: 1 };
     }
 
     const typeMap: Record<string, string> = {
@@ -438,21 +776,15 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
       const prefix = match[1].toLowerCase();
       const rest = match[2].trim();
       const mappedType = typeMap[prefix];
-      const next = {
-        ...filters,
+      return {
+        ...base,
         keyword: rest || undefined,
-        type: mappedType || filters.type,
+        type: mappedType || base.type,
         page: 1,
       };
-      const enforced = applyFilters(next);
-      persistFilters(enforced);
-      return enforced;
     }
 
-    const next = { ...filters, keyword: text, page: 1 };
-    const enforced = applyFilters(next);
-    persistFilters(enforced);
-    return enforced;
+    return { ...base, keyword: text, page: 1 };
   };
 
   const applyClosedRangeShortcut = (range: { from: string; to: string }) => {
@@ -693,6 +1025,125 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     return map;
   }, [todos]);
 
+  const alignmentTree = useMemo(() => {
+    if (!alignmentEpic) return null;
+    const byId: Record<number, any> = {};
+    alignmentItems.forEach((item) => {
+      if (typeof item?.id === "number") {
+        byId[item.id] = item;
+      }
+    });
+    if (alignmentEpic?.id) {
+      byId[alignmentEpic.id] = alignmentEpic;
+    }
+    const childrenMap: Record<number, number[]> = {};
+    alignmentItems.forEach((item) => {
+      const parentId = item.parentId;
+      if (!parentId) return;
+      if (!childrenMap[parentId]) {
+        childrenMap[parentId] = [];
+      }
+      childrenMap[parentId].push(item.id);
+    });
+
+    const buildNode = (id: number, visited: Set<number>) => {
+      if (visited.has(id)) return null;
+      const item = byId[id];
+      if (!item) return null;
+      const nextVisited = new Set(visited);
+      nextVisited.add(id);
+      const childIds = childrenMap[id] || [];
+      const sortedChildIds = [...childIds].sort((a, b) => {
+        const aCreated = byId[a]?.createdDate ? new Date(byId[a].createdDate).getTime() : 0;
+        const bCreated = byId[b]?.createdDate ? new Date(byId[b].createdDate).getTime() : 0;
+        if (aCreated === bCreated) return b - a;
+        return bCreated - aCreated;
+      });
+      const children = sortedChildIds
+        .map((childId) => buildNode(childId, nextVisited))
+        .filter((node): node is { item: any; children: any[] } => Boolean(node));
+      return { item, children };
+    };
+
+    return buildNode(alignmentEpic.id, new Set());
+  }, [alignmentEpic, alignmentItems]);
+
+  const renderAlignmentCard = (item: any) => {
+    const avatarSrc = proxyAzureResourceUrl(item.assignedToAvatar);
+    const initials = (item.assignedTo || "?")
+      .split(" ")
+      .map((part: string) => part.charAt(0).toUpperCase())
+      .join("")
+      .slice(0, 2);
+    const stateKey = (item.state || "").toLowerCase();
+    const estimateValue = item.originalEstimate;
+    const estimateText =
+      typeof estimateValue === "number" && !Number.isNaN(estimateValue) ? `${estimateValue}h` : "-";
+    return (
+      <div
+        className="alignment-node-card"
+        onClick={() => openEditForm(item)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openEditForm(item);
+          }
+        }}
+        role="button"
+        tabIndex={0}
+      >
+        <Typography.Text strong>{item.title || "Untitled"}</Typography.Text>
+        <div className="alignment-status-row">
+          <Tag color={stateColors[stateKey] || "default"} className="alignment-status-tag">
+            {item.state || "-"}
+          </Tag>
+          <Typography.Text type="secondary" className="alignment-estimate">
+            预计工时: {estimateText}
+          </Typography.Text>
+        </div>
+        <div className="alignment-meta">
+          <div className="assignee-avatar" title={item.assignedTo || ""}>
+            {avatarSrc ? <img src={avatarSrc} alt={item.assignedTo || "User"} /> : initials || "-"}
+          </div>
+          <Tag color={typeColors[item.workItemType] || "default"}>{item.workItemType || "-"}</Tag>
+          {item.priority ? <Tag color={priorityColors[item.priority] || "default"}>{`P${item.priority}`}</Tag> : null}
+        </div>
+        <Button
+          size="small"
+          className="alignment-child-button"
+          icon={<PlusOutlined />}
+          onClick={(event) => {
+            event.stopPropagation();
+            openChildTask(item);
+          }}
+        />
+      </div>
+    );
+  };
+
+  const renderMindmapNode = (node: { item: any; children: any[] }) => {
+    const renderedChildren = node.children
+      .map((child) => ({ child, element: renderMindmapNode(child) }))
+      .filter(({ element }) => Boolean(element));
+    const hasVisibleChildren = renderedChildren.length > 0;
+    if (hideNotStarted && isNotStarted(node.item.state)) return null;
+    if (hideCompleted && isCompleted(node.item.state) && !hasVisibleChildren) return null;
+    return (
+      <div className="mindmap-node">
+        <div className="mindmap-card">{renderAlignmentCard(node.item)}</div>
+        {hasVisibleChildren && (
+          <div className="mindmap-children">
+            {renderedChildren.map(({ child, element }) => (
+              <div key={child.item.id} className="mindmap-child">
+                {element}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const cardTitle = useMemo(() => {
     if (!forcedProjectId) return t("allTodos.title", "All Projects - To-Dos");
     const match = projects.find((p) => p.value === forcedProjectId);
@@ -708,7 +1159,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     form.setFieldsValue({
       projectId: record.projectId,
       title: "",
-      assignedTo: record.assignedTo,
+      assignedTo: currentUser || record.assignedTo,
       state: "New",
       priority: 2,
       originalEstimate: undefined,
@@ -1070,6 +1521,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     }
     try {
       setLoading(true);
+      let savedTodo: any = null;
       if (editing) {
         const updatePayload: any = {
           title: values.title,
@@ -1093,7 +1545,8 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         if (!isClosed && remainingValue != null) {
           updatePayload.remaining = remainingValue;
         }
-        await api.updateTodo(values.projectId, editing.id, updatePayload);
+        const updated = await api.updateTodo(values.projectId, editing.id, updatePayload);
+        savedTodo = updated?.todo || null;
         message.success(options?.temporary ? "Temporarily saved" : "Updated");
       } else {
         const initialState = isClosed ? "Active" : desiredState;
@@ -1113,8 +1566,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           plannedStartDate: plannedStartDateValue,
           targetDate: targetDateValue,
         });
+        savedTodo = created?.todo || null;
         if (isClosed && created?.todo?.id) {
-          await api.updateTodo(values.projectId, created.todo.id, { state: desiredState });
+          const updated = await api.updateTodo(values.projectId, created.todo.id, { state: desiredState });
+          savedTodo = updated?.todo || savedTodo;
         }
         message.success("Created");
       }
@@ -1127,6 +1582,14 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         setEditing(null);
         form.resetFields();
       }
+      if (alignmentEpic) {
+        await refreshAlignmentNodes({
+          projectId: values.projectId,
+          itemId: savedTodo?.id || editing?.id,
+          parentId,
+          updatedItem: savedTodo || undefined,
+        });
+      }
     } catch (err: any) {
       message.error(err.message || "Save failed");
     } finally {
@@ -1134,8 +1597,74 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     }
   };
 
+  const alignmentView = alignmentEpic ? (
+    <Card className="alignment-card">
+        <div className="alignment-header">
+          <div>
+            <Typography.Title level={3} className="alignment-title">
+              {t("alignment.title", "对齐视图")}
+            </Typography.Title>
+          </div>
+          <Space>
+            <Button
+              icon={hideNotStarted ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              onClick={() => setHideNotStarted((prev) => !prev)}
+            >
+              {hideNotStarted ? t("alignment.showNew", "显示未开始") : t("alignment.hideNew", "隐藏未开始")}
+            </Button>
+            <Button
+              icon={hideCompleted ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              onClick={() => setHideCompleted((prev) => !prev)}
+            >
+              {hideCompleted ? t("alignment.showDone", "显示已完成") : t("alignment.hideDone", "隐藏已完成")}
+            </Button>
+            <Button icon={<LeftOutlined />} onClick={() => setAlignmentEpic(null)}>
+              {t("alignment.back", "返回上一级")}
+            </Button>
+          </Space>
+        </div>
+        <div className="alignment-body">
+          <div className="alignment-tree">
+            {alignmentLoading ? (
+              <Empty description={t("alignment.loading", "加载中...")} />
+          ) : !alignmentTree ? (
+            <Empty description={t("alignment.empty", "暂无对齐任务")} />
+          ) : (
+            <>
+              <div className="mindmap-controls">
+                <Button onClick={() => setAlignmentZoom((prev) => Math.min(1.5, Number((prev + 0.1).toFixed(2))))}>
+                  {t("alignment.zoomIn", "放大")}
+                </Button>
+                <Button onClick={() => setAlignmentZoom((prev) => Math.max(0.6, Number((prev - 0.1).toFixed(2))))}>
+                  {t("alignment.zoomOut", "缩小")}
+                </Button>
+                <Button onClick={() => setAlignmentZoom(1)}>{t("alignment.zoomReset", "重置")}</Button>
+              </div>
+              <div
+                className="mindmap-viewport"
+                ref={alignmentViewportRef}
+                onPointerDown={handleAlignmentPointerDown}
+                onPointerMove={handleAlignmentPointerMove}
+                onPointerUp={handleAlignmentPointerUp}
+                onPointerLeave={handleAlignmentPointerUp}
+              >
+                <div className="mindmap" style={{ transform: `scale(${alignmentZoom})` }}>
+                  {renderMindmapNode(alignmentTree)}
+                </div>
+              </div>
+            </>
+            )}
+          </div>
+        </div>
+      </Card>
+  ) : null;
+
   return (
-    <Card
+    <>
+      {alignmentEpic ? (
+        alignmentView
+      ) : (
+        <Card
       title={cardTitle}
       extra={
         <Space align="center" size={24}>
@@ -1158,6 +1687,9 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             onClick={() => {
               setEditing(null);
               form.resetFields();
+              if (currentUser) {
+                form.setFieldsValue({ assignedTo: currentUser });
+              }
               if (forcedProjectId) {
                 form.setFieldsValue({ projectId: forcedProjectId });
                 loadTags(forcedProjectId);
@@ -1188,11 +1720,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         <Col xs={24} md={6}>
           <Input
             placeholder={t("filters.searchTitle", "Search title")}
-            value={filters.keyword || ""}
+            value={keywordInput}
             allowClear
             onChange={(e) => {
-              const next = applyKeywordSearch(e.target.value || undefined);
-              loadTodos(next);
+              setKeywordInput(e.target.value || "");
             }}
           />
         </Col>
@@ -1200,12 +1731,9 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           <Input
             placeholder={t("filters.assigned", "Assigned to")}
             allowClear
-            value={filters.assignedTo}
+            value={assignedInput}
             onChange={(e) => {
-              const next = { ...filters, assignedTo: e.target.value || undefined, page: 1 };
-              const enforced = applyFilters(next);
-              persistFilters(enforced);
-              loadTodos(enforced);
+              setAssignedInput(e.target.value || "");
             }}
           />
         </Col>
@@ -1492,6 +2020,14 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             render: (value?: string) => (value ? <Tag color={typeColors[value] || "default"}>{value}</Tag> : "-"),
           },
           {
+            title: t("table.priority", "Priority"),
+            dataIndex: "priority",
+            width: 110,
+            sorter: (a, b) => (a.priority || 0) - (b.priority || 0),
+            render: (value?: number) =>
+              value ? <Tag color={priorityColors[value] || "default"}>{`P${value}`}</Tag> : "-",
+          },
+          {
             title: t("table.discussion", "Discussion"),
             dataIndex: "latestDiscussion",
             width: 360,
@@ -1544,7 +2080,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           {
             title: t("table.actions", "Actions"),
             fixed: "right" as const,
-            width: 120,
+            width: 160,
             render: (_, record) => (
               <Space>
                 <Button
@@ -1558,6 +2094,14 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                     icon={<PlusOutlined />}
                     title="New Task under this User Story"
                     onClick={() => openChildTask(record)}
+                  />
+                )}
+                {record.workItemType === "Epic" && (
+                  <Button
+                    size="small"
+                    icon={<EyeOutlined />}
+                    title="Alignment View"
+                    onClick={() => openAlignmentView(record)}
                   />
                 )}
               </Space>
@@ -1589,8 +2133,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         />
       )}
 
+        </Card>
+      )}
       <Drawer
-        title={editing ? "Edit To-Do" : "Create To-Do"}
+        title={editing ? t("drawer.title.edit", "Edit To-Do") : t("drawer.title.create", "Create To-Do")}
         open={drawerOpen}
         onClose={() => {
           setDrawerOpen(false);
@@ -1612,7 +2158,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                   window.open(url, "_blank", "noopener,noreferrer");
                 }}
               >
-                View in DevOps
+                {t("drawer.buttons.viewDevOps", "View in DevOps")}
               </Button>
             )}
             <Button
@@ -1622,21 +2168,21 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                 setComments([]);
               }}
             >
-              Cancel
+              {t("drawer.buttons.cancel", "Cancel")}
             </Button>
             <Button loading={loading} onClick={() => handleCreate({ temporary: true })}>
-              Temporary Save
+              {t("drawer.buttons.temporarySave", "Temporary Save")}
             </Button>
             <Button type="primary" loading={loading} onClick={() => handleCreate()}>
-              {editing ? "Save" : "Create"}
+              {editing ? t("drawer.buttons.save", "Save") : t("drawer.buttons.create", "Create")}
             </Button>
           </Space>
         }
       >
-        <Form layout="vertical" form={form} initialValues={{ state: "New", assignedTo: "Evan Zhu", workItemType: "User Story" }}>
-          <Form.Item label="Project" name="projectId" rules={[{ required: true }]}> 
+        <Form layout="vertical" form={form} initialValues={{ state: "New", workItemType: "User Story" }}>
+          <Form.Item label={t("form.fields.project", "Project")} name="projectId" rules={[{ required: true }]}> 
             <Select
-              placeholder="Select project"
+              placeholder={t("form.placeholders.project", "Select project")}
               options={projects}
               showSearch
               disabled={!!editing || !!forcedProjectId}
@@ -1649,31 +2195,33 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               }}
             />
           </Form.Item>
-          <Form.Item label="Title" name="title" rules={[{ required: true }]}>
+          <Form.Item label={t("form.fields.title", "Title")} name="title" rules={[{ required: true }]}>
             <Input style={{ borderRadius: 0 }} />
           </Form.Item>
           <Row gutter={12}>
             <Col span={12}>
-              <Form.Item label="Work Item Type" name="workItemType">
+              <Form.Item label={t("form.fields.workItemType", "Work Item Type")} name="workItemType">
                 <Select
                   disabled={!!editing}
                   options={["User Story", "Product Backlog Item", "Task", "Bug", "Feature"].map((v) => ({
                     label: v,
                     value: v,
                   }))}
-                  placeholder="Select type"
+                  placeholder={t("form.placeholders.workItemType", "Select type")}
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Parent" name="parentId">
+              <Form.Item label={t("form.fields.parent", "Parent")} name="parentId">
                 <Select
                   showSearch
                   allowClear
                   options={parentOptions}
-                  placeholder="Select parent"
+                  placeholder={t("form.placeholders.parent", "Select parent")}
                   onFocus={() => loadParents(form.getFieldValue("projectId"))}
-                  onSearch={(val) => loadParents(form.getFieldValue("projectId"), val)}
+                  onSearch={(val) =>
+                    debounce(parentSearchTimeout, () => loadParents(form.getFieldValue("projectId"), val))
+                  }
                   filterOption={false}
                 />
               </Form.Item>
@@ -1681,58 +2229,58 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           </Row>
           <Row gutter={12}>
             <Col span={12}>
-              <Form.Item label="Assigned To" name="assignedTo">
+              <Form.Item label={t("form.fields.assignedTo", "Assigned To")} name="assignedTo">
                 <Input style={{ borderRadius: 0 }} />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="State" name="state">
+              <Form.Item label={t("form.fields.state", "State")} name="state">
                 <Select
                   options={["New", "Active", "Resolved", "Closed"].map((value) => ({
                     label: value,
                     value,
                   }))}
-                  placeholder="Select state"
+                  placeholder={t("form.placeholders.state", "Select state")}
                 />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={12}>
             <Col span={12}>
-              <Form.Item label="Priority" name="priority">
+              <Form.Item label={t("form.fields.priority", "Priority")} name="priority">
                 <Select
                   options={[1, 2, 3, 4].map((v) => ({ label: `P${v}`, value: v }))}
-                  placeholder="Select priority"
+                  placeholder={t("form.placeholders.priority", "Select priority")}
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Original Estimate" name="originalEstimate">
+              <Form.Item label={t("form.fields.originalEstimate", "Original Estimate")} name="originalEstimate">
                 <InputNumber min={0} style={{ width: "100%" }} />
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={12}>
             <Col span={12}>
-              <Form.Item label="Planned Start Date" name="plannedStartDate">
+              <Form.Item label={t("form.fields.plannedStart", "Planned Start Date")} name="plannedStartDate">
                 <DatePicker style={{ width: "100%" }} allowClear />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Target Date" name="targetDate">
+              <Form.Item label={t("form.fields.targetDate", "Target Date")} name="targetDate">
                 <DatePicker style={{ width: "100%" }} allowClear />
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item label="Description" name="description">
+          <Form.Item label={t("form.fields.description", "Description")} name="description">
             <RichTextEditor
               value={form.getFieldValue("description")}
               onChange={(html) => form.setFieldsValue({ description: html })}
-              placeholder="Rich text: paste images, add links"
+              placeholder={t("form.placeholders.description", "Rich text: paste images, add links")}
               onUploadImage={async (file) => {
                 const projectId = form.getFieldValue("projectId");
                 if (!projectId) {
-                  message.error("Please select project first");
+                  message.error(t("form.messages.selectProjectFirst", "Please select project first"));
                   throw new Error("projectId required");
                 }
                 const res = await api.uploadAttachment(projectId, file);
@@ -1742,49 +2290,53 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           </Form.Item>
           <Row gutter={12}>
             <Col span={12}>
-              <Form.Item label="Area" name="areaPath">
+              <Form.Item label={t("form.fields.area", "Area")} name="areaPath">
                 <Select
                   showSearch
                   options={areaOptions}
-                  placeholder="Select area"
+                  placeholder={t("form.placeholders.area", "Select area")}
                   onFocus={() => loadAreas(form.getFieldValue("projectId"))}
-                  onSearch={(val) => loadAreas(form.getFieldValue("projectId"), val)}
+                  onSearch={(val) =>
+                    debounce(areaSearchTimeout, () => loadAreas(form.getFieldValue("projectId"), val))
+                  }
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Iteration" name="iterationPath">
+              <Form.Item label={t("form.fields.iteration", "Iteration")} name="iterationPath">
                 <Select
                   showSearch
                   options={iterationOptions}
-                  placeholder="Select iteration"
+                  placeholder={t("form.placeholders.iteration", "Select iteration")}
                   onFocus={() => loadIterations(form.getFieldValue("projectId"))}
-                  onSearch={(val) => loadIterations(form.getFieldValue("projectId"), val)}
+                  onSearch={(val) =>
+                    debounce(iterationSearchTimeout, () => loadIterations(form.getFieldValue("projectId"), val))
+                  }
                 />
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item label="Tags" name="tags">
+          <Form.Item label={t("form.fields.tags", "Tags")} name="tags">
             <Select
               mode="tags"
               options={tagOptions}
               showSearch
-              placeholder="Add tags"
+              placeholder={t("form.placeholders.tags", "Add tags")}
               onFocus={() => loadTags(form.getFieldValue("projectId"))}
-              onSearch={(val) => loadTags(form.getFieldValue("projectId"), val)}
+              onSearch={(val) => debounce(tagSearchTimeout, () => loadTags(form.getFieldValue("projectId"), val))}
             />
           </Form.Item>
           {editing && (
             <>
-              <Form.Item label="Add Comment">
+              <Form.Item label={t("form.fields.addComment", "Add Comment")}>
                 <RichTextEditor
                   ref={commentEditorRef}
                   value={newComment}
                   onChange={(html) => setNewComment(html)}
-                  placeholder="Add a comment"
+                  placeholder={t("form.placeholders.comment", "Add a comment")}
                   onUploadImage={async (file) => {
                     if (!editing?.projectId) {
-                      message.error("Please select project first");
+                      message.error(t("form.messages.selectProjectFirst", "Please select project first"));
                       throw new Error("projectId required");
                     }
                     const res = await api.uploadAttachment(editing.projectId, file);
@@ -1799,21 +2351,21 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                       setMentionPickerOpen(open);
                       if (!open) {
                         setMentionSearchValue("");
-                        setMentionOptions([]);
-                      }
-                    }}
-                    dropdownRender={() => (
-                      <div style={{ padding: 12, width: 280 }}>
-                        <AutoComplete
-                          autoFocus
-                          value={mentionSearchValue}
-                          placeholder="Search users"
+                       setMentionOptions([]);
+                     }
+                   }}
+                   dropdownRender={() => (
+                     <div style={{ padding: 12, width: 280 }}>
+                       <AutoComplete
+                         autoFocus
+                         value={mentionSearchValue}
+                          placeholder={t("form.placeholders.searchUsers", "Search users")}
                           style={{ width: "100%" }}
                           options={mentionOptions.map((opt) => ({ label: opt.label, value: opt.value }))}
                           onChange={(val) => setMentionSearchValue(val)}
                           onSearch={(val) => {
                             setMentionSearchValue(val);
-                            fetchMentionOptions(val);
+                            debounce(mentionSearchTimeout, () => fetchMentionOptions(val));
                           }}
                           onSelect={(value) => {
                             const target = mentionOptions.find((opt) => opt.value === value);
@@ -1822,19 +2374,19 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                             }
                           }}
                           onBlur={() => setMentionPickerOpen(false)}
-                          notFoundContent={mentionLoading ? "Searching..." : "No matches"}
+                          notFoundContent={mentionLoading ? t("form.text.searching", "Searching...") : t("form.text.noMatches", "No matches")}
                         />
                       </div>
                     )}
                   >
-                    <Button icon={<UserAddOutlined />}>@ Mention</Button>
+                    <Button icon={<UserAddOutlined />}>{t("form.buttons.mention", "@ Mention")}</Button>
                   </Dropdown>
                   <Button
                     type="primary"
                     onClick={async () => {
                       const content = (newComment || "").trim();
                       if (!hasRichContent(content)) {
-                        message.warning("Comment is empty");
+                        message.warning(t("form.messages.emptyComment", "Comment is empty"));
                         return;
                       }
                       await handleAddComment(content);
@@ -1843,14 +2395,14 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                     disabled={!hasRichContent(newComment)}
                     loading={commentLoading}
                   >
-                    Post
+                    {t("form.buttons.post", "Post")}
                   </Button>
                 </Space>
               </Form.Item>
-              <Form.Item label="Discussion">
+              <Form.Item label={t("form.fields.discussion", "Discussion")}>
                 <div className="discussion-timeline">
                   {commentLoading ? (
-                    "Loading..."
+                    t("form.text.loading", "Loading...")
                   ) : comments.length ? (
                     comments.map((c, index) => (
                       <div key={c.id || index} className="discussion-item">
@@ -1866,7 +2418,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                       </div>
                     ))
                   ) : (
-                    <div style={{ color: "#999" }}>No comments</div>
+                    <div style={{ color: "#999" }}>{t("form.text.noComments", "No comments")}</div>
                   )}
                 </div>
               </Form.Item>
@@ -1874,6 +2426,6 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           )}
         </Form>
       </Drawer>
-    </Card>
+    </>
   );
 }

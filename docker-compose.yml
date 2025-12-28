@@ -4,6 +4,7 @@ services:
     environment:
       - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
       - PORT=${PORT:-5000}
+      - CORS_ORIGIN=${CORS_ORIGIN}
     ports:
       - "${BACKEND_PORT:-5800}:5000"
     restart: unless-stopped

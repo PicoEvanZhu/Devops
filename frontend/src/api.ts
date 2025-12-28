@@ -52,6 +52,8 @@ export const api = {
     const query = params.toString() ? `?${params.toString()}` : "";
     return apiFetch<{ todos: TodoItem[]; hasMore?: boolean }>(`/api/projects/${projectId}/todos${query}`);
   },
+  listDescendants: (projectId: string, epicId: number) =>
+    apiFetch<{ todos: TodoItem[] }>(`/api/projects/${projectId}/todos/descendants/${epicId}`),
   listTags: (projectId: string, search?: string) => {
     const params = new URLSearchParams();
     if (search) params.append("search", search);
