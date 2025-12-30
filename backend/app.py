@@ -1,5 +1,7 @@
 import os
 import logging
+import re
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional, List, Tuple
 
 from dotenv import load_dotenv
@@ -77,14 +79,77 @@ def _attach_parent_titles(client: AzureDevOpsClient, items: List[Dict[str, Any]]
             item["parentTitle"] = title
 
 
+def _collect_mention_tokens(profile: Optional[Dict[str, Any]], email: Optional[str]) -> List[str]:
+    tokens = []
+    if email:
+        tokens.append(email)
+    if profile:
+        tokens.extend(
+            [
+                profile.get("id"),
+                profile.get("email"),
+                profile.get("uniqueName"),
+                profile.get("displayName"),
+            ]
+        )
+    return [str(t).strip().lower() for t in tokens if t]
+
+
+def _comment_mentions_user(text: str, tokens: List[str], user_id: Optional[str]) -> bool:
+    if not text:
+        return False
+    lowered = text.lower()
+    if user_id:
+        marker = str(user_id).lower()
+        if f"@<{marker}>" in lowered:
+            return True
+        if marker in lowered:
+            if re.search(r'data-vss-mention="[^"]*' + re.escape(marker) + r'[^"]*"', lowered):
+                return True
+    if not tokens:
+        return False
+    for token in tokens:
+        if token and token in lowered:
+            return True
+    return False
+
+
+def _strip_html(text: str) -> str:
+    if not text:
+        return ""
+    cleaned = re.sub(r"<[^>]+>", " ", text)
+    return re.sub(r"\s+", " ", cleaned).strip()
+
+
+def _parse_datetime(value: Optional[str]) -> Optional[datetime]:
+    if not value:
+        return None
+    raw = value.strip()
+    if not raw:
+        return None
+    try:
+        if raw.endswith("Z"):
+            raw = raw[:-1] + "+00:00"
+        return datetime.fromisoformat(raw)
+    except ValueError:
+        pass
+    for fmt in ("%Y-%m-%d %H:%M", "%Y-%m-%d %H:%M:%S"):
+        try:
+            return datetime.strptime(raw, fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
+
+
 @app.route("/api/login", methods=["POST"])
 def login() -> tuple:
     data = request.get_json(force=True, silent=True) or {}
     organization = data.get("organization")
     pat = data.get("pat")
+    email = data.get("email")
 
-    if not organization or not pat:
-        return jsonify({"error": "organization and pat are required"}), 400
+    if not organization or not pat or not email:
+        return jsonify({"error": "organization, pat, and email are required"}), 400
 
     client = AzureDevOpsClient(organization, pat)
     try:
@@ -96,6 +161,7 @@ def login() -> tuple:
 
     session["organization"] = organization
     session["pat"] = pat
+    session["email"] = email
     session.permanent = True
     return jsonify({"success": True, "organization": organization})
 
@@ -110,6 +176,7 @@ def logout() -> tuple:
 def session_info() -> tuple:
     organization = session.get("organization")
     pat = session.get("pat")
+    email = session.get("email")
     if not organization or not pat:
         return jsonify({"authenticated": False})
     profile: Dict[str, Any] = {}
@@ -118,6 +185,10 @@ def session_info() -> tuple:
         profile = client.get_current_profile()
     except Exception as exc:  # pragma: no cover - best effort profile fetch
         app.logger.warning("Failed to fetch current profile: %s", exc)
+    if email:
+        profile = profile or {}
+        if isinstance(profile, dict):
+            profile.setdefault("email", email)
     return jsonify({"authenticated": True, "organization": organization, "user": profile or None})
 
 
@@ -187,6 +258,8 @@ def list_all_todos() -> tuple:
     page_size = int(request.args.get("pageSize", 20))
 
     try:
+        if not assigned_to:
+            assigned_to = session.get("email")
         if not assigned_to:
             profile = client.get_current_profile()
             assigned_to = profile.get("displayName") or profile.get("email") or profile.get("uniqueName")
@@ -412,6 +485,111 @@ def search_identities() -> tuple:
         return jsonify({"identities": identities})
     except AzureDevOpsError as exc:
         return jsonify({"error": str(exc)}), exc.status_code or 500
+
+
+@app.route("/api/mentions", methods=["GET"])
+def list_mentions() -> tuple:
+    client = _require_client()
+    email = (session.get("email") or "").strip()
+    limit = int(request.args.get("limit", 200))
+    max_items = int(request.args.get("maxItems", 100))
+    try:
+        profile = client.get_current_profile()
+    except Exception as exc:  # pragma: no cover - best effort profile fetch
+        app.logger.warning("Failed to fetch current profile for mentions: %s", exc)
+        profile = {}
+
+    tokens = _collect_mention_tokens(profile, email)
+    user_id = profile.get("id") if isinstance(profile, dict) else None
+    if not tokens:
+        return jsonify({"count": 0, "items": []})
+
+    assigned_to = email or profile.get("email") or profile.get("uniqueName") or profile.get("displayName")
+    if not assigned_to:
+        return jsonify({"count": 0, "items": []})
+
+    mentions: List[Dict[str, Any]] = []
+    seen_comment_ids: set = set()
+    items_scanned = 0
+    cutoff = datetime.now(timezone.utc) - timedelta(days=30)
+
+    try:
+        projects = client.list_projects()
+        for proj in projects:
+            if len(mentions) >= limit:
+                break
+            proj_id = proj.get("id")
+            if not proj_id:
+                continue
+            remaining_items = max_items - items_scanned
+            if remaining_items <= 0:
+                break
+            todos = client.query_todos(
+                proj_id,
+                assigned_to=assigned_to,
+                page=1,
+                page_size=min(200, remaining_items),
+            )
+            if not todos:
+                continue
+            for item in todos:
+                items_scanned += 1
+                if items_scanned > max_items:
+                    break
+                if len(mentions) >= limit:
+                    break
+                item_id = item.get("id")
+                if not item_id:
+                    continue
+                comments = client.list_comments(proj_id, int(item_id))
+                for comment in comments:
+                    if len(mentions) >= limit:
+                        break
+                    comment_id = comment.get("id")
+                    if comment_id in seen_comment_ids:
+                        continue
+                    created_at = _parse_datetime(comment.get("createdDate"))
+                    if not created_at:
+                        continue
+                    if created_at.tzinfo is None:
+                        created_at = created_at.replace(tzinfo=timezone.utc)
+                    if created_at < cutoff:
+                        continue
+                    author = (comment.get("createdBy") or "").strip().lower()
+                    if author and any(token in author for token in tokens):
+                        continue
+                    text = comment.get("text") or ""
+                    if _comment_mentions_user(text, tokens, user_id):
+                        seen_comment_ids.add(comment_id)
+                        preview = _strip_html(text)
+                        if len(preview) > 160:
+                            preview = f"{preview[:160]}..."
+                        mentions.append(
+                            {
+                                "id": comment_id,
+                                "projectId": proj_id,
+                                "projectName": proj.get("name"),
+                                "workItemId": item_id,
+                                "title": item.get("title"),
+                                "preview": preview,
+                                "createdBy": comment.get("createdBy"),
+                                "createdDate": comment.get("createdDate"),
+                            }
+                        )
+                if len(mentions) >= limit:
+                    break
+            if len(mentions) >= limit:
+                break
+    except AzureDevOpsError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code or 500
+    except Exception as exc:  # pragma: no cover - defensive
+        return jsonify({"error": str(exc)}), 500
+
+    mentions.sort(
+        key=lambda item: _parse_datetime(item.get("createdDate")) or datetime.min.replace(tzinfo=timezone.utc),
+        reverse=True,
+    )
+    return jsonify({"count": len(mentions), "items": mentions})
 
 
 @app.errorhandler(AzureDevOpsAuthError)

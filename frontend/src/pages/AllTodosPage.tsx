@@ -1,5 +1,5 @@
-import { BarChartOutlined, ClearOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, LeftOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
-import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Empty, Form, Input, InputNumber, Row, Select, Space, Table, Tag, Tabs, Typography, message } from "antd";
+import { BarChartOutlined, BulbOutlined, ClearOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, LeftOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
+import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Empty, Form, Input, InputNumber, Row, Select, Segmented, Space, Table, Tag, Tabs, Typography, message } from "antd";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -94,6 +94,11 @@ const normalizeAlignmentItem = (item: any, projectId?: string) => ({
   projectName: item.projectName || item.project,
 });
 
+const stripHtml = (value?: string): string => {
+  if (!value) return "";
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+};
+
 const projectBadgeStyle = (projectName?: string) => {
   const normalized = normalizeProjectName(projectName);
   if (!normalized) {
@@ -101,6 +106,14 @@ const projectBadgeStyle = (projectName?: string) => {
   }
   const index = hashString(normalized) % projectBadgePalette.length;
   return projectBadgePalette[index];
+};
+
+const parseTabKey = (value?: string | null): TabKey | null => {
+  if (!value) return null;
+  if (value === "all" || value === "no-start" || value === "on-going" || value === "completed") {
+    return value;
+  }
+  return null;
 };
 
 const getProjectSortKey = (item: any) => normalizeProjectName(item?.projectName || item?.project || item?.projectId) || "";
@@ -133,11 +146,6 @@ const rewriteAzureAttachmentHtml = (html: string): string => {
   } catch {
     return html;
   }
-};
-
-const stripHtml = (html: string): string => {
-  if (!html) return "";
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 };
 
 const summarizeCommentText = (html: string, limit = 140): string => {
@@ -224,6 +232,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const FILTER_STORAGE_KEY = "allTodosFilters";
   const OWNER_FILTER_STORAGE_KEY = "dashboardOwnerFilter";
   const { t } = useI18n();
+  const location = useLocation();
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const buildDefaultFilters = useCallback((): FiltersState => {
@@ -260,7 +269,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     return buildDefaultFilters();
   });
   const [pagination, setPagination] = useState({ current: 1, pageSize: 100, total: 0 });
-  const [viewMode, setViewMode] = useState<"table" | "gantt">("table");
+  const [viewMode, setViewMode] = useState<"table" | "gantt" | "board">("table");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
   const [keywordInput, setKeywordInput] = useState(filters.keyword || "");
@@ -271,7 +280,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [iterationOptions, setIterationOptions] = useState<{ label: string; value: string }[]>([]);
   const [parentOptions, setParentOptions] = useState<{ label: string; value: number }[]>([]);
   const [form] = Form.useForm();
-  const [tabKey, setTabKey] = useState<TabKey>("on-going");
+  const [tabKey, setTabKey] = useState<TabKey>(() => {
+    const params = new URLSearchParams(location.search);
+    return parseTabKey(params.get("tab")) || "on-going";
+  });
   const [comments, setComments] = useState<any[]>([]);
   const [commentLoading, setCommentLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -284,7 +296,6 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [mentionLoading, setMentionLoading] = useState(false);
   const [latestCommentMap, setLatestCommentMap] = useState<Record<string, LatestCommentPreview>>({});
   const latestCommentRequestRef = useRef(0);
-  const filterDebounceTimeout = useRef<number | null>(null);
   const tagSearchTimeout = useRef<number | null>(null);
   const areaSearchTimeout = useRef<number | null>(null);
   const iterationSearchTimeout = useRef<number | null>(null);
@@ -300,6 +311,22 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const alignmentRequestRef = useRef(0);
   const alignmentInitRef = useRef(false);
   const alignmentAutoOpenRef = useRef(false);
+  const tabInitRef = useRef(false);
+  const todoOpenRef = useRef<string | null>(null);
+  const ganttScrollRef = useRef<HTMLDivElement | null>(null);
+  const ganttRangeRef = useRef<string | null>(null);
+  const [confettiSeed, setConfettiSeed] = useState(0);
+  const [confettiActive, setConfettiActive] = useState(false);
+  const confettiTimerRef = useRef<number | null>(null);
+  const ganttDragRef = useRef<{
+    active: boolean;
+    startX: number;
+    scrollLeft: number;
+  }>({
+    active: false,
+    startX: 0,
+    scrollLeft: 0,
+  });
   const alignmentDragRef = useRef<{
     active: boolean;
     startX: number;
@@ -313,7 +340,29 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     scrollLeft: 0,
     scrollTop: 0,
   });
-  const location = useLocation();
+  const tabFromQuery = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    return parseTabKey(params.get("tab"));
+  }, [location.search]);
+
+  useEffect(() => {
+    return () => {
+      if (confettiTimerRef.current) {
+        window.clearTimeout(confettiTimerRef.current);
+      }
+    };
+  }, []);
+
+  const triggerConfetti = useCallback(() => {
+    if (confettiTimerRef.current) {
+      window.clearTimeout(confettiTimerRef.current);
+    }
+    setConfettiSeed(Date.now());
+    setConfettiActive(true);
+    confettiTimerRef.current = window.setTimeout(() => {
+      setConfettiActive(false);
+    }, 1600) as unknown as number;
+  }, []);
 
   const debounce = (ref: React.MutableRefObject<number | null>, fn: () => void, delay = 400) => {
     if (ref.current) {
@@ -323,9 +372,14 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   };
 
   useEffect(() => {
+    if (tabKey !== "all" && viewMode === "board") {
+      setViewMode("table");
+    }
+  }, [tabKey, viewMode]);
+
+  useEffect(() => {
     return () => {
       [
-        filterDebounceTimeout,
         tagSearchTimeout,
         areaSearchTimeout,
         iterationSearchTimeout,
@@ -338,12 +392,6 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
       });
     };
   }, []);
-  useEffect(() => {
-    if (tabKey !== "on-going" && viewMode !== "table") {
-      setViewMode("table");
-    }
-  }, [tabKey, viewMode]);
-
   const advanceState = (state?: string) => {
     const normalized = (state || "").toLowerCase();
     if (normalized === "new") return "Active";
@@ -359,6 +407,12 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const isCompleted = (state?: string) => {
     const normalized = (state || "").toLowerCase();
     return normalized === "closed" || normalized === "resolved";
+  };
+
+  const isOverdue = (item: any) => {
+    if (!item?.targetDate) return false;
+    if (isCompleted(item.state)) return false;
+    return dayjs(item.targetDate).endOf("day").isBefore(dayjs().startOf("day"));
   };
 
   const openAlignmentView = async (epic: any) => {
@@ -528,6 +582,45 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     const viewport = alignmentViewportRef.current;
     if (!viewport) return;
     alignmentDragRef.current.active = false;
+    viewport.releasePointerCapture(event.pointerId);
+    event.preventDefault();
+  };
+
+  const handleGanttPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = ganttScrollRef.current;
+    if (!viewport) return;
+    if (event.button !== 0) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest(".gantt-label")) {
+      return;
+    }
+    if (!target?.closest(".gantt-bar-wrapper") && !target?.closest(".gantt-scale-track")) {
+      return;
+    }
+    if (target?.closest(".gantt-bar")) {
+      return;
+    }
+    ganttDragRef.current = {
+      active: true,
+      startX: event.clientX,
+      scrollLeft: viewport.scrollLeft,
+    };
+    viewport.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  };
+
+  const handleGanttPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = ganttScrollRef.current;
+    if (!viewport || !ganttDragRef.current.active) return;
+    const deltaX = event.clientX - ganttDragRef.current.startX;
+    viewport.scrollLeft = ganttDragRef.current.scrollLeft - deltaX;
+    event.preventDefault();
+  };
+
+  const handleGanttPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const viewport = ganttScrollRef.current;
+    if (!viewport) return;
+    ganttDragRef.current.active = false;
     viewport.releasePointerCapture(event.pointerId);
     event.preventDefault();
   };
@@ -738,24 +831,6 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     }
   }, [filters.keyword, filters.assignedTo]);
 
-  useEffect(() => {
-    debounce(filterDebounceTimeout, () => {
-      const nextFromKeyword = buildKeywordFilters(keywordInput || undefined, filters);
-      const next = { ...nextFromKeyword, assignedTo: assignedInput || undefined, page: 1 };
-      const enforced = applyFilters(next);
-      persistFilters(enforced);
-      if (typeof window !== "undefined") {
-        if (assignedInput) {
-          window.localStorage.setItem(OWNER_FILTER_STORAGE_KEY, assignedInput);
-        } else {
-          window.localStorage.removeItem(OWNER_FILTER_STORAGE_KEY);
-        }
-      }
-      loadTodos(enforced);
-    });
-  }, [keywordInput, assignedInput]);
-
-
   const buildKeywordFilters = (raw: string | undefined, base: FiltersState): FiltersState => {
     const text = raw?.trim();
     if (!text) {
@@ -786,6 +861,21 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
 
     return { ...base, keyword: text, page: 1 };
   };
+
+  const applySearchFilters = useCallback(() => {
+    const nextFromKeyword = buildKeywordFilters(keywordInput || undefined, filters);
+    const next = { ...nextFromKeyword, assignedTo: assignedInput || undefined, page: 1 };
+    const enforced = applyFilters(next);
+    persistFilters(enforced);
+    if (typeof window !== "undefined") {
+      if (assignedInput) {
+        window.localStorage.setItem(OWNER_FILTER_STORAGE_KEY, assignedInput);
+      } else {
+        window.localStorage.removeItem(OWNER_FILTER_STORAGE_KEY);
+      }
+    }
+    loadTodos(enforced);
+  }, [assignedInput, buildKeywordFilters, filters, keywordInput]);
 
   const applyClosedRangeShortcut = (range: { from: string; to: string }) => {
     const next = {
@@ -841,8 +931,6 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   }, [filters, buildDefaultFilters]);
 
   const ganttRows = useMemo(() => {
-    if (tabKey !== "on-going") return [];
-    const todayStart = dayjs().startOf("day");
     return todos
       .filter((item) => item.plannedStartDate)
       .map((item) => {
@@ -850,18 +938,18 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         const rawEnd = item.targetDate ? dayjs(item.targetDate) : start.add(1, "day");
         const end = rawEnd.isAfter(start) ? rawEnd : start.add(1, "day");
         return { item, start, end };
-      })
-      .filter(({ end }) => end.isAfter(todayStart));
-  }, [todos, tabKey]);
+      });
+  }, [todos]);
 
-  const renderGanttView = () => {
-    if (!ganttRows.length) {
-      return <Empty description="暂无可展示的计划数据" />;
-    }
+  const ganttMeta = useMemo(() => {
+    if (!ganttRows.length) return null;
     const todayStart = dayjs().startOf("day");
-    let minStart = todayStart;
+    let minStart = ganttRows[0].start.startOf("day");
     let maxEnd = ganttRows[0].end.endOf("day");
-    ganttRows.forEach(({ end }) => {
+    ganttRows.forEach(({ start, end }) => {
+      if (start.isBefore(minStart)) {
+        minStart = start.startOf("day");
+      }
       if (end.isAfter(maxEnd)) {
         maxEnd = end.endOf("day");
       }
@@ -870,79 +958,306 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
       maxEnd = minStart.add(1, "day");
     }
     const totalDays = Math.max(maxEnd.diff(minStart, "day"), 1);
-    const tickCount = Math.min(totalDays + 1, 10);
-    const ticks = Array.from({ length: tickCount }, (_, idx) => {
-      if (tickCount === 1) return minStart;
-      const offset = Math.round((idx * totalDays) / (tickCount - 1));
-      return minStart.add(offset, "day");
+    const totalSlots = totalDays + 1;
+    const dayWidth = 60;
+    const labelWidth = 300;
+    const barWidth = totalSlots * dayWidth;
+    const timelineWidth = labelWidth + barWidth;
+    const weekLabels = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    const ticks = Array.from({ length: totalSlots }, (_, idx) => {
+      const current = minStart.add(idx, "day");
+      const weekday = weekLabels[current.day()];
+      const label = weekday === "周一" ? `${current.format("MM-DD")} ${weekday}` : weekday;
+      return { offset: idx, label };
     });
+    const todayOffset = Math.max(todayStart.diff(minStart, "day"), 0) * dayWidth;
+    return {
+      minStart,
+      maxEnd,
+      totalDays,
+      totalSlots,
+      dayWidth,
+      labelWidth,
+      barWidth,
+      timelineWidth,
+      ticks,
+      todayOffset,
+      rangeKey: `${minStart.toISOString()}_${maxEnd.toISOString()}`,
+    };
+  }, [ganttRows]);
+
+  useEffect(() => {
+    if (!ganttMeta || viewMode !== "gantt") return;
+    if (ganttRangeRef.current === ganttMeta.rangeKey) return;
+    ganttRangeRef.current = ganttMeta.rangeKey;
+    const viewport = ganttScrollRef.current;
+    if (!viewport) return;
+    viewport.scrollLeft = ganttMeta.todayOffset;
+  }, [ganttMeta, viewMode]);
+
+  const renderGanttView = () => {
+    if (!ganttRows.length || !ganttMeta) {
+      return <Empty description="暂无可展示的计划数据" />;
+    }
+    const { minStart, totalDays, dayWidth, labelWidth, barWidth, timelineWidth, ticks } = ganttMeta;
+    const todayStart = dayjs().startOf("day");
 
     return (
       <div className="gantt-container">
-        <div className="gantt-scale">
-          {ticks.map((tick, idx) => (
-            <div className="gantt-scale-tick" key={`${tick.toISOString()}-${idx}`}>
-              <span>{tick.format("MM-DD")}</span>
-            </div>
-          ))}
+        <div className="gantt-toolbar">
+          <div className="gantt-toolbar-spacer" />
+          <Button
+            size="small"
+            onClick={() => {
+              const viewport = ganttScrollRef.current;
+              if (viewport && ganttMeta) {
+                viewport.scrollLeft = ganttMeta.todayOffset;
+              }
+            }}
+          >
+            {t("filters.today", "Today")}
+          </Button>
         </div>
-        <div className="gantt-rows">
-          {ganttRows.map(({ item, start, end }) => {
-            const adjustedStart = start.isBefore(minStart) ? minStart : start.startOf("day");
-            const normalizedEnd = end.endOf("day");
-            const leftPct = Math.max(0, (adjustedStart.diff(minStart, "day") / totalDays) * 100);
-            const spanDays = Math.max(normalizedEnd.diff(adjustedStart, "day"), 0) + 1;
-            let widthPct = Math.max((spanDays / totalDays) * 100, 2);
-            if (leftPct + widthPct > 100) {
-              widthPct = 100 - leftPct;
-            }
-            const avatarSrc = proxyAzureResourceUrl(item.assignedToAvatar);
-            const initials = (item.assignedTo || "?")
-              .split(" ")
-              .map((part: string) => part.charAt(0).toUpperCase())
-              .join("")
-              .slice(0, 2);
-            return (
-              <div className="gantt-row" key={`${item.projectId}-${item.id}`}>
-                <div className="gantt-label">
-                  <div className="gantt-avatar">
-                    {avatarSrc ? <img src={avatarSrc} alt={item.assignedTo || "User"} /> : initials || "-"}
+        <div
+          className="gantt-scroll"
+          ref={ganttScrollRef}
+          onPointerDown={handleGanttPointerDown}
+          onPointerMove={handleGanttPointerMove}
+          onPointerUp={handleGanttPointerUp}
+          onPointerLeave={handleGanttPointerUp}
+        >
+          <div className="gantt-timeline" style={{ width: timelineWidth }}>
+            <div className="gantt-scale">
+              <div className="gantt-scale-spacer" style={{ width: labelWidth }} />
+              <div className="gantt-scale-track" style={{ width: barWidth }}>
+                {ticks.map((tick, idx) => (
+                  <div className="gantt-scale-tick" style={{ left: tick.offset * dayWidth }} key={`${tick.label}-${idx}`}>
+                    <span>{tick.label}</span>
                   </div>
-                  <div className="gantt-label-body">
-                    <div className="gantt-label-title">
-                      <span className="gantt-project-pill" style={projectBadgeStyle(item.projectName || item.projectId)}>
-                        {normalizeProjectName(item.projectName || item.projectId) || item.projectId}
-                      </span>
-                    </div>
-                    <div className="gantt-label-desc">{item.title}</div>
-                  </div>
-                </div>
-                <div className="gantt-bar-wrapper">
-                  <div
-                    className="gantt-bar"
-                    style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
-                    onClick={() => openEditForm(item)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(evt) => {
-                      if (evt.key === "Enter" || evt.key === " ") {
-                        evt.preventDefault();
-                        openEditForm(item);
-                      }
-                    }}
-                  >
-                    <span>
-                      {adjustedStart.format("MM-DD")} ~ {end.format("MM-DD")}
-                    </span>
-                  </div>
-                </div>
+                ))}
               </div>
-            );
-          })}
+            </div>
+            <div className="gantt-rows">
+              {ganttRows.map(({ item, start, end }) => {
+                const adjustedStart = start.isBefore(minStart) ? minStart : start.startOf("day");
+                const normalizedEnd = end.endOf("day");
+                const leftPx = Math.max(0, adjustedStart.diff(minStart, "day")) * dayWidth;
+                const spanDays = Math.max(normalizedEnd.diff(adjustedStart, "day"), 0) + 1;
+                const widthPx = Math.max(spanDays * dayWidth, 6);
+                const isDone = isCompleted(item.state);
+                const isOverdue =
+                  !isDone &&
+                  item.targetDate &&
+                  dayjs(item.targetDate).endOf("day").isBefore(todayStart);
+                const isNotStartedByDate = !isDone && todayStart.isBefore(start.startOf("day"));
+                const isInProgress =
+                  !isDone &&
+                  !isNotStartedByDate &&
+                  !isOverdue &&
+                  item.targetDate &&
+                  todayStart.isAfter(start.startOf("day")) &&
+                  todayStart.isBefore(end.endOf("day"));
+                const avatarSrc = proxyAzureResourceUrl(item.assignedToAvatar);
+                const initials = (item.assignedTo || "?")
+                  .split(" ")
+                  .map((part: string) => part.charAt(0).toUpperCase())
+                  .join("")
+                  .slice(0, 2);
+                return (
+                  <div className="gantt-row" key={`${item.projectId}-${item.id}`} style={{ width: timelineWidth }}>
+                    <div
+                      className="gantt-label gantt-label-action"
+                      style={{ width: labelWidth }}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => openEditForm(item)}
+                      onKeyDown={(evt) => {
+                        if (evt.key === "Enter" || evt.key === " ") {
+                          evt.preventDefault();
+                          openEditForm(item);
+                        }
+                      }}
+                    >
+                      <div className="gantt-avatar">
+                        {avatarSrc ? <img src={avatarSrc} alt={item.assignedTo || "User"} /> : initials || "-"}
+                      </div>
+                    <div className="gantt-label-body">
+                      <div className="gantt-label-title">
+                        <span className="gantt-project-pill" style={projectBadgeStyle(item.projectName || item.projectId)}>
+                          {normalizeProjectName(item.projectName || item.projectId) || item.projectId}
+                        </span>
+                        {item.workItemType ? (
+                          <Tag color={typeColors[item.workItemType] || "default"}>{item.workItemType}</Tag>
+                        ) : null}
+                        {isOverdue ? <span className="gantt-overdue-tag">逾期</span> : null}
+                      </div>
+                      <div className="gantt-label-desc">
+                        {item.title}
+                      </div>
+                    </div>
+                    <Button
+                      size="small"
+                      className="gantt-label-add"
+                      icon={<PlusOutlined />}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        openChildTask(item);
+                      }}
+                    />
+                  </div>
+                <div className="gantt-bar-wrapper" style={{ width: barWidth }}>
+                  <Button
+                    size="small"
+                    className="gantt-child-button"
+                    icon={<PlusOutlined />}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      openChildTask(item);
+                    }}
+                  />
+                  <div
+                    className={`gantt-bar${isDone ? " gantt-bar--done" : ""}${isOverdue ? " gantt-bar--overdue" : ""}${isInProgress ? " gantt-bar--inprogress" : ""}${isNotStartedByDate ? " gantt-bar--not-started" : ""}`}
+                    style={{ left: `${leftPx}px`, width: `${widthPx}px` }}
+                        onClick={() => openEditForm(item)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(evt) => {
+                          if (evt.key === "Enter" || evt.key === " ") {
+                            evt.preventDefault();
+                            openEditForm(item);
+                          }
+                        }}
+                      >
+                        <span>
+                          {adjustedStart.format("MM-DD")} ~ {end.format("MM-DD")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     );
   };
+
+  const boardGroups = useMemo(() => {
+    const groups = {
+      todo: [] as any[],
+      doing: [] as any[],
+      done: [] as any[],
+    };
+    todos.forEach((item) => {
+      if (isNotStarted(item.state)) {
+        groups.todo.push(item);
+      } else if (isCompleted(item.state)) {
+        groups.done.push(item);
+      } else {
+        groups.doing.push(item);
+      }
+    });
+    return groups;
+  }, [todos]);
+
+  const renderBoardView = () => {
+    if (tabKey !== "all") {
+      return <Empty description="看板仅支持全部视图" />;
+    }
+    const columns = [
+      { key: "todo", title: "待办", state: "New" },
+      { key: "doing", title: "进行中", state: "Active" },
+      { key: "done", title: "已完成", state: "Closed" },
+    ] as const;
+    return (
+      <div className="kanban-board">
+        {columns.map((col) => {
+          const items = boardGroups[col.key];
+          return (
+            <div key={col.key} className="kanban-column">
+              <div className="kanban-column-header">
+                <span>{col.title}</span>
+                <span className="kanban-count">{items.length}</span>
+                <Button
+                  size="small"
+                  className="kanban-add"
+                  icon={<PlusOutlined />}
+                  onClick={() => openNewTodoWithState(col.state)}
+                />
+              </div>
+              <div className="kanban-column-body">
+                {items.length === 0 ? (
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无任务" />
+                ) : (
+                  items.map((item) => {
+                    const stateKey = (item.state || "").toLowerCase();
+                    const desc = stripHtml(item.description);
+                    return (
+                      <div
+                        key={`${item.projectId}-${item.id}`}
+                        className="kanban-card"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => openEditForm(item)}
+                        onKeyDown={(evt) => {
+                          if (evt.key === "Enter" || evt.key === " ") {
+                            evt.preventDefault();
+                            openEditForm(item);
+                          }
+                        }}
+                      >
+                        <div className="kanban-card-title">{item.title || "Untitled"}</div>
+                        {desc ? <div className="kanban-card-desc">{desc}</div> : null}
+                        <div className="kanban-card-tags">
+                          <Tag color={stateColors[stateKey] || "default"}>{item.state || "-"}</Tag>
+                          {item.workItemType ? <Tag color={typeColors[item.workItemType] || "default"}>{item.workItemType}</Tag> : null}
+                          {item.priority ? <Tag color={priorityColors[item.priority] || "default"}>{`P${item.priority}`}</Tag> : null}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const confettiPieces = useMemo(() => {
+    if (!confettiActive) return null;
+    let seed = confettiSeed || Date.now();
+    const rand = () => {
+      seed = (seed * 9301 + 49297) % 233280;
+      return seed / 233280;
+    };
+    const palette = ["#22d3ee", "#0ea5e9", "#22c55e", "#f97316", "#ef4444", "#a855f7", "#facc15"];
+    return Array.from({ length: 26 }, (_, idx) => {
+      const left = rand() * 100;
+      const delay = rand() * 0.3;
+      const duration = 1.2 + rand() * 0.8;
+      const size = 6 + rand() * 6;
+      const rotate = Math.floor(rand() * 360);
+      const color = palette[Math.floor(rand() * palette.length)];
+      return (
+        <span
+          key={`${confettiSeed}-${idx}`}
+          className="confetti-piece"
+          style={{
+            left: `${left}%`,
+            width: `${size}px`,
+            height: `${Math.max(4, size * 0.6)}px`,
+            background: color,
+            animationDelay: `${delay}s`,
+            animationDuration: `${duration}s`,
+            ["--confetti-rotate" as any]: `${rotate}deg`,
+          }}
+        />
+      );
+    });
+  }, [confettiActive, confettiSeed]);
 
   const totalRemaining = useMemo(
     () =>
@@ -1153,6 +1468,23 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     return t("allTodos.projectFallback", "Project To-Dos");
   }, [forcedProjectId, projects, t]);
 
+  const openNewTodoWithState = (state: string) => {
+    setEditing(null);
+    form.resetFields();
+    if (currentUser) {
+      form.setFieldsValue({ assignedTo: currentUser });
+    }
+    if (forcedProjectId) {
+      form.setFieldsValue({ projectId: forcedProjectId });
+      loadTags(forcedProjectId);
+      loadAreas(forcedProjectId);
+      loadIterations(forcedProjectId);
+      loadParents(forcedProjectId);
+    }
+    form.setFieldsValue({ state });
+    setDrawerOpen(true);
+  };
+
   const openChildTask = (record: any) => {
     setEditing(null);
     form.resetFields();
@@ -1256,6 +1588,38 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     persistFilters(enforced);
     loadTodos(enforced, normalized);
   };
+
+  useEffect(() => {
+    if (tabInitRef.current) return;
+    tabInitRef.current = true;
+    if (!tabFromQuery || tabFromQuery === tabKey) return;
+    handleTabChange(tabFromQuery);
+  }, [tabFromQuery, tabKey]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const openTodoId = params.get("openTodoId");
+    if (!openTodoId) {
+      todoOpenRef.current = null;
+      return;
+    }
+    if (todoOpenRef.current === openTodoId) return;
+    todoOpenRef.current = openTodoId;
+    const projectId = forcedProjectId || params.get("projectId");
+    if (!projectId) return;
+    setLoading(true);
+    api
+      .getTodo(projectId, Number(openTodoId))
+      .then((res) => {
+        if (res?.todo) {
+          openEditForm({ ...res.todo, projectId });
+        }
+      })
+      .catch((err: any) => {
+        message.error(err.message || "Failed to open item");
+      })
+      .finally(() => setLoading(false));
+  }, [forcedProjectId, location.search]);
 
   const loadComments = async (projectId?: string, workItemId?: number) => {
     if (!projectId || !workItemId) {
@@ -1512,9 +1876,19 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     const desiredState = values.state || "New";
     const stateLower = desiredState.toString().toLowerCase();
     const isClosed = stateLower === "closed" || stateLower === "resolved";
+    const wasClosed = editing ? isCompleted(editing.state) : false;
+    const shouldCelebrate = !options?.temporary && isClosed && (!editing || !wasClosed);
     let remainingValue = values.remaining;
-    const plannedStartDateValue = serializeDateValue(values.plannedStartDate);
-    const targetDateValue = serializeDateValue(values.targetDate);
+    const todayStart = dayjs().startOf("day").toISOString();
+    const todayEnd = dayjs().endOf("day").toISOString();
+    let plannedStartDateValue = serializeDateValue(values.plannedStartDate);
+    let targetDateValue = serializeDateValue(values.targetDate);
+    const isActive = stateLower === "active";
+    const isEditingNew = editing && (editing.state || "").toString().toLowerCase() === "new";
+    if (editing && isActive && !isEditingNew) {
+      if (!plannedStartDateValue) plannedStartDateValue = todayStart;
+      if (!targetDateValue) targetDateValue = todayEnd;
+    }
     if (remainingValue == null && originalEstimate != null && !isClosed) {
       // 非关闭状态下，如果没单独填 Remaining，则默认与 Original Estimate 相同
       remainingValue = originalEstimate;
@@ -1590,6 +1964,9 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           updatedItem: savedTodo || undefined,
         });
       }
+      if (shouldCelebrate) {
+        triggerConfetti();
+      }
     } catch (err: any) {
       message.error(err.message || "Save failed");
     } finally {
@@ -1661,6 +2038,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
 
   return (
     <>
+      {confettiActive ? <div className="confetti-overlay">{confettiPieces}</div> : null}
       {alignmentEpic ? (
         alignmentView
       ) : (
@@ -1737,7 +2115,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             }}
           />
         </Col>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={5}>
           <Select
             allowClear
             placeholder={t("filters.state", "State")}
@@ -1755,7 +2133,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             }))}
           />
         </Col>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={4}>
           <Select
             mode="multiple"
             allowClear
@@ -1801,6 +2179,11 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               value,
             }))}
           />
+        </Col>
+        <Col xs={24} md={3}>
+          <Button type="primary" icon={<SearchOutlined />} onClick={applySearchFilters} block>
+            {t("filters.search", "Search")}
+          </Button>
         </Col>
       </Row>
       <Row gutter={12} style={{ marginBottom: 12 }}>
@@ -1911,25 +2294,54 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           </>
         )}
       </Row>
-      <Row justify="end" style={{ marginBottom: 12 }}>
+      <Row justify="space-between" align="middle" style={{ marginBottom: 12 }}>
         <Space>
-          {tabKey === "on-going" && (
-            <Button
-              icon={viewMode === "gantt" ? <UnorderedListOutlined /> : <BarChartOutlined />}
-              type={viewMode === "gantt" ? "primary" : "default"}
-              onClick={() => setViewMode((prev) => (prev === "table" ? "gantt" : "table"))}
-            >
-              {viewMode === "gantt" ? t("views.list", "List View") : t("views.gantt", "Gantt View")}
-            </Button>
-          )}
+          <Segmented
+            value={viewMode}
+            onChange={(value) => setViewMode(value as "table" | "gantt" | "board")}
+            options={[
+              {
+                label: (
+                  <Space size={6}>
+                    <UnorderedListOutlined />
+                    {t("views.list", "List View")}
+                  </Space>
+                ),
+                value: "table",
+              },
+              {
+                label: (
+                  <Space size={6}>
+                    <BarChartOutlined />
+                    {t("views.gantt", "Gantt View")}
+                  </Space>
+                ),
+                value: "gantt",
+              },
+              {
+                label: (
+                  <Space size={6}>
+                    <LinkOutlined />
+                    {t("views.board", "Board View")}
+                  </Space>
+                ),
+                value: "board",
+                disabled: tabKey !== "all",
+              },
+            ]}
+          />
+        </Space>
+        <Space>
           <Button icon={<ClearOutlined />} onClick={clearFilters} disabled={!hasActiveFilters}>
             {t("filters.clear", "Clear Filters")}
           </Button>
         </Space>
       </Row>
 
-      {viewMode === "gantt" && tabKey === "on-going" ? (
+      {viewMode === "gantt" ? (
         renderGanttView()
+      ) : viewMode === "board" ? (
+        renderBoardView()
       ) : (
         <Table<any>
           dataSource={todos}
@@ -2011,6 +2423,22 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             ellipsis: true,
             width: 280,
             sorter: stringSorter((item) => (item.title || "").toLowerCase()),
+            render: (value: string, record) => {
+              const title = value || "-";
+              return (
+                <div className="table-title-cell">
+                  <span className="table-title-text" title={title}>
+                    {title}
+                  </span>
+                  {record.workItemType ? (
+                    <Tag className="table-title-type" color={typeColors[record.workItemType] || "default"}>
+                      {record.workItemType}
+                    </Tag>
+                  ) : null}
+                  {isOverdue(record) ? <span className="table-overdue-tag">逾期</span> : null}
+                </div>
+              );
+            },
           },
           {
             title: t("table.type", "Type"),
@@ -2027,6 +2455,20 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             render: (value?: number) =>
               value ? <Tag color={priorityColors[value] || "default"}>{`P${value}`}</Tag> : "-",
           },
+          ...(tabKey === "all"
+            ? [
+                {
+                  title: t("table.state", "State"),
+                  dataIndex: "state",
+                  width: 100,
+                  sorter: stringSorter((item) => (item.state || "").toLowerCase()),
+                  render: (value?: string) => {
+                    const key = (value || "").toLowerCase();
+                    return value ? <Tag color={stateColors[key] || "default"}>{value}</Tag> : "-";
+                  },
+                },
+              ]
+            : []),
           {
             title: t("table.discussion", "Discussion"),
             dataIndex: "latestDiscussion",
@@ -2088,22 +2530,18 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                   icon={<EditOutlined />}
                   onClick={() => openEditForm(record)}
                 />
-                {record.workItemType === "User Story" && (
-                  <Button
-                    size="small"
-                    icon={<PlusOutlined />}
-                    title="New Task under this User Story"
-                    onClick={() => openChildTask(record)}
-                  />
-                )}
-                {record.workItemType === "Epic" && (
-                  <Button
-                    size="small"
-                    icon={<EyeOutlined />}
-                    title="Alignment View"
-                    onClick={() => openAlignmentView(record)}
-                  />
-                )}
+                <Button
+                  size="small"
+                  icon={<PlusOutlined />}
+                  title="New child item"
+                  onClick={() => openChildTask(record)}
+                />
+                <Button
+                  size="small"
+                  icon={<BulbOutlined />}
+                  title="Alignment View"
+                  onClick={() => openAlignmentView(record)}
+                />
               </Space>
             ),
           },

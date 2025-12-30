@@ -351,6 +351,7 @@ class AzureDevOpsClient:
             url = "https://app.vssps.visualstudio.com/_apis/profile/profiles/me"
             resp = self._request("GET", url, params={"api-version": "7.1-preview.3"}).json()
             profile = {
+                "id": resp.get("id"),
                 "displayName": resp.get("displayName"),
                 "email": resp.get("emailAddress"),
                 "uniqueName": resp.get("emailAddress"),
@@ -374,6 +375,7 @@ class AzureDevOpsClient:
             ).json()
             user = resp.get("authenticatedUser") or {}
             return {
+                "id": user.get("id"),
                 "displayName": user.get("displayName"),
                 "email": user.get("mailAddress") or user.get("uniqueName"),
                 "uniqueName": user.get("uniqueName"),

@@ -31,10 +31,10 @@ type TodoQueryFilters = {
 };
 
 export const api = {
-  login: (organization: string, pat: string) =>
+  login: (organization: string, pat: string, email: string) =>
     apiFetch<{ success: boolean; organization: string }>("/api/login", {
       method: "POST",
-      body: JSON.stringify({ organization, pat }),
+      body: JSON.stringify({ organization, pat, email }),
     }),
   logout: () => apiFetch<{ success: boolean }>("/api/logout", { method: "POST" }),
   session: () => apiFetch<SessionInfo>("/api/session"),
@@ -126,5 +126,11 @@ export const api = {
       throw new Error((data as any).error || response.statusText);
     }
     return data as { url: string };
+  },
+  listMentions: (limit?: number) => {
+    const params = new URLSearchParams();
+    if (limit) params.append("limit", String(limit));
+    const query = params.toString() ? `?${params.toString()}` : "";
+    return apiFetch<{ count: number; items: any[] }>(`/api/mentions${query}`);
   },
 };

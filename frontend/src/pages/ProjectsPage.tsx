@@ -1,5 +1,5 @@
 import { ArrowRightOutlined, ReloadOutlined, UserOutlined } from "@ant-design/icons";
-import { AutoComplete, Button, Card, Col, Empty, Progress, Row, Space, Table, Tag, Typography, message } from "antd";
+import { AutoComplete, Button, Card, Col, Row, Space, Table, Tag, Typography, message } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,18 @@ type DashboardSummary = {
 };
 
 const normalizeState = (state?: string) => (state || "").toLowerCase().trim();
+const normalizeOwnerToken = (value?: string) => (value || "").toLowerCase().trim();
+const compactOwnerToken = (value?: string) => normalizeOwnerToken(value).replace(/[^a-z0-9]/g, "");
+const isOwnerTokenMatch = (assigned: string, token: string) => {
+  const normalizedAssigned = normalizeOwnerToken(assigned);
+  const normalizedToken = normalizeOwnerToken(token);
+  if (!normalizedAssigned || !normalizedToken) return false;
+  if (normalizedAssigned.includes(normalizedToken) || normalizedToken.includes(normalizedAssigned)) return true;
+  const compactAssigned = compactOwnerToken(assigned);
+  const compactToken = compactOwnerToken(token);
+  if (!compactAssigned || !compactToken) return false;
+  return compactAssigned.includes(compactToken) || compactToken.includes(compactAssigned);
+};
 
 const getTodoStatusTone = (state?: string) => {
   const normalized = normalizeState(state);
@@ -24,18 +36,6 @@ const getTodoStatusTone = (state?: string) => {
   if (normalized === "active" || normalized === "validate") return "blue";
   if (normalized === "new") return "gold";
   return "default";
-};
-
-const computeProgress = (todo: TodoItem) => {
-  if (typeof todo.remaining === "number" && typeof todo.originalEstimate === "number" && todo.originalEstimate > 0) {
-    const progress = Math.round((1 - todo.remaining / todo.originalEstimate) * 100);
-    return Math.min(100, Math.max(0, progress));
-  }
-  const normalized = normalizeState(todo.state);
-  if (normalized === "closed" || normalized === "resolved") return 100;
-  if (normalized === "active" || normalized === "validate") return 70;
-  if (normalized === "new") return 25;
-  return 45;
 };
 
 export function ProjectsPage({ session }: { session: SessionInfo }) {
@@ -56,11 +56,9 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
   const [ownerOptions, setOwnerOptions] = useState<{ value: string; label: string }[]>([]);
   const [ownerLoading, setOwnerLoading] = useState(false);
   const ownerSearchTimeout = useRef<number | null>(null);
-  const [userProjectIds, setUserProjectIds] = useState<string[]>([]);
-  const [myTodos, setMyTodos] = useState<TodoItem[]>([]);
-  const [objectives, setObjectives] = useState<TodoItem[]>([]);
   const navigate = useNavigate();
   const { t } = useI18n();
+  const weekdayLabel = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"][dayjs().day()];
 
   const effectiveSession = sessionFromServer?.authenticated ? sessionFromServer : session;
   const displayName =
@@ -76,27 +74,39 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
     return Array.from(new Set(tokens));
   }, [effectiveSession.user?.displayName, effectiveSession.user?.email, effectiveSession.user?.uniqueName]);
 
-  const activeOwner =
-    ownerFilter ||
-    effectiveSession.user?.email ||
-    effectiveSession.user?.uniqueName ||
-    effectiveSession.user?.displayName ||
-    "";
-  const activeOwnerTokens = activeOwner ? [activeOwner.toLowerCase()] : userTokens;
+  const isOwnerMatch = (value?: string) => {
+    if (!value) return false;
+    if (userTokens.length === 0) return true;
+    return userTokens.some((token) => isOwnerTokenMatch(value, token));
+  };
+
+  const ownerTokens = useMemo(() => {
+    if (ownerFilter) {
+      const normalized = ownerFilter.toLowerCase();
+      const matchesCurrent = userTokens.some((token) => normalized.includes(token) || token.includes(normalized));
+      return matchesCurrent ? Array.from(new Set([normalized, ...userTokens])) : [normalized];
+    }
+    return userTokens;
+  }, [ownerFilter, userTokens]);
 
   const isOwnedByUser = (item: TodoItem) => {
-    if (activeOwnerTokens.length === 0) return false;
-    const assigned = (item.assignedTo || "").toLowerCase();
-    return activeOwnerTokens.some((token) => assigned.includes(token) || token.includes(assigned));
+    if (ownerTokens.length === 0) return true;
+    const assigned = item.assignedTo || "";
+    if (!assigned) return true;
+    return ownerTokens.some((token) => isOwnerTokenMatch(assigned, token));
   };
 
   const loadDashboard = async () => {
     setDashboardLoading(true);
     try {
-      const assignedTo = activeOwner || "";
-      const res = await api.listAllTodos({ pageSize: 1000, assignedTo: assignedTo || undefined });
+      const assignedTo =
+        ownerFilter ||
+        effectiveSession.user?.email ||
+        effectiveSession.user?.uniqueName ||
+        effectiveSession.user?.displayName;
+      const res = await api.listAllTodos({ pageSize: 1000, assignedTo });
       const items = res.todos || [];
-      const ownedItems = activeOwner ? items : items.filter(isOwnedByUser);
+      const ownedItems = items.filter(isOwnedByUser);
       const counts = ownedItems.reduce(
         (acc, item) => {
           const state = normalizeState(item.state);
@@ -116,32 +126,7 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
         return dayjs(item.targetDate).isBefore(now, "day");
       }).length;
 
-      const mine = [...ownedItems]
-        .sort((a, b) => {
-          const dateA = dayjs(a.changedDate || a.createdDate || 0).valueOf();
-          const dateB = dayjs(b.changedDate || b.createdDate || 0).valueOf();
-          return dateB - dateA;
-        })
-        .slice(0, 3);
-
-
-      const objectiveCandidates = ownedItems.filter((item) =>
-        ["epic", "feature"].includes((item.workItemType || "").toLowerCase())
-      );
-      const objectiveList = (objectiveCandidates.length > 0 ? objectiveCandidates : ownedItems)
-        .slice(0, 3);
-
       setSummary({ ...counts, overdue: overdueCount });
-      setMyTodos(mine);
-      setObjectives(objectiveList);
-      const projectIds = Array.from(
-        new Set(
-          ownedItems
-            .map((item) => (item.projectId ? String(item.projectId).trim() : ""))
-            .filter((value) => value.length > 0)
-        )
-      );
-      setUserProjectIds(projectIds);
     } catch (err: any) {
       message.error(err.message || "Failed to fetch dashboard data");
     } finally {
@@ -159,6 +144,11 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDashboardRefresh = () => {
+    loadDashboard();
+    load();
   };
 
   useEffect(() => {
@@ -184,7 +174,7 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
         cachedOwner = window.localStorage.getItem(OWNER_FILTER_STORAGE_KEY) || "";
       }
       const defaultOwner =
-        cachedOwner ||
+        (cachedOwner && isOwnerMatch(cachedOwner) ? cachedOwner : "") ||
         effectiveSession.user?.email ||
         effectiveSession.user?.uniqueName ||
         effectiveSession.user?.displayName;
@@ -211,7 +201,7 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
 
   useEffect(() => {
     loadDashboard();
-  }, [ownerFilter, userTokens.length]);
+  }, [ownerFilter, ownerTokens]);
 
   const handleOwnerSearch = (value: string) => {
     if (ownerSearchTimeout.current) {
@@ -226,7 +216,7 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
       try {
         const res = await api.searchIdentities(value.trim());
         const options = (res.identities || []).map((identity) => ({
-          value: identity.mail || identity.uniqueName || identity.displayName || identity.id || value,
+          value: identity.displayName || identity.mail || identity.uniqueName || identity.id || value,
           label: identity.displayName
             ? `${identity.displayName}${identity.mail ? ` (${identity.mail})` : ""}`
             : identity.mail || identity.uniqueName || identity.id || value,
@@ -240,17 +230,11 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
     }, 300) as unknown as number;
   };
 
-  const filteredProjects = useMemo(() => {
-    if (!activeOwner) return projects;
-    if (userProjectIds.length === 0) return [];
-    return projects.filter((project) => userProjectIds.includes(project.id));
-  }, [projects, userProjectIds, activeOwner]);
-
   const metricCards = useMemo(
     () => [
-      { label: t("dashboard.metrics.todo", "待办"), value: summary.todo, tone: "todo" },
-      { label: t("dashboard.metrics.active", "进行中"), value: summary.active, tone: "active" },
-      { label: t("dashboard.metrics.done", "已完成"), value: summary.done, tone: "done" },
+      { label: t("dashboard.metrics.todo", "待办"), value: summary.todo, tone: "todo", tabKey: "no-start" },
+      { label: t("dashboard.metrics.active", "进行中"), value: summary.active, tone: "active", tabKey: "on-going" },
+      { label: t("dashboard.metrics.done", "已完成"), value: summary.done, tone: "done", tabKey: "completed" },
       { label: t("dashboard.metrics.overdue", "逾期"), value: summary.overdue, tone: "overdue" },
     ],
     [summary, t]
@@ -265,21 +249,23 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
             <Typography.Title level={2} className="dashboard-hero-title">
               {t("dashboard.welcome", "欢迎回来")}，{displayName}
             </Typography.Title>
-            <Typography.Text className="dashboard-hero-sub">
-              {t("dashboard.subtitle", "今天也要稳步推进你的目标")}
-            </Typography.Text>
             <div className="dashboard-hero-quote">
-              <Typography.Text>
-                {t("dashboard.quote.line1", "希望我们见证彼此的成长，互助前行。")}
-              </Typography.Text>
               <Typography.Text>
                 {t("dashboard.quote.line2", "所有的目标，都是经过分解，逐步实现才能达成。")}
               </Typography.Text>
+              <Typography.Text>
+                {t("dashboard.quote.line1", "希望我们见证彼此的成长，互助前行。")}
+              </Typography.Text>
             </div>
+            <Typography.Text className="dashboard-hero-sub">
+              {t("dashboard.subtitle", "今天也要稳步推进你的目标")}
+            </Typography.Text>
           </div>
           <div className="dashboard-hero-badge">
             <span>{t("dashboard.heroBadge", "每日节奏")}</span>
-            <strong>{dayjs().format("MM/DD")}</strong>
+            <strong>
+              {dayjs().format("MM/DD")} {weekdayLabel}
+            </strong>
           </div>
         </div>
       </Card>
@@ -302,12 +288,25 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
           className="dashboard-filter-input"
           notFoundContent={ownerLoading ? t("dashboard.ownerSearching", "搜索中...") : undefined}
         />
+        <div className="dashboard-filter-spacer" />
+        <Button icon={<ReloadOutlined />} onClick={handleDashboardRefresh} loading={dashboardLoading || loading}>
+          {t("projects.buttons.refresh", "Refresh")}
+        </Button>
       </div>
 
       <Row gutter={[20, 20]} className="dashboard-metrics">
         {metricCards.map((metric) => (
           <Col xs={12} md={6} key={metric.label}>
-            <Card className={`dashboard-metric-card tone-${metric.tone}`} bordered={false}>
+            <Card
+              className={`dashboard-metric-card tone-${metric.tone}`}
+              bordered={false}
+              hoverable={Boolean(metric.tabKey)}
+              onClick={() => {
+                if (metric.tabKey) {
+                  navigate(`/todos?tab=${metric.tabKey}`);
+                }
+              }}
+            >
               <Typography.Text className="dashboard-metric-label">{metric.label}</Typography.Text>
               <div className="dashboard-metric-value">{metric.value}</div>
             </Card>
@@ -315,83 +314,10 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
         ))}
       </Row>
 
-      <Row gutter={[20, 20]} className="dashboard-main">
-        <Col xs={24} lg={12}>
-          <Card
-            title={t("dashboard.myTasks", "我负责的任务")}
-            extra={
-              <Button type="link" onClick={() => navigate("/todos")}>
-                {t("dashboard.viewAll", "查看全部")}
-              </Button>
-            }
-            loading={dashboardLoading}
-            className="dashboard-panel"
-          >
-            {myTodos.length === 0 && !dashboardLoading ? (
-              <Empty description={t("dashboard.emptyTasks", "暂无分配给你的任务")} />
-            ) : (
-              <Space direction="vertical" size="middle" className="dashboard-list">
-                {myTodos.map((item) => (
-                  <div key={item.id} className="dashboard-list-item">
-                    <div>
-                      <Typography.Text strong>{item.title || t("dashboard.untitled", "未命名任务")}</Typography.Text>
-                      <Typography.Text type="secondary" className="dashboard-date">
-                        {item.targetDate ? dayjs(item.targetDate).format("YYYY-MM-DD") : t("dashboard.noDate", "未设置时间")}
-                      </Typography.Text>
-                    </div>
-                    <Tag color={getTodoStatusTone(item.state)}>{item.state || t("dashboard.statusUnknown", "未知")}</Tag>
-                  </div>
-                ))}
-              </Space>
-            )}
-          </Card>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Card
-            title={t("dashboard.objectives", "重要 Objective")}
-            extra={
-              <Button type="link" onClick={() => navigate("/todos")}>
-                {t("dashboard.viewAll", "查看全部")}
-              </Button>
-            }
-            loading={dashboardLoading}
-            className="dashboard-panel"
-          >
-            {objectives.length === 0 && !dashboardLoading ? (
-              <Empty description={t("dashboard.emptyObjectives", "暂无关键目标")} />
-            ) : (
-              <Space direction="vertical" size="middle" className="dashboard-list">
-                {objectives.map((item) => {
-                  const progress = computeProgress(item);
-                  return (
-                    <div key={item.id} className="dashboard-list-item">
-                      <div>
-                        <Typography.Text strong>{item.title || t("dashboard.untitled", "未命名目标")}</Typography.Text>
-                        <div className="dashboard-progress-row">
-                          <Tag color="green">{item.state || t("dashboard.inProgress", "进行中")}</Tag>
-                          <Progress percent={progress} size="small" showInfo={false} />
-                          <span className="dashboard-progress-value">{progress}%</span>
-                        </div>
-                      </div>
-                      <Button type="link" onClick={() => navigate("/todos")}>
-                        {t("dashboard.enter", "进入")}
-                      </Button>
-                    </div>
-                  );
-                })}
-              </Space>
-            )}
-          </Card>
-        </Col>
-      </Row>
-
       <Card
         title={t("projects.title", "Projects")}
         extra={
           <Space>
-            <Button icon={<ReloadOutlined />} onClick={load} loading={loading}>
-              {t("projects.buttons.refresh", "Refresh")}
-            </Button>
             <Button type="primary" onClick={() => navigate("/todos")}>
               {t("projects.buttons.allTodos", "All To-Dos")}
             </Button>
@@ -400,7 +326,7 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
         className="dashboard-panel"
       >
         <Table<Project>
-          dataSource={filteredProjects}
+          dataSource={projects}
           loading={loading}
           rowKey="id"
           pagination={false}
@@ -425,7 +351,7 @@ export function ProjectsPage({ session }: { session: SessionInfo }) {
           },
           ]}
         />
-        {filteredProjects.length === 0 && !loading && (
+        {projects.length === 0 && !loading && (
           <Space direction="vertical" style={{ marginTop: 12 }}>
             <Typography.Text type="secondary">{t("projects.empty", "No projects found for this organization.")}</Typography.Text>
           </Space>

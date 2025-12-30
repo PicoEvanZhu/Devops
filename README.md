@@ -57,3 +57,4 @@ docker-compose up --build
   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBAp3/uh0U9XwXGUAcCUzV9PcHzEUm5Nbj86F/qCYZiQ devops-deploy
   ```
   deployer:jqYS5G5lVKj53IKDQCFrTCnT%
+  O_7qibP]Av6g

@@ -1,4 +1,4 @@
-import { LockOutlined, LoginOutlined } from "@ant-design/icons";
+import { LockOutlined, LoginOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,14 +29,14 @@ export function LoginPage({ onLogin }: Props) {
   }, [onLogin]);
 
   const onFinish = async (values: any) => {
-    const { organization, pat } = values;
-    if (!organization || !pat) {
-      message.error("Organization and PAT are required");
+    const { organization, pat, email } = values;
+    if (!organization || !pat || !email) {
+      message.error("Organization, PAT, and email are required");
       return;
     }
     setLoading(true);
     try {
-      await api.login(organization, pat);
+      await api.login(organization, pat, email);
       message.success("Signed in");
       const sessionInfo = await api.session();
       onLogin(sessionInfo);
@@ -57,6 +57,13 @@ export function LoginPage({ onLogin }: Props) {
         <Form layout="vertical" onFinish={onFinish} initialValues={{ organization: defaultOrg }}>
           <Form.Item label="Organization" name="organization" rules={[{ required: true }]}>
             <Input placeholder="e.g. Pico-Group" />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true }, { type: "email", message: "Enter a valid email" }]}
+          >
+            <Input prefix={<MailOutlined />} placeholder="you@example.com" />
           </Form.Item>
           <Form.Item label="Personal Access Token" name="pat" rules={[{ required: true }]}>
             <Input.Password prefix={<LockOutlined />} placeholder="Enter PAT" />

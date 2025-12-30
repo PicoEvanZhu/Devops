@@ -1,344 +1,163 @@
 
 > frontend@0.0.0 dev
-> vite --port 5173
+> vite
 
 
-  VITE v7.2.6  ready in 472 ms
+  VITE v7.2.6  ready in 218 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
-6:52:59 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-6:53:24 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-6:53:58 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-6:54:23 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-6:55:02 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-6:55:25 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-6:55:58 PM [vite] (client) hmr update /src/App.css
-7:00:51 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:05:29 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:06:04 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:06:27 PM [vite] (client) hmr update /src/App.css
-7:10:13 PM [vite] (client) hmr update /src/App.css
-7:12:25 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:12:59 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:13:27 PM [vite] (client) hmr update /src/App.css
-7:13:47 PM [vite] (client) hmr update /src/App.css
-7:15:07 PM [vite] (client) hmr update /src/App.css
-7:21:15 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:21:41 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:22:19 PM [vite] (client) hmr update /src/App.css
-7:26:48 PM [vite] (client) hmr update /src/App.css
-7:30:12 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:30:42 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:30:42 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (1417:14)
+3:31:49 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stripHtml' has already been declared. (143:6)
 
-  1415 |                 <Button onClick={() => setAlignmentZoom(1)}>{t("alignment.zoomReset", "重置")}</Button>
-  1416 |               </div>
-> 1417 |               <div className="mindmap-viewport">
-       |               ^
-  1418 |                 <div className="mindmap" style={{ transform: `scale(${alignmentZoom})` }}>
-  1419 |                   {renderMindmapNode(alignmentTree)}
-  1420 |                 </div>
+  141 | };
+  142 |
+> 143 | const stripHtml = (html: string): string => {
+      |       ^
+  144 |   if (!html) return "";
+  145 |   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  146 | };
   Plugin: vite:react-babel
-  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:1417:14
-  1415 |                  <Button onClick={() => setAlignmentZoom(1)}>{t("alignment.zoomReset", "重置")}</Button>
-  1416 |                </div>
-  1417 |                <div className="mindmap-viewport">
-       |                ^
-  1418 |                  <div className="mindmap" style={{ transform: `scale(${alignmentZoom})` }}>
-  1419 |                    {renderMindmapNode(alignmentTree)}
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:143:6
+  141 |  };
+  142 |  
+  143 |  const stripHtml = (html: string): string => {
+      |        ^
+  144 |    if (!html) return "";
+  145 |    return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+3:31:49 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stripHtml' has already been declared. (143:6)
+
+  141 | };
+  142 |
+> 143 | const stripHtml = (html: string): string => {
+      |       ^
+  144 |   if (!html) return "";
+  145 |   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  146 | };
+  Plugin: vite:react-babel
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:143:6
+  141 |  };
+  142 |  
+  143 |  const stripHtml = (html: string): string => {
+      |        ^
+  144 |    if (!html) return "";
+  145 |    return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
       at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
       at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4771:18)
-      at TypeScriptParserMixin.jsxParseElement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4778:17)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4788:19)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:39
-      at TypeScriptParserMixin.tryParse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6932:20)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:18)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
-      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
-      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12567:17)
-      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11747:28)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10957:29)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9664:18)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10949:17)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10957:29)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9664:18)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10949:17)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseExpressionBase (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10848:23)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
-      at TypeScriptParserMixin.parseExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:17)
-      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4661:31)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4740:36)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4727:32)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4727:32)
-7:32:26 PM [vite] (client) hmr update /src/App.css
-7:37:27 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:37:27 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (1426:14)
-
-  1424 |                 <Button onClick={() => setAlignmentZoom(1)}>{t("alignment.zoomReset", "重置")}</Button>
-  1425 |               </div>
-> 1426 |               <div className="mindmap-viewport">
-       |               ^
-  1427 |                 <div className="mindmap" style={{ transform: `scale(${alignmentZoom})` }}>
-  1428 |                   {renderMindmapNode(alignmentTree)}
-  1429 |                 </div>
-  Plugin: vite:react-babel
-  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:1426:14
-  1424 |                  <Button onClick={() => setAlignmentZoom(1)}>{t("alignment.zoomReset", "重置")}</Button>
-  1425 |                </div>
-  1426 |                <div className="mindmap-viewport">
-       |                ^
-  1427 |                  <div className="mindmap" style={{ transform: `scale(${alignmentZoom})` }}>
-  1428 |                    {renderMindmapNode(alignmentTree)}
-      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
-      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4771:18)
-      at TypeScriptParserMixin.jsxParseElement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4778:17)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4788:19)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:39
-      at TypeScriptParserMixin.tryParse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6932:20)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:18)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
-      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
-      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12567:17)
-      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11747:28)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10957:29)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9664:18)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10949:17)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10957:29)
-      at TypeScriptParserMixin.parseConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9664:18)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10949:17)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseExpressionBase (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10848:23)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
-      at TypeScriptParserMixin.parseExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:17)
-      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4661:31)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4740:36)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4727:32)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4727:32)
-7:38:56 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:42:15 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:42:44 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:43:04 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:43:35 PM [vite] (client) hmr update /src/App.css
-7:46:52 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:53:20 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:54:11 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:54:11 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Unexpected token, expected "}" (2258:3)
-
-  2256 |       </Drawer>
-  2257 |     </Card>
-> 2258 |   );
-       |    ^
-  2259 | }
-  2260 |
-  Plugin: vite:react-babel
-  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:2258:3
-  2256 |        </Drawer>
-  2257 |      </Card>
-  2258 |    );
-       |     ^
-  2259 |  }
-  2260 |  
-      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
-      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
-      at TypeScriptParserMixin.unexpected (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6644:16)
-      at TypeScriptParserMixin.expect (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6924:12)
-      at TypeScriptParserMixin.jsxParseExpressionContainer (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4666:10)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4740:36)
-      at TypeScriptParserMixin.jsxParseElement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4778:17)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4788:19)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:39
-      at TypeScriptParserMixin.tryParse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6932:20)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:18)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
-      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
-      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12567:17)
-      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11747:28)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseExpressionBase (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10848:23)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
-      at TypeScriptParserMixin.parseExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:17)
-      at TypeScriptParserMixin.parseReturnStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13218:28)
-      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12874:21)
+      at TypeScriptScopeHandler.checkRedeclarationInScope (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1646:19)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:1612:12)
+      at TypeScriptScopeHandler.declareName (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4909:11)
+      at TypeScriptParserMixin.declareNameFromIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7594:16)
+      at TypeScriptParserMixin.checkIdentifier (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7590:12)
+      at TypeScriptParserMixin.checkLVal (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:7527:12)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13488:10)
+      at TypeScriptParserMixin.parseVarId (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9805:11)
+      at TypeScriptParserMixin.parseVar (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13459:12)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13306:10)
+      at TypeScriptParserMixin.parseVarStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9469:31)
+      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12927:23)
       at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
       at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
-      at TypeScriptParserMixin.parseStatementListItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
-      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
+      at TypeScriptParserMixin.parseModuleItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12820:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:36)
       at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
-      at TypeScriptParserMixin.parseBlock (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
-      at TypeScriptParserMixin.parseFunctionBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
-      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12160:10)
-      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9223:18)
-7:54:34 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:54:34 PM [vite] Internal server error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Expected corresponding JSX closing tag for <>. (2259:4)
+      at TypeScriptParserMixin.parseProgram (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12698:10)
+      at TypeScriptParserMixin.parseTopLevel (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12688:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14568:25)
+      at TypeScriptParserMixin.parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10183:18)
+      at parse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:14602:38)
+      at parser (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/parser/index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+      at normalizeFile.next (<anonymous>)
+      at run (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transformation/index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:261:32)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:189:28
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/core/lib/gensync-utils/async.js:67:7
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:113:33
+      at step (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:287:14)
+      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:273:13
+      at async.call.result.err.err (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/gensync/index.js:223:11)
+3:31:49 PM [vite] (client) Pre-transform error: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx: Identifier 'stripHtml' has already been declared. (143:6)
 
-  2257 |         </Form>
-  2258 |       </Drawer>
-> 2259 |     </Card>
-       |     ^
-  2260 |   );
-  2261 | }
-  2262 |
+  141 | };
+  142 |
+> 143 | const stripHtml = (html: string): string => {
+      |       ^
+  144 |   if (!html) return "";
+  145 |   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  146 | };
   Plugin: vite:react-babel
-  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:2259:4
-  2257 |          </Form>
-  2258 |        </Drawer>
-  2259 |      </Card>
-       |      ^
-  2260 |    );
-  2261 |  }
-      at constructor (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:367:19)
-      at TypeScriptParserMixin.raise (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6624:19)
-      at TypeScriptParserMixin.jsxParseElementAt (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4749:14)
-      at TypeScriptParserMixin.jsxParseElement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4778:17)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4788:19)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:39
-      at TypeScriptParserMixin.tryParse (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:6932:20)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9828:18)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12500:12)
-      at TypeScriptParserMixin.parseMaybeAssignAllowIn (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10864:17)
-      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12567:17)
-      at TypeScriptParserMixin.parseParenAndDistinguishExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11747:28)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11395:23)
-      at TypeScriptParserMixin.parseExprAtom (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:4793:20)
-      at TypeScriptParserMixin.parseExprSubscripts (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11145:23)
-      at TypeScriptParserMixin.parseUpdate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11130:21)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:11110:23)
-      at TypeScriptParserMixin.parseMaybeUnary (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9890:18)
-      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10963:61)
-      at TypeScriptParserMixin.parseExprOps (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10968:23)
-      at TypeScriptParserMixin.parseMaybeConditional (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10945:23)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10895:21)
-      at TypeScriptParserMixin.parseMaybeAssign (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9839:20)
-      at TypeScriptParserMixin.parseExpressionBase (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10848:23)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:39
-      at TypeScriptParserMixin.allowInAnd (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12495:16)
-      at TypeScriptParserMixin.parseExpression (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:10844:17)
-      at TypeScriptParserMixin.parseReturnStatement (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13218:28)
-      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12874:21)
-      at TypeScriptParserMixin.parseStatementContent (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9569:18)
-      at TypeScriptParserMixin.parseStatementLike (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12843:17)
-      at TypeScriptParserMixin.parseStatementListItem (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12823:17)
-      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13392:61)
-      at TypeScriptParserMixin.parseBlockBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13385:10)
-      at TypeScriptParserMixin.parseBlock (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13373:10)
-      at TypeScriptParserMixin.parseFunctionBody (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12174:24)
-      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12160:10)
-      at TypeScriptParserMixin.parseFunctionBodyAndFinish (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:9223:18)
-      at /Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13521:12
-      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:12477:14)
-      at TypeScriptParserMixin.parseFunction (/Users/zhutianyu/Documents/code/Devops/frontend/node_modules/@babel/parser/lib/index.js:13520:10)
-7:55:27 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-7:59:40 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:00:01 PM [vite] (client) hmr update /src/App.css
-8:01:43 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:02:03 PM [vite] (client) hmr update /src/App.css
-8:06:45 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:09:08 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:15:00 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:26:19 PM [vite] (client) hmr update /src/App.tsx, /src/pages/LoginPage.tsx, /src/pages/ProjectsPage.tsx, /src/pages/AllTodosPage.tsx, /src/components/RichTextEditor.tsx
-8:26:58 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:36:24 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
-8:39:31 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:40:01 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:45:03 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:48:42 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:58:55 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
-10:50:08 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-10:57:56 PM [vite] (client) hmr update /src/App.css
-11:11:44 PM [vite] (client) hmr update /src/App.css
-11:15:42 PM [vite] (client) hmr update /src/App.css
-11:18:19 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-11:19:04 PM [vite] (client) hmr update /src/App.css
-11:27:40 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-11:36:19 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:10:32 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:11:44 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:12:26 AM [vite] (client) hmr update /src/App.css
-8:27:06 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:27:57 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:29:09 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:30:07 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:30:56 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:31:54 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
-8:34:50 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+  File: /Users/zhutianyu/Documents/code/Devops/frontend/src/pages/AllTodosPage.tsx:143:6
+  141 |  };
+  142 |  
+  143 |  const stripHtml = (html: string): string => {
+      |        ^
+  144 |    if (!html) return "";
+  145 |    return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+3:53:53 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:54:06 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:54:15 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:55:33 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:02:33 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:02:42 PM [vite] (client) hmr update /src/App.css
+4:23:39 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:23:47 PM [vite] (client) hmr update /src/App.css
+4:25:42 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:27:38 PM [vite] (client) hmr update /src/App.css
+4:37:03 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:37:10 PM [vite] (client) hmr update /src/App.css
+4:38:35 PM [vite] (client) hmr update /src/App.css
+4:39:45 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:39:53 PM [vite] (client) hmr update /src/App.css
+4:41:07 PM [vite] (client) hmr update /src/App.css
+4:42:36 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:42:43 PM [vite] (client) hmr update /src/App.css
+4:54:29 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+9:57:09 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+10:02:31 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+12:02:35 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+12:04:05 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+12:12:08 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+12:33:13 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+2:36:44 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+2:46:32 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+2:50:39 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+2:50:56 PM [vite] (client) hmr update /src/App.css
+3:00:26 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:00:52 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:04:31 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:05:14 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:06:24 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:08:16 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:12:40 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:15:00 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:18:35 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:19:20 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:21:24 PM [vite] (client) hmr update /src/App.tsx, /src/pages/LoginPage.tsx, /src/pages/ProjectsPage.tsx, /src/pages/AllTodosPage.tsx, /src/components/RichTextEditor.tsx
+3:21:44 PM [vite] (client) hmr update /src/pages/LoginPage.tsx
+3:24:21 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:28:28 PM [vite] (client) hmr update /src/pages/ProjectsPage.tsx
+3:29:43 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:29:59 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:30:48 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:36:40 PM [vite] (client) hmr update /src/App.tsx, /src/pages/LoginPage.tsx, /src/pages/ProjectsPage.tsx, /src/pages/AllTodosPage.tsx, /src/components/RichTextEditor.tsx
+3:37:07 PM [vite] (client) hmr update /src/App.tsx
+3:42:33 PM [vite] (client) hmr update /src/App.tsx
+3:43:06 PM [vite] (client) hmr update /src/App.css
+3:43:31 PM [vite] (client) hmr update /src/App.css
+3:44:15 PM [vite] (client) hmr update /src/App.tsx
+3:44:57 PM [vite] (client) hmr update /src/i18n.tsx
+3:44:57 PM [vite] (client) hmr invalidate /src/i18n.tsx Could not Fast Refresh ("useI18n" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+3:44:57 PM [vite] (client) hmr update /src/App.tsx, /src/pages/ProjectsPage.tsx, /src/pages/AllTodosPage.tsx
+3:54:47 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:27:03 PM [vite] (client) hmr update /src/App.tsx
+4:27:20 PM [vite] (client) hmr update /src/App.tsx
+4:28:04 PM [vite] (client) hmr update /src/App.tsx
+4:28:34 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+4:33:36 PM [vite] (client) hmr update /src/App.tsx
+4:35:46 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
