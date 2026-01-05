@@ -127,9 +127,10 @@ export const api = {
     }
     return data as { url: string };
   },
-  listMentions: (limit?: number) => {
+  listMentions: (limit = 20, perProject = 20) => {
     const params = new URLSearchParams();
     if (limit) params.append("limit", String(limit));
+    if (perProject) params.append("perProject", String(perProject));
     const query = params.toString() ? `?${params.toString()}` : "";
     return apiFetch<{ count: number; items: any[] }>(`/api/mentions${query}`);
   },

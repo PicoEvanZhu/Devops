@@ -1,8 +1,8 @@
-import { BarChartOutlined, BulbOutlined, ClearOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, LeftOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
+import { ArrowUpOutlined, BarChartOutlined, BulbOutlined, ClearOutlined, EditOutlined, EyeInvisibleOutlined, EyeOutlined, LeftOutlined, LinkOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, UnorderedListOutlined, UserAddOutlined } from "@ant-design/icons";
 import { AutoComplete, Button, Card, Checkbox, Col, DatePicker, Drawer, Dropdown, Empty, Form, Input, InputNumber, Row, Select, Segmented, Space, Table, Tag, Tabs, Typography, message } from "antd";
 import dayjs from "dayjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { api, API_BASE } from "../api";
 import { RichTextEditor } from "../components/RichTextEditor";
@@ -13,6 +13,7 @@ import { useI18n } from "../i18n";
 type FiltersState = {
   state?: string;
   keyword?: string;
+  parentKeyword?: string;
   assignedTo?: string;
   type?: string;
   project?: string;
@@ -171,8 +172,8 @@ const hasRichContent = (html: string): boolean => {
 };
 
 
-const serializeDateValue = (value: any): string | null | undefined => {
-  if (value === null) return null;
+const serializeDateValue = (value: any): string | undefined => {
+  if (value === null) return undefined;
   if (!value) return undefined;
   const parsed = dayjs.isDayjs(value) ? value : dayjs(value);
   return parsed.isValid() ? parsed.toISOString() : undefined;
@@ -233,6 +234,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const OWNER_FILTER_STORAGE_KEY = "dashboardOwnerFilter";
   const { t } = useI18n();
   const location = useLocation();
+  const navigate = useNavigate();
   const [todos, setTodos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const buildDefaultFilters = useCallback((): FiltersState => {
@@ -273,6 +275,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
   const [keywordInput, setKeywordInput] = useState(filters.keyword || "");
+  const [parentKeywordInput, setParentKeywordInput] = useState(filters.parentKeyword || "");
   const [assignedInput, setAssignedInput] = useState(filters.assignedTo || "");
   const [projects, setProjects] = useState<{ label: string; value: string }[]>([]);
   const [tagOptions, setTagOptions] = useState<{ label: string; value: string }[]>([]);
@@ -420,6 +423,21 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     setAlignmentLoading(true);
     setHideCompleted(false);
     setHideNotStarted(false);
+    if (epic?.id) {
+      const params = new URLSearchParams(location.search);
+      const nextId = String(epic.id);
+      const currentId = params.get("alignmentTodoId");
+      if (params.get("alignment") !== "1" || currentId !== nextId) {
+        params.set("alignment", "1");
+        params.set("alignmentTodoId", nextId);
+        if (!forcedProjectId && epic.projectId) {
+          params.set("projectId", String(epic.projectId));
+        }
+        const nextSearch = params.toString();
+        const nextUrl = `${location.pathname}${nextSearch ? `?${nextSearch}` : ""}`;
+        navigate(nextUrl);
+      }
+    }
     const requestId = alignmentRequestRef.current + 1;
     alignmentRequestRef.current = requestId;
       const loadByPaging = async (projectId: string, requestId: number) => {
@@ -687,6 +705,17 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           return true;
         });
       }
+      if (effectiveFilters.parentKeyword) {
+        const needle = effectiveFilters.parentKeyword.trim().toLowerCase();
+        if (needle) {
+          filtered = filtered.filter((item) => {
+            if (!item.parentId && !item.parentTitle) return false;
+            const parentRecord = todoById[item.parentId] || parentDetails[item.parentId];
+            const label = item.parentTitle || parentRecord?.title || `#${item.parentId || ""}`;
+            return label.toLowerCase().includes(needle);
+          });
+        }
+      }
 
       const sorted = [...filtered];
       if (currentTab === "no-start") {
@@ -732,6 +761,13 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     const params = new URLSearchParams(location.search);
     return params.get("alignment") === "1";
   }, [location.search]);
+  const alignmentTodoId = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    const raw = params.get("alignmentTodoId");
+    if (!raw) return null;
+    const parsed = Number(raw);
+    return Number.isFinite(parsed) ? parsed : null;
+  }, [location.search]);
 
   useEffect(() => {
     if (!alignmentMode || alignmentInitRef.current) return;
@@ -742,6 +778,25 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     persistFilters(enforced);
     loadTodos(enforced, "all");
   }, [alignmentMode]);
+
+  useEffect(() => {
+    if (!alignmentMode || !alignmentTodoId || alignmentEpic) return;
+    const params = new URLSearchParams(location.search);
+    const projectId = forcedProjectId || params.get("projectId");
+    if (!projectId) return;
+    setLoading(true);
+    api
+      .getTodo(projectId, alignmentTodoId)
+      .then((res) => {
+        if (res?.todo) {
+          openAlignmentView({ ...res.todo, projectId });
+        }
+      })
+      .catch((err: any) => {
+        message.error(err.message || "Failed to open alignment item");
+      })
+      .finally(() => setLoading(false));
+  }, [alignmentMode, alignmentTodoId, alignmentEpic, forcedProjectId, location.search]);
 
   useEffect(() => {
     if (!alignmentMode || alignmentAutoOpenRef.current || alignmentEpic) return;
@@ -826,10 +881,13 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     if ((filters.keyword || "") !== keywordInput) {
       setKeywordInput(filters.keyword || "");
     }
+    if ((filters.parentKeyword || "") !== parentKeywordInput) {
+      setParentKeywordInput(filters.parentKeyword || "");
+    }
     if ((filters.assignedTo || "") !== assignedInput) {
       setAssignedInput(filters.assignedTo || "");
     }
-  }, [filters.keyword, filters.assignedTo]);
+  }, [filters.keyword, filters.parentKeyword, filters.assignedTo]);
 
   const buildKeywordFilters = (raw: string | undefined, base: FiltersState): FiltersState => {
     const text = raw?.trim();
@@ -864,7 +922,12 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
 
   const applySearchFilters = useCallback(() => {
     const nextFromKeyword = buildKeywordFilters(keywordInput || undefined, filters);
-    const next = { ...nextFromKeyword, assignedTo: assignedInput || undefined, page: 1 };
+    const next = {
+      ...nextFromKeyword,
+      parentKeyword: parentKeywordInput || undefined,
+      assignedTo: assignedInput || undefined,
+      page: 1,
+    };
     const enforced = applyFilters(next);
     persistFilters(enforced);
     if (typeof window !== "undefined") {
@@ -919,6 +982,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     const defaults = buildDefaultFilters();
     return (
       !!filters.keyword ||
+      !!filters.parentKeyword ||
       !!filters.assignedTo ||
       !!filters.state ||
       !!filters.closedFrom ||
@@ -1537,6 +1601,20 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
     loadParents(record.projectId);
     loadComments(record.projectId, record.id);
     setDrawerOpen(true);
+    if (record?.id && record?.projectId) {
+      const params = new URLSearchParams(location.search);
+      const nextOpenId = String(record.id);
+      const currentOpenId = params.get("openTodoId");
+      if (currentOpenId !== nextOpenId) {
+        params.set("openTodoId", nextOpenId);
+        if (!forcedProjectId) {
+          params.set("projectId", String(record.projectId));
+        }
+        const nextSearch = params.toString();
+        const nextUrl = `${location.pathname}${nextSearch ? `?${nextSearch}` : ""}`;
+        navigate(nextUrl);
+      }
+    }
   };
 
   const openParentRecord = async (record: any) => {
@@ -1909,10 +1987,10 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           iterationPath: cleanIteration,
           parentId,
         };
-        if (plannedStartDateValue !== undefined) {
+        if (typeof plannedStartDateValue === "string") {
           updatePayload.plannedStartDate = plannedStartDateValue;
         }
-        if (targetDateValue !== undefined) {
+        if (typeof targetDateValue === "string") {
           updatePayload.targetDate = targetDateValue;
         }
         // 编辑已关闭的 item 时，不再自动改写 Remaining
@@ -1924,7 +2002,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         message.success(options?.temporary ? "Temporarily saved" : "Updated");
       } else {
         const initialState = isClosed ? "Active" : desiredState;
-        const created = await api.createTodo(values.projectId, {
+        const createPayload: any = {
           title: values.title,
           assignedTo: values.assignedTo,
           priority: values.priority,
@@ -1937,9 +2015,14 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           parentId,
           originalEstimate,
           remaining: remainingValue,
-          plannedStartDate: plannedStartDateValue,
-          targetDate: targetDateValue,
-        });
+        };
+        if (typeof plannedStartDateValue === "string") {
+          createPayload.plannedStartDate = plannedStartDateValue;
+        }
+        if (typeof targetDateValue === "string") {
+          createPayload.targetDate = targetDateValue;
+        }
+        const created = await api.createTodo(values.projectId, createPayload);
         savedTodo = created?.todo || null;
         if (isClosed && created?.todo?.id) {
           const updated = await api.updateTodo(values.projectId, created.todo.id, { state: desiredState });
@@ -1995,7 +2078,20 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             >
               {hideCompleted ? t("alignment.showDone", "显示已完成") : t("alignment.hideDone", "隐藏已完成")}
             </Button>
-            <Button icon={<LeftOutlined />} onClick={() => setAlignmentEpic(null)}>
+            <Button
+              icon={<LeftOutlined />}
+              onClick={() => {
+                setAlignmentEpic(null);
+                const params = new URLSearchParams(location.search);
+                if (params.has("alignment") || params.has("alignmentTodoId")) {
+                  params.delete("alignment");
+                  params.delete("alignmentTodoId");
+                  const nextSearch = params.toString();
+                  const nextUrl = `${location.pathname}${nextSearch ? `?${nextSearch}` : ""}`;
+                  navigate(nextUrl);
+                }
+              }}
+            >
               {t("alignment.back", "返回上一级")}
             </Button>
           </Space>
@@ -2095,7 +2191,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
         style={{ marginBottom: 12 }}
       />
       <Row gutter={12} style={{ marginBottom: 12 }}>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={5}>
           <Input
             placeholder={t("filters.searchTitle", "Search title")}
             value={keywordInput}
@@ -2105,7 +2201,17 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             }}
           />
         </Col>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={5}>
+          <Input
+            placeholder={t("filters.searchParent", "Search parent")}
+            value={parentKeywordInput}
+            allowClear
+            onChange={(e) => {
+              setParentKeywordInput(e.target.value || "");
+            }}
+          />
+        </Col>
+        <Col xs={24} md={5}>
           <Input
             placeholder={t("filters.assigned", "Assigned to")}
             allowClear
@@ -2115,7 +2221,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             }}
           />
         </Col>
-        <Col xs={24} md={5}>
+        <Col xs={24} md={3}>
           <Select
             allowClear
             placeholder={t("filters.state", "State")}
@@ -2133,7 +2239,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
             }))}
           />
         </Col>
-        <Col xs={24} md={4}>
+        <Col xs={24} md={3}>
           <Select
             mode="multiple"
             allowClear
@@ -2580,6 +2686,16 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           setDrawerOpen(false);
           setEditing(null);
           setComments([]);
+          const params = new URLSearchParams(location.search);
+          if (params.has("openTodoId")) {
+            params.delete("openTodoId");
+            if (!forcedProjectId) {
+              params.delete("projectId");
+            }
+            const nextSearch = params.toString();
+            const nextUrl = `${location.pathname}${nextSearch ? `?${nextSearch}` : ""}`;
+            navigate(nextUrl);
+          }
         }}
         width={1200}
         destroyOnClose
@@ -2604,6 +2720,16 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
                 setDrawerOpen(false);
                 setEditing(null);
                 setComments([]);
+                const params = new URLSearchParams(location.search);
+                if (params.has("openTodoId")) {
+                  params.delete("openTodoId");
+                  if (!forcedProjectId) {
+                    params.delete("projectId");
+                  }
+                  const nextSearch = params.toString();
+                  const nextUrl = `${location.pathname}${nextSearch ? `?${nextSearch}` : ""}`;
+                  navigate(nextUrl);
+                }
               }}
             >
               {t("drawer.buttons.cancel", "Cancel")}
@@ -2617,6 +2743,22 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
           </Space>
         }
       >
+        {editing && (
+          <div className="drawer-quick-actions">
+            <Space>
+              <Button icon={<BarChartOutlined />} onClick={() => openAlignmentView(editing)}>
+                {t("drawer.buttons.alignment", "Alignment View")}
+              </Button>
+              <Button
+                icon={<ArrowUpOutlined />}
+                disabled={!editing.parentId}
+                onClick={() => openParentRecord(editing)}
+              >
+                {t("drawer.buttons.openParent", "Open Parent")}
+              </Button>
+            </Space>
+          </div>
+        )}
         <Form layout="vertical" form={form} initialValues={{ state: "New", workItemType: "User Story" }}>
           <Form.Item label={t("form.fields.project", "Project")} name="projectId" rules={[{ required: true }]}> 
             <Select
@@ -2641,7 +2783,7 @@ export function AllTodosPage({ forcedProjectId, hideProjectSelector = false }: A
               <Form.Item label={t("form.fields.workItemType", "Work Item Type")} name="workItemType">
                 <Select
                   disabled={!!editing}
-                  options={["User Story", "Product Backlog Item", "Task", "Bug", "Feature"].map((v) => ({
+                  options={["Epic", "Feature", "User Story", "Product Backlog Item", "Task", "Bug", "Issue"].map((v) => ({
                     label: v,
                     value: v,
                   }))}

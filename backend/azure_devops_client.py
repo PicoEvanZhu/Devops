@@ -72,6 +72,7 @@ class AzureDevOpsClient:
         work_item_type: Optional[str] = None,
         planned_from: Optional[str] = None,
         planned_to: Optional[str] = None,
+        changed_from: Optional[str] = None,
         page: int = 1,
         page_size: int = 20,
     ) -> List[Dict[str, Any]]:
@@ -120,6 +121,8 @@ class AzureDevOpsClient:
             clauses.append(f"[Microsoft.VSTS.Scheduling.StartDate] >= '{planned_from}'")
         if planned_to:
             clauses.append(f"[Microsoft.VSTS.Scheduling.StartDate] <= '{planned_to}'")
+        if changed_from:
+            clauses.append(f"[System.ChangedDate] >= '{changed_from}'")
 
         wiql = (
             "SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo], "

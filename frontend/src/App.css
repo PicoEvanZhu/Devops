@@ -1165,3 +1165,7 @@
   height: 100%;
   object-fit: cover;
 }
+
+.drawer-quick-actions {
+  margin-bottom: 12px;
+}

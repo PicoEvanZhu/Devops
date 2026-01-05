@@ -15170,3 +15170,1221 @@
 127.0.0.1 - - [30/Dec/2025 16:39:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
 127.0.0.1 - - [30/Dec/2025 16:39:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
 127.0.0.1 - - [30/Dec/2025 16:39:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:43:39] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:44:10] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:48:39] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:49:10] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:53:39] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:54:04] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:58:39] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 16:59:11] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:03:39] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:04:10] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:42] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:43] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:07:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:09] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:10] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:08:39] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:09:10] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:12] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:18] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:18] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:18] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:18] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:18] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:20] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:20] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:20] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:20] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:23] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/36936 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/36936 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:25] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/tags HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/areas HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:27] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/_apis/wit/attachments/83bba347-60fa-4192-b67a-767bcb2b9a6b?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:29] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:29] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/31915 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:30] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/31915 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:42] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:48] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan.zhu@pico.com&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:14:49,597] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:14:50,504] INFO in app: list_all_todos: Salesforce-CRM items=19
+[2025-12-30 17:14:50,794] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:14:50,807] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:14:50,815] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:14:50,834] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:14:50,862] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:14:50,937] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:14:51,083] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:14:51,099] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:14:51,118] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:14:51,134] INFO in app: list_all_todos: Pico Services items=21
+127.0.0.1 - - [30/Dec/2025 17:14:51] "GET /api/todos?state=Active,Validate&assignedTo=evan.zhu@pico.com&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41599 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/51674 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/59219 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39089/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37341/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46762/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46774/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46787/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/56429/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45210/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:52] "OPTIONS /api/todos?state=Active,Validate&assignedTo=evan.zhu@pico.com&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:53] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41599 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:53] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/51674 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:53] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39089/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:53] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:53] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/59219 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:53] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:54] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37341/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:54] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46787/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:54] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/56429/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:54] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46762/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:55] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:55] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:55] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46774/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:55] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:55] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:55] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:56] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:56] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:56] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45210/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:57] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:57] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:14:57] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+[2025-12-30 17:14:58,154] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:14:58,449] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:14:58,755] INFO in app: list_all_todos: Pico Services items=0
+[2025-12-30 17:14:59,060] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:14:59,142] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:14:59,172] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [30/Dec/2025 17:14:59] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.M2M4YmQxYWUtYjQ2MC03OGFiLWI1ZWUtYWFkZDAyMTAwZmY3 HTTP/1.1" 200 -
+[2025-12-30 17:14:59,357] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:14:59,357] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:14:59,393] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:14:59,408] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:14:59,408] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:15:00,086] INFO in app: list_all_todos: Salesforce-CRM items=9
+127.0.0.1 - - [30/Dec/2025 17:15:00] "GET /api/todos?state=Active,Validate&assignedTo=evan.zhu@pico.com&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39089/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37341/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46774/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46762/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46787/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/56429/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:00] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45210/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46762/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39089/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46774/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37341/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46787/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:01] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/56429/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45210/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:02] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:03] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:24] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:15:25,249] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:15:25,564] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:15:26,094] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-30 17:15:26,307] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:15:26,309] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:15:26,405] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:15:26,461] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:15:26,462] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:15:26,491] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:15:26,492] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:15:26,501] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:15:26,627] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:15:26] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:31] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:15:32,036] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:15:32,284] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:15:32,754] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-30 17:15:32,945] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:15:32,956] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:15:33,001] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:15:33,004] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:15:33,006] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:15:33,181] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:15:33,205] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:15:33,207] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:15:33,220] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [30/Dec/2025 17:15:33] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:34] "OPTIONS /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:15:35,500] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:15:35,782] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:15:36,367] INFO in app: list_all_todos: Pico Services items=21
+[2025-12-30 17:15:36,391] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:15:36,439] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:15:36,456] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:15:36,808] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:15:36,810] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:15:36,811] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:15:36,811] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:15:36,812] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:15:37,082] INFO in app: list_all_todos: Salesforce-CRM items=10
+127.0.0.1 - - [30/Dec/2025 17:15:37] "GET /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:37] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:37] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:37] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:38] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:39] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:40] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:40] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:40] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:40] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+[2025-12-30 17:15:40,591] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:15:40,895] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [30/Dec/2025 17:15:40] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.M2M4YmQxYWUtYjQ2MC03OGFiLWI1ZWUtYWFkZDAyMTAwZmY3 HTTP/1.1" 200 -
+[2025-12-30 17:15:41,510] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:15:41,524] INFO in app: list_all_todos: Pico Services items=21
+[2025-12-30 17:15:41,553] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:15:41,742] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:15:41,759] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:15:41,765] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:15:41,823] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:15:41,864] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:15:42,051] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:15:42,494] INFO in app: list_all_todos: Salesforce-CRM items=10
+127.0.0.1 - - [30/Dec/2025 17:15:43] "GET /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:43] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:44] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:45] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:15:54] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:15:55,243] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:15:55,855] INFO in app: list_all_todos: Project Sniff items=2
+[2025-12-30 17:15:56,406] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:15:56,455] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:15:56,465] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:15:56,486] INFO in app: list_all_todos: Pico Services items=17
+[2025-12-30 17:15:56,488] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:15:56,538] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:15:56,573] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:15:56,599] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:15:56,739] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:15:56,802] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:15:57] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:00] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:16:01,929] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:16:02,587] INFO in app: list_all_todos: Project Sniff items=2
+[2025-12-30 17:16:02,931] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:16:03,129] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:16:03,136] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:16:03,212] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:16:03,214] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:16:03,225] INFO in app: list_all_todos: Pico Services items=28
+[2025-12-30 17:16:03,338] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:16:03,399] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:16:03,406] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:16:03,478] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:16:04] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:07] "OPTIONS /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:16:08,829] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:16:09,084] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:16:09,568] INFO in app: list_all_todos: Pico Services items=21
+[2025-12-30 17:16:09,769] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:16:09,778] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:16:09,813] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:16:09,962] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:16:09,966] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:16:09,968] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:16:09,983] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:16:10,035] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:16:10,341] INFO in app: list_all_todos: Salesforce-CRM items=10
+127.0.0.1 - - [30/Dec/2025 17:16:10] "GET /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:11] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:13] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:13] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.M2M4YmQxYWUtYjQ2MC03OGFiLWI1ZWUtYWFkZDAyMTAwZmY3 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:14] "OPTIONS /api/todos?type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:16:15,940] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:16:16,341] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:16:16,910] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:16:16,949] INFO in app: list_all_todos: Pico Services items=100
+[2025-12-30 17:16:16,990] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:16:17,061] INFO in app: list_all_todos: Project Sniff items=1
+[2025-12-30 17:16:17,070] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:16:17,100] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:16:17,235] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:16:17,372] INFO in app: list_all_todos: Salesforce-CRM items=100
+[2025-12-30 17:16:17,488] INFO in app: list_all_todos: IES-X items=9
+[2025-12-30 17:16:17,499] INFO in app: list_all_todos: Power One System Support items=8
+127.0.0.1 - - [30/Dec/2025 17:16:19] "GET /api/todos?type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/21676 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37341 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39089 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46787 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/52893 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/24699/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37340/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/40007/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41754/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60230/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60256/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60257/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60321/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60329/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60383/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60385/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60402/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60544/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60969/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60971/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61187/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61287/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/56029/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60439/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60572/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/52896/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60431/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60655/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60967/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60968/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61289/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60432/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60437/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/38855/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:20] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41955/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39089 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/52893 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45611 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/21676 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46787 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37341 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:21] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:22] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:22] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/37340/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:22] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/24699/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:22] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41754/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:22] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/40007/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60230/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60257/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60321/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60256/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60329/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:23] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60383/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60402/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60385/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60395/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60544/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60418/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:24] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60969/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60971/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61187/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/56029/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61287/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:25] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60439/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60572/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/52896/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60431/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:26] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60655/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60967/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61289/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60968/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60432/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60437/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41955/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:29] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/38855/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:30] "OPTIONS /api/todos?assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:16:31,158] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:16:31,739] INFO in app: list_all_todos: Project Sniff items=2
+[2025-12-30 17:16:32,334] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:16:32,379] INFO in app: list_all_todos: Pico Services items=100
+[2025-12-30 17:16:32,381] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:16:32,415] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:16:32,416] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:16:32,670] INFO in app: list_all_todos: Epicor-ERP items=1
+[2025-12-30 17:16:32,685] INFO in app: list_all_todos: Power One System Support items=3
+[2025-12-30 17:16:32,750] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:16:33,251] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:16:33,407] INFO in app: list_all_todos: IES-X items=84
+127.0.0.1 - - [30/Dec/2025 17:16:36] "GET /api/todos?assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:46] "OPTIONS /api/logout HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:46] "POST /api/logout HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:47] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:47] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:47] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:47] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:53] "OPTIONS /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:55] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:55] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:16:57] "OPTIONS /api/todos?assignedTo=tony.lu&pageSize=1000 HTTP/1.1" 200 -
+[2025-12-30 17:16:58,015] INFO in app: list_all_todos: 11 projects
+127.0.0.1 - - [30/Dec/2025 17:16:58] "GET /api/projects HTTP/1.1" 200 -
+[2025-12-30 17:16:58,227] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:16:58,523] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:16:58,826] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2025-12-30 17:16:59,001] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:16:59,104] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:16:59,142] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:16:59,162] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:16:59,188] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:16:59,206] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:16:59,230] INFO in app: list_all_todos: Helpdesk-SH items=0
+127.0.0.1 - - [30/Dec/2025 17:16:59] "GET /api/session HTTP/1.1" 200 -
+[2025-12-30 17:16:59,276] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:16:59,292] INFO in app: list_all_todos: Pico Services items=145
+127.0.0.1 - - [30/Dec/2025 17:16:59] "GET /api/projects HTTP/1.1" 200 -
+[2025-12-30 17:16:59,398] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:16:59,399] INFO in app: list_all_todos: Project Sniff items=2
+[2025-12-30 17:16:59,410] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:16:59,418] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:16:59,427] INFO in app: list_all_todos: Pico Services items=151
+[2025-12-30 17:16:59,481] INFO in app: list_all_todos: Power One System Support items=8
+[2025-12-30 17:16:59,495] INFO in app: list_all_todos: Project Sniff items=1
+[2025-12-30 17:16:59,530] INFO in app: list_all_todos: IES-X items=9
+[2025-12-30 17:16:59,581] INFO in app: list_all_todos: Epicor-ERP items=1
+[2025-12-30 17:16:59,632] INFO in app: list_all_todos: IES-X items=85
+[2025-12-30 17:16:59,693] INFO in app: list_all_todos: Power One System Support items=3
+127.0.0.1 - - [30/Dec/2025 17:17:01] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:02] "GET /api/todos?assignedTo=tony.lu&pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:02] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2025-12-30 17:17:04,008] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:17:04,303] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [30/Dec/2025 17:17:04] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:04] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:04] "OPTIONS /api/projects HTTP/1.1" 200 -
+[2025-12-30 17:17:04,976] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:05,091] INFO in app: list_all_todos: Pico Services items=151
+[2025-12-30 17:17:05,166] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:17:05,405] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:17:05,443] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:05,475] INFO in app: list_all_todos: Power One System Support items=8
+[2025-12-30 17:17:05,491] INFO in app: list_all_todos: IES-X items=9
+[2025-12-30 17:17:05,525] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:05,594] INFO in app: list_all_todos: Project Sniff items=1
+127.0.0.1 - - [30/Dec/2025 17:17:05] "GET /api/projects HTTP/1.1" 200 -
+[2025-12-30 17:17:05,839] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:17:06,150] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2025-12-30 17:17:06,346] INFO in app: list_all_todos: Project Sniff items=2
+[2025-12-30 17:17:06,814] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:17:06,828] INFO in app: list_all_todos: Pico Services items=17
+127.0.0.1 - - [30/Dec/2025 17:17:06] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:07] "GET /api/projects HTTP/1.1" 200 -
+[2025-12-30 17:17:07,048] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:17:07,059] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:17:07,061] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:07,061] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:07,072] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:17:07,086] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:07,091] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:17:07,119] INFO in app: list_all_todos: Epicor-ERP items=0
+127.0.0.1 - - [30/Dec/2025 17:17:07] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:07] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19719 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:07] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21411 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:07] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/28683 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:07] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31777 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:07] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43488 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46270 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47615 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36975 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19721/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21444/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21761/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43701/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31779/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43489/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49088/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/36979/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/44005/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49058/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/34484/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49061/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55919/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19376/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/25618/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/20179/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36923/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "OPTIONS /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36917/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:08] "GET /api/session HTTP/1.1" 200 -
+[2025-12-30 17:17:08,846] INFO in app: list_all_todos: 11 projects
+127.0.0.1 - - [30/Dec/2025 17:17:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21411 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19719 HTTP/1.1" 200 -
+[2025-12-30 17:17:09,448] INFO in app: list_all_todos: Project Sniff items=2
+127.0.0.1 - - [30/Dec/2025 17:17:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/28683 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:09] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2025-12-30 17:17:09,796] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:17:09,941] INFO in app: list_all_todos: Epicor-ERP items=0
+127.0.0.1 - - [30/Dec/2025 17:17:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31777 HTTP/1.1" 200 -
+[2025-12-30 17:17:10,009] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:10,012] INFO in app: list_all_todos: Pico Services items=17
+[2025-12-30 17:17:10,026] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:17:10,026] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:10,044] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:17:10,045] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:10,047] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:17:10,216] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:17:10] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43488 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:10] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:10] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46270 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:10] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:11] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:11] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47615 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:11] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:11] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36975 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:12] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19721/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:12] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:12] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21761/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:13] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43701/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:13] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31779/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:13] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43489/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:13] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49088/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:13] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21444/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:13] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/36979/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:14] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:14] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/44005/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:14] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49058/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:14] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/34484/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:14] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49061/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:15] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55919/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:15] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19376/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:15] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36923/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:15] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/20179/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:16] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36917/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:16] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19719 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:16] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/25618/comments HTTP/1.1" 200 -
+[2025-12-30 17:17:16,828] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:17:17,124] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+127.0.0.1 - - [30/Dec/2025 17:17:17] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.ZDczYTUwNWEtYTg5Zi03OGY0LWI3OGItZjFhNWRkNjM4MmI3 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:17] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21411 HTTP/1.1" 200 -
+[2025-12-30 17:17:17,738] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:17,798] INFO in app: list_all_todos: Epicor-ERP items=0
+127.0.0.1 - - [30/Dec/2025 17:17:17] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/28683 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:17] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31777 HTTP/1.1" 200 -
+[2025-12-30 17:17:17,944] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:17,973] INFO in app: list_all_todos: Pico Services items=151
+[2025-12-30 17:17:17,974] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:17,974] INFO in app: list_all_todos: Project Sniff items=1
+[2025-12-30 17:17:18,046] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:17:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43488 HTTP/1.1" 200 -
+[2025-12-30 17:17:18,201] INFO in app: list_all_todos: IES-X items=9
+[2025-12-30 17:17:18,386] INFO in app: list_all_todos: Power One System Support items=8
+127.0.0.1 - - [30/Dec/2025 17:17:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46270 HTTP/1.1" 200 -
+[2025-12-30 17:17:18,647] INFO in app: list_all_todos: Salesforce-CRM items=200
+127.0.0.1 - - [30/Dec/2025 17:17:18] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47615 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:19] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:20] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36975 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19721/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21761/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:20] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43701/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:21] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31779/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:21] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43489/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:21] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:21] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21444/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:21] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:21] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49088/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:22] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/36979/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:22] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:22] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/44005/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:22] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49058/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:22] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/34484/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55919/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49061/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19376/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:23] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36917/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:23] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36923/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:23] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/25618/comments HTTP/1.1" 200 -
+[2025-12-30 17:17:24,206] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:17:24,771] INFO in app: list_all_todos: Project Sniff items=1
+127.0.0.1 - - [30/Dec/2025 17:17:24] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/20179/comments HTTP/1.1" 200 -
+[2025-12-30 17:17:25,206] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:25,332] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:25,364] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:17:25,370] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:17:25,388] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:25,584] INFO in app: list_all_todos: Pico Services items=151
+[2025-12-30 17:17:25,628] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:17:25,679] INFO in app: list_all_todos: Power One System Support items=8
+[2025-12-30 17:17:25,723] INFO in app: list_all_todos: IES-X items=9
+[2025-12-30 17:17:26,074] INFO in app: list_all_todos: Salesforce-CRM items=200
+127.0.0.1 - - [30/Dec/2025 17:17:28] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:17:29,106] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:17:29,579] INFO in app: list_all_todos: Project Sniff items=2
+127.0.0.1 - - [30/Dec/2025 17:17:29] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2025-12-30 17:17:30,060] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:17:30,079] INFO in app: list_all_todos: Pico Services items=28
+[2025-12-30 17:17:30,106] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:17:30,236] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:30,238] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:30,280] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:17:30,281] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:30,289] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:17:30,304] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:17:30,328] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:17:31] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47591 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19721/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21444/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21761/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43701/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31779/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43489/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49088/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/36979/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47592/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47616/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49002/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/44005/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49058/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/34484/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49061/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55934/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55919/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19376/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/20179/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/25618/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50101/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36923/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:31] "OPTIONS /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36917/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47591 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21761/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/31779/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/21444/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43701/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19721/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/36979/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/43489/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49088/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47592/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:33] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47616/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49058/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49002/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/44005/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:34] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/34484/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:35] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49061/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:35] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:35] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:35] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55934/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:35] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:35] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55919/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:36] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/20179/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:36] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/19376/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:36] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/25618/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:36] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:36] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50101/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:37] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36923/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:37] "GET /api/projects/f4b1fdbd-62c6-4ccf-add2-a786329c118a/todos/36917/comments HTTP/1.1" 200 -
+[2025-12-30 17:17:37,751] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:17:38,041] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:17:38,597] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-30 17:17:38,648] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:17:38,665] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:17:38,701] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:17:38,701] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:17:38,855] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:17:38,873] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:17:38,877] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:17:38,879] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:17:38,902] INFO in app: list_all_todos: Salesforce-CRM items=0
+127.0.0.1 - - [30/Dec/2025 17:17:39] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47592/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47616/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49002/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55934/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:39] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50101/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:40] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:40] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49002/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:40] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47592/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:40] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47616/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:40] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:40] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:41] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:41] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:41] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:41] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55934/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:41] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50101/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:45] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/descendants/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:46] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/descendants/46697 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:48] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.M2M4YmQxYWUtYjQ2MC03OGFiLWI1ZWUtYWFkZDAyMTAwZmY3 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:48] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.NjQ0MzAyZmMtMDViZi03OWFjLThjYWYtNDZiYTIzMzFhMzk3 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:48] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.NjExYzZjMDUtNGFjYi03ZjA0LWIxYWUtMTA0MzA0NzEwYzI5 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:17:48] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.OWQ2NzcwOGItYzIxZC03YWIzLWFiN2EtNjQ5N2RmYWU2Njc3 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:23] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:23] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:23] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:23] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:23] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61345/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:24] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/iterations HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:24] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61345/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:24] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/tags HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:24] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/areas HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:25] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/c63486b9-3f83-49d9-b289-c9b25f4cfccb/_apis/wit/attachments/a6723c97-8c8a-4357-b004-6d9d351c1217?fileName%3Dimage.png HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:26] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos?page=1&pageSize=50 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:27] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:29] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61345 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:31] "PATCH /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61345 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:31] "OPTIONS /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:18:33,569] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:18:33,855] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:18:34,414] INFO in app: list_all_todos: Pico Services items=11
+[2025-12-30 17:18:34,539] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:18:34,580] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:18:34,636] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:18:34,647] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:18:34,706] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:18:34,726] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:18:34,759] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:18:34,783] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:18:35,575] INFO in app: list_all_todos: Salesforce-CRM items=0
+127.0.0.1 - - [30/Dec/2025 17:18:35] "GET /api/todos?state=Active,Validate&assignedTo=tony.lu&type=Epic&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:35] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47592/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47616/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49002/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55934/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50101/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:36] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47600/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47616/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49002/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/47592/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:37] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49027/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:38] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50104/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:38] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/46697/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:38] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/50101/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:38] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55934/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:18:39] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:22] "OPTIONS /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:19:24,094] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:19:24,385] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:19:24,991] INFO in app: list_all_todos: Pico Services items=21
+[2025-12-30 17:19:25,101] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:19:25,109] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:19:25,256] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:19:25,264] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:19:25,302] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:19:25,304] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:19:25,339] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:19:25,431] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:19:25,575] INFO in app: list_all_todos: Salesforce-CRM items=10
+127.0.0.1 - - [30/Dec/2025 17:19:26] "GET /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/31915 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/36936 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49270 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60385 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55906/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61222/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61311/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61312/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60285/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60332/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60702/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61286/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61308/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61309/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61211/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61310/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60640/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61271/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61316/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61313/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61317/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:26] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:27] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/49102 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/36936 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:27] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55940 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:27] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/48957 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:27] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/46753 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/31915 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49270 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:28] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60385 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:28] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61222/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:28] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55906/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:29] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:29] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61311/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:29] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61312/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:29] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60285/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:29] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60332/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60702/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61309/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61286/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61308/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:30] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:31] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61310/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:31] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61211/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:31] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61316/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:31] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60640/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61271/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61313/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61317/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:32] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:33] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:33] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:33] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:33] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:33] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:34] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:49] "OPTIONS /api/todos?state=Active,Validate&assignedTo=emily.zhou&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:19:50,529] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:19:50,879] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:19:51,487] INFO in app: list_all_todos: Pico Services items=6
+[2025-12-30 17:19:51,528] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:19:51,532] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2025-12-30 17:19:51,708] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:19:51,716] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:19:51,754] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:19:51,764] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:19:51,794] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:19:51,828] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:19:51,842] INFO in app: list_all_todos: Helpdesk-SG items=0
+127.0.0.1 - - [30/Dec/2025 17:19:52] "GET /api/todos?state=Active,Validate&assignedTo=emily.zhou&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55916/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55917/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55918/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55920/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55922/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:52] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55929/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55922/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55924 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55918/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55917/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55916/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:53] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55920/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:54] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55929/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:19:55] "GET /api/attachments/proxy?url=https://dev.azure.com/Pico-Group/_apis/GraphProfile/MemberAvatars/aad.YmQ4YTJmY2ItMTRmZi03MjE2LWE2NDItYTg0MzdkMDRlY2U1 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:02] "OPTIONS /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+[2025-12-30 17:20:04,048] INFO in app: list_all_todos: 11 projects
+[2025-12-30 17:20:04,344] INFO in app: list_all_todos: Project Sniff items=0
+[2025-12-30 17:20:04,929] INFO in app: list_all_todos: Pico Services items=21
+[2025-12-30 17:20:05,185] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2025-12-30 17:20:05,186] INFO in app: list_all_todos: Power One System Support items=0
+[2025-12-30 17:20:05,198] INFO in app: list_all_todos: fe-test-sample items=0
+[2025-12-30 17:20:05,219] INFO in app: list_all_todos: IES-X items=0
+[2025-12-30 17:20:05,418] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2025-12-30 17:20:05,444] INFO in app: list_all_todos: Epicor-ERP items=0
+[2025-12-30 17:20:05,446] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2025-12-30 17:20:05,553] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2025-12-30 17:20:05,559] INFO in app: list_all_todos: Salesforce-CRM items=10
+127.0.0.1 - - [30/Dec/2025 17:20:06] "GET /api/todos?state=Active,Validate&type=__NO_EPIC__&page=1&pageSize=100 HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55906/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61222/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61311/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61312/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60285/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60332/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61286/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60702/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61308/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61309/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61211/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61310/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60640/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61271/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61313/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61316/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61317/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:06] "OPTIONS /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61222/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61311/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55906/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60285/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60397/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:07] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61312/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61286/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60332/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61308/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60702/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60424/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:08] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/55911/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61309/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60420/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61271/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61211/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:09] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61310/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:10] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/60640/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:10] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61313/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:10] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61316/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/26246/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:11] "GET /api/projects/c63486b9-3f83-49d9-b289-c9b25f4cfccb/todos/61317/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/39947/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/49215/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60330/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:11] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/55081/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60388/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/41900/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/45417/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/61293/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:20:12] "GET /api/projects/4a28de41-d99d-4b60-b5c8-c7a667fa94f9/todos/60436/comments HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:21:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:22:30] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:26:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:27:27] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:31:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:32:23] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:36:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:37:28] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:41:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:42:26] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:46:57] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:47:27] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:52:23] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:52:54] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:57:23] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 17:57:49] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 18:02:23] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 18:02:55] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 18:07:23] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [30/Dec/2025 18:07:54] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:51] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:51] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:55] "OPTIONS /api/todos?assignedTo=emily.zhou&pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:31:56,178] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:31:56,194] INFO in app: list_all_todos: 11 projects
+127.0.0.1 - - [01/Jan/2026 13:31:56] "GET /api/projects HTTP/1.1" 200 -
+[2026-01-01 13:31:56,716] INFO in app: list_all_todos: Power One System Support items=0
+127.0.0.1 - - [01/Jan/2026 13:31:56] "GET /api/projects HTTP/1.1" 200 -
+[2026-01-01 13:31:56,820] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:31:56,852] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:31:56,880] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2026-01-01 13:31:56,880] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:31:56,881] INFO in app: list_all_todos: Project Sniff items=0
+[2026-01-01 13:31:56,884] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:31:56,902] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:31:56,916] INFO in app: list_all_todos: fe-test-sample items=0
+127.0.0.1 - - [01/Jan/2026 13:31:56] "GET /api/session HTTP/1.1" 200 -
+[2026-01-01 13:31:57,086] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:31:57,091] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:31:57,094] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:31:57,098] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:31:57,131] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:31:57,133] INFO in app: list_all_todos: IES-X items=0
+[2026-01-01 13:31:57,211] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2026-01-01 13:31:57,350] INFO in app: list_all_todos: Pico Services items=12
+[2026-01-01 13:31:57,358] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:31:57,362] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:31:57,417] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:31:57,536] INFO in app: list_all_todos: IES-X items=9
+127.0.0.1 - - [01/Jan/2026 13:31:57] "GET /api/todos?assignedTo=emily.zhou&pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:31:57,682] INFO in app: list_all_todos: Pico Services items=153
+127.0.0.1 - - [01/Jan/2026 13:31:58] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:31:59] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:32:00] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:32:01,091] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:32:01,674] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:32:01,693] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:32:01,702] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:32:01,772] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:32:01,847] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:32:01,918] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:32:01,964] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:32:02,012] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:32:02,128] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2026-01-01 13:32:02,169] INFO in app: list_all_todos: IES-X items=9
+[2026-01-01 13:32:02,326] INFO in app: list_all_todos: Pico Services items=153
+127.0.0.1 - - [01/Jan/2026 13:32:05] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:32:05,700] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:32:05,936] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:32:06,291] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:32:06,292] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:32:06,292] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:32:06,294] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:32:06,530] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:32:06,540] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:32:06,548] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:32:06,639] INFO in app: list_all_todos: Pico Services items=153
+[2026-01-01 13:32:06,943] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2026-01-01 13:32:06,948] INFO in app: list_all_todos: IES-X items=9
+127.0.0.1 - - [01/Jan/2026 13:32:10] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:32:11,005] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:32:11,501] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:32:11,666] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:32:11,667] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:32:11,668] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:32:11,671] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:32:11,824] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:32:11,924] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:32:12,152] INFO in app: list_all_todos: IES-X items=9
+[2026-01-01 13:32:12,228] INFO in app: list_all_todos: Pico Services items=153
+[2026-01-01 13:32:12,320] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2026-01-01 13:32:12,409] INFO in app: list_all_todos: Power One System Support items=8
+127.0.0.1 - - [01/Jan/2026 13:32:15] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:32:19] "GET /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:34:59] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:34:59] "OPTIONS /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:00] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/mentions HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/projects HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:01] "OPTIONS /api/todos?assignedTo=emily.zhou&pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:35:01,635] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:35:01,647] INFO in app: list_all_todos: 11 projects
+127.0.0.1 - - [01/Jan/2026 13:35:01] "GET /api/projects HTTP/1.1" 200 -
+[2026-01-01 13:35:02,090] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:35:02,090] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:35:02,187] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:35:02,223] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:35:02,260] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:35:02,266] INFO in app: list_all_todos: Salesforce-CRM items=0
+[2026-01-01 13:35:02,295] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:35:02,298] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:35:02,298] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:35:02,302] INFO in app: list_all_todos: Helpdesk-SH items=0
+127.0.0.1 - - [01/Jan/2026 13:35:02] "GET /api/session HTTP/1.1" 200 -
+[2026-01-01 13:35:02,385] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:35:02,394] INFO in app: list_all_todos: Project Sniff items=0
+127.0.0.1 - - [01/Jan/2026 13:35:02] "GET /api/projects HTTP/1.1" 200 -
+[2026-01-01 13:35:02,429] INFO in app: list_all_todos: Power One System Support items=0
+[2026-01-01 13:35:02,438] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:35:02,464] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:35:02,479] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:35:02,495] INFO in app: list_all_todos: IES-X items=0
+[2026-01-01 13:35:02,538] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:35:02,545] INFO in app: list_all_todos: Pico Services items=12
+[2026-01-01 13:35:02,713] INFO in app: list_all_todos: Pico Services items=153
+[2026-01-01 13:35:02,779] INFO in app: list_all_todos: Salesforce-CRM items=200
+127.0.0.1 - - [01/Jan/2026 13:35:02] "GET /api/todos?assignedTo=emily.zhou&pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:35:02,800] INFO in app: list_all_todos: IES-X items=9
+127.0.0.1 - - [01/Jan/2026 13:35:04] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:05] "GET /api/session HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:05] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:35:06,347] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:35:06,797] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:35:06,894] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:35:06,895] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:35:06,898] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:35:06,898] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:35:07,057] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:35:07,118] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:35:07,132] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:35:07,348] INFO in app: list_all_todos: IES-X items=9
+[2026-01-01 13:35:07,453] INFO in app: list_all_todos: Pico Services items=153
+[2026-01-01 13:35:07,672] INFO in app: list_all_todos: Salesforce-CRM items=200
+127.0.0.1 - - [01/Jan/2026 13:35:10] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:35:11,079] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:35:11,517] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:35:11,662] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:35:11,662] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:35:11,802] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:35:11,804] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:35:11,823] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:35:11,886] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:35:11,906] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:35:12,141] INFO in app: list_all_todos: IES-X items=9
+[2026-01-01 13:35:12,207] INFO in app: list_all_todos: Pico Services items=153
+[2026-01-01 13:35:12,421] INFO in app: list_all_todos: Salesforce-CRM items=200
+127.0.0.1 - - [01/Jan/2026 13:35:15] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+[2026-01-01 13:35:15,885] INFO in app: list_all_todos: 11 projects
+[2026-01-01 13:35:16,386] INFO in app: list_all_todos: Project Sniff items=1
+[2026-01-01 13:35:16,535] INFO in app: list_all_todos: Epicor-ERP items=0
+[2026-01-01 13:35:16,542] INFO in app: list_all_todos: Helpdesk ERP - South Asia items=0
+[2026-01-01 13:35:16,543] INFO in app: list_all_todos: Helpdesk-SH items=0
+[2026-01-01 13:35:16,545] INFO in app: list_all_todos: Helpdesk ERP - JKT items=0
+[2026-01-01 13:35:16,687] INFO in app: list_all_todos: fe-test-sample items=0
+[2026-01-01 13:35:16,821] INFO in app: list_all_todos: Power One System Support items=8
+[2026-01-01 13:35:16,823] INFO in app: list_all_todos: Helpdesk-SG items=0
+[2026-01-01 13:35:17,171] INFO in app: list_all_todos: Pico Services items=153
+[2026-01-01 13:35:17,202] INFO in app: list_all_todos: Salesforce-CRM items=200
+[2026-01-01 13:35:17,204] INFO in app: list_all_todos: IES-X items=9
+127.0.0.1 - - [01/Jan/2026 13:35:20] "GET /api/todos?pageSize=1000 HTTP/1.1" 200 -
+127.0.0.1 - - [01/Jan/2026 13:35:25] "GET /api/mentions HTTP/1.1" 200 -
+/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/resource_tracker.py:216: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

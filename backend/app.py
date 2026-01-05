@@ -1,6 +1,8 @@
 import os
 import logging
 import re
+import html
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional, List, Tuple
 
@@ -83,6 +85,12 @@ def _collect_mention_tokens(profile: Optional[Dict[str, Any]], email: Optional[s
     tokens = []
     if email:
         tokens.append(email)
+        local_part = email.split("@", 1)[0]
+        if local_part:
+            tokens.append(local_part)
+            tokens.append(local_part.replace(".", " "))
+            tokens.append(local_part.replace("_", " "))
+            tokens.append(local_part.replace("-", " "))
     if profile:
         tokens.extend(
             [
@@ -98,7 +106,8 @@ def _collect_mention_tokens(profile: Optional[Dict[str, Any]], email: Optional[s
 def _comment_mentions_user(text: str, tokens: List[str], user_id: Optional[str]) -> bool:
     if not text:
         return False
-    lowered = text.lower()
+    normalized = html.unescape(text).replace("\xa0", " ")
+    lowered = normalized.lower()
     if user_id:
         marker = str(user_id).lower()
         if f"@<{marker}>" in lowered:
@@ -491,8 +500,9 @@ def search_identities() -> tuple:
 def list_mentions() -> tuple:
     client = _require_client()
     email = (session.get("email") or "").strip()
-    limit = int(request.args.get("limit", 200))
-    max_items = int(request.args.get("maxItems", 100))
+    limit = int(request.args.get("limit", 20))
+    per_project = int(request.args.get("perProject", 20))
+    per_project = max(1, min(per_project, 1000))
     try:
         profile = client.get_current_profile()
     except Exception as exc:  # pragma: no cover - best effort profile fetch
@@ -501,17 +511,30 @@ def list_mentions() -> tuple:
 
     tokens = _collect_mention_tokens(profile, email)
     user_id = profile.get("id") if isinstance(profile, dict) else None
+    if email:
+        try:
+            identities = client.search_identities(email)
+            if identities:
+                identity = identities[0]
+                tokens.extend(
+                    [
+                        identity.get("id"),
+                        identity.get("descriptor"),
+                        identity.get("displayName"),
+                        identity.get("uniqueName"),
+                        identity.get("mail"),
+                    ]
+                )
+        except Exception as exc:  # pragma: no cover - best effort enrichment
+            app.logger.warning("Failed to enrich mention tokens: %s", exc)
+    tokens = [str(t).strip().lower() for t in tokens if t]
     if not tokens:
-        return jsonify({"count": 0, "items": []})
-
-    assigned_to = email or profile.get("email") or profile.get("uniqueName") or profile.get("displayName")
-    if not assigned_to:
         return jsonify({"count": 0, "items": []})
 
     mentions: List[Dict[str, Any]] = []
     seen_comment_ids: set = set()
-    items_scanned = 0
-    cutoff = datetime.now(timezone.utc) - timedelta(days=30)
+    cutoff = datetime.now(timezone.utc) - timedelta(days=14)
+    cutoff_str = cutoff.strftime("%Y-%m-%d")
 
     try:
         projects = client.list_projects()
@@ -521,63 +544,75 @@ def list_mentions() -> tuple:
             proj_id = proj.get("id")
             if not proj_id:
                 continue
-            remaining_items = max_items - items_scanned
-            if remaining_items <= 0:
-                break
-            todos = client.query_todos(
-                proj_id,
-                assigned_to=assigned_to,
-                page=1,
-                page_size=min(200, remaining_items),
-            )
-            if not todos:
-                continue
-            for item in todos:
-                items_scanned += 1
-                if items_scanned > max_items:
+            page = 1
+            scanned = 0
+            while scanned < per_project:
+                page_size = min(200, per_project - scanned)
+                todos = client.query_todos(
+                    proj_id,
+                    changed_from=cutoff_str,
+                    page=page,
+                    page_size=page_size,
+                )
+                if not todos:
                     break
-                if len(mentions) >= limit:
+                scanned += len(todos)
+                item_map = {item.get("id"): item for item in todos if item.get("id")}
+                if not item_map:
                     break
-                item_id = item.get("id")
-                if not item_id:
-                    continue
-                comments = client.list_comments(proj_id, int(item_id))
-                for comment in comments:
-                    if len(mentions) >= limit:
-                        break
-                    comment_id = comment.get("id")
-                    if comment_id in seen_comment_ids:
-                        continue
-                    created_at = _parse_datetime(comment.get("createdDate"))
-                    if not created_at:
-                        continue
-                    if created_at.tzinfo is None:
-                        created_at = created_at.replace(tzinfo=timezone.utc)
-                    if created_at < cutoff:
-                        continue
-                    author = (comment.get("createdBy") or "").strip().lower()
-                    if author and any(token in author for token in tokens):
-                        continue
-                    text = comment.get("text") or ""
-                    if _comment_mentions_user(text, tokens, user_id):
-                        seen_comment_ids.add(comment_id)
-                        preview = _strip_html(text)
-                        if len(preview) > 160:
-                            preview = f"{preview[:160]}..."
-                        mentions.append(
-                            {
-                                "id": comment_id,
-                                "projectId": proj_id,
-                                "projectName": proj.get("name"),
-                                "workItemId": item_id,
-                                "title": item.get("title"),
-                                "preview": preview,
-                                "createdBy": comment.get("createdBy"),
-                                "createdDate": comment.get("createdDate"),
-                            }
-                        )
-                if len(mentions) >= limit:
+                max_workers = min(6, len(item_map))
+                with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                    futures = {
+                        executor.submit(client.list_comments, proj_id, int(item_id)): item_id
+                        for item_id in item_map.keys()
+                    }
+                    for future in as_completed(futures):
+                        if len(mentions) >= limit:
+                            break
+                        item_id = futures[future]
+                        try:
+                            comments = future.result() or []
+                        except Exception as exc:  # pragma: no cover - best effort
+                            app.logger.warning("Failed to fetch comments for %s/%s: %s", proj_id, item_id, exc)
+                            continue
+                        item = item_map.get(item_id) or {}
+                        for comment in comments:
+                            if len(mentions) >= limit:
+                                break
+                            comment_id = comment.get("id")
+                            if comment_id in seen_comment_ids:
+                                continue
+                            created_at = _parse_datetime(comment.get("createdDate"))
+                            if not created_at:
+                                continue
+                            if created_at.tzinfo is None:
+                                created_at = created_at.replace(tzinfo=timezone.utc)
+                            if created_at < cutoff:
+                                continue
+                            author = (comment.get("createdBy") or "").strip().lower()
+                            if author and any(token in author for token in tokens):
+                                continue
+                            text = comment.get("text") or ""
+                            if _comment_mentions_user(text, tokens, user_id):
+                                seen_comment_ids.add(comment_id)
+                                preview = _strip_html(text)
+                                if len(preview) > 160:
+                                    preview = f"{preview[:160]}..."
+                                mentions.append(
+                                    {
+                                        "id": comment_id,
+                                        "projectId": proj_id,
+                                        "projectName": proj.get("name"),
+                                        "workItemId": item_id,
+                                        "title": item.get("title"),
+                                        "preview": preview,
+                                        "createdBy": comment.get("createdBy"),
+                                        "createdDate": comment.get("createdDate"),
+                                    }
+                                )
+                if len(todos) < page_size or len(mentions) >= limit:
                     break
+                page += 1
             if len(mentions) >= limit:
                 break
     except AzureDevOpsError as exc:

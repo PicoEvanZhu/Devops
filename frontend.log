@@ -1,0 +1,30 @@
+
+> frontend@0.0.0 dev
+> vite
+
+
+  VITE v7.2.6  ready in 121 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+11:22:45 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+11:22:53 AM [vite] (client) hmr update /src/i18n.tsx
+11:22:54 AM [vite] (client) hmr invalidate /src/i18n.tsx Could not Fast Refresh ("useI18n" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+11:22:54 AM [vite] (client) hmr update /src/App.tsx, /src/pages/ProjectsPage.tsx, /src/pages/AllTodosPage.tsx
+11:58:18 AM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+11:58:27 AM [vite] (client) hmr update /src/i18n.tsx
+11:58:27 AM [vite] (client) hmr invalidate /src/i18n.tsx Could not Fast Refresh ("useI18n" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+11:58:27 AM [vite] (client) hmr update /src/App.tsx, /src/pages/ProjectsPage.tsx, /src/pages/AllTodosPage.tsx
+11:58:46 AM [vite] (client) hmr update /src/App.css
+12:02:27 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+2:01:03 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+2:57:14 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+2:57:25 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+2:57:38 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+2:57:46 PM [vite] (client) hmr update /src/pages/AllTodosPage.tsx
+3:58:07 PM [vite] .env.local changed, restarting server...
+3:58:07 PM [vite] (client) Re-optimizing dependencies because lockfile has changed
+3:58:07 PM [vite] server restarted.
+12:19:44 PM [vite] .env.local changed, restarting server...
+12:19:44 PM [vite] (client) Re-optimizing dependencies because lockfile has changed
+12:19:44 PM [vite] server restarted.
